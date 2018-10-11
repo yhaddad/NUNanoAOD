@@ -4,17 +4,17 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import PostProcessor
 
-from PhysicsTools.NanoAODTools.postprocessing.monoZ.MonoZProducer import *
-from PhysicsTools.NanoAODTools.postprocessing.monoZ.GenMonoZProducer import *
+from PhysicsTools.NanoAODTools.postprocessing.monoZ.JetProducer import *
+
 from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jecUncertainties import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetUncertainties import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetRecalib import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.mht import *
+from PhysicsTools.NanoAODTools.postprocessing.modules.jme.JetSysColl import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.muonScaleResProducer import *
-from PhysicsTools.NanoAODTools.postprocessing.framework.crabhelper import inputFiles,runsAndLumis
-
+# from PhysicsTools.NanoAODTools.postprocessing.framework.crabhelper import inputFiles,runsAndLumis
 import argparse
 
 
@@ -37,52 +37,40 @@ dataRun = options.dataRun
 
 print("isMC = ", isMC, "era = ", era, "dataRun = ", dataRun)
 
+files = [
+    "root://cms-xrd-global.cern.ch//store/mc/RunIIFall17NanoAOD/DYJetsToLL_M-50_HT-70to100_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/10000/08884C40-C7A4-E811-A882-3C4A92F7DE0E.root"
+]
+
 pre_selection = " || ".join([
     "(Sum$(Electron_pt > 20) >= 2)",
     "(Sum$(Muon_pt > 20) >= 2)",
     "(Sum$(Muon_pt > 20 && Muon_tightId) >= 1)"
 ])
+pre_selection = " && ".join([pre_selection, "(Entry$ < 50000)"])
+pre_selection = "(Entry$ < 20)"
+print("pre_selection : ", pre_selection)
 
 modules_2017 = [
-    #puAutoWeight(),
-    muonScaleRes2017(),
-    #btagSFProducer("2017", "deepcsv"),
-    #GenMonoZProducer(),
-    MonoZProducer(options.isMC, str(options.era))
+#    puAutoWeight(),
+#    muonScaleRes2017(),
+#    btagSFProducer("2017", "deepcsv"),
+#    GenMonoZProducer(),
+#    MonoZProducer(options.isMC, str(options.era))
+]
+modules_2017 = [
+    jetmetUncertainties2017All(),
+    JetProducer(systvals=['jesTotalUp', 'jesTotalUp'], jetSelection= lambda j : j.pt > 30),
 ]
 
-if options.isMC:
-   modules_2017.insert(0, puAutoWeight())
-   modules_2017.insert(1, GenMonoZProducer())
-   modules_2017.insert(2, btagSFProducer("2017", "deepcsv"))   
-
-if options.doSyst:
-    modules_2017.insert(
-        0, jetmetUncertainties2017All()
-    )
-    modules_2017.insert(
-        1, MonoZProducer(
-            isMC=options.isMC, era=str(options.era),
-            do_syst=options.doSyst, syst_var='jesTotalUp'
-        )
-    )
-    modules_2017.insert(
-        2, MonoZProducer(
-            isMC=options.isMC, era=str(options.era),
-            do_syst=options.doSyst, syst_var='jesTotalDown'
-        )
-    )
-
 p = PostProcessor(
-    ".", inputFiles(), 
-    cut=pre_selection,
+    ".", files, cut=pre_selection,
     branchsel="keep_and_drop.txt",
     outputbranchsel="keep_and_drop.txt",
     modules=modules_2017,
     provenance=True,
     noOut=False,
     fwkJobReport=True,
-    jsonInput=runsAndLumis()
+    # jsonInput=runsAndLumis()
 )
 
 p.run()
