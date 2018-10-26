@@ -1,20 +1,20 @@
-drop *
+keep *
 
 #keep CaloMET_*
-keep Electron_*
-keep Flag_*
-keep GenMET_*
-keep GenPart_*
+#keep Electron_*
+#keep Flag_*
+#keep GenMET_*
+#keep GenPart_*
 #keep IsoTrack_*
-keep Jet_*
+#keep Jet_*
 keep LHEPdfWeight
 keep LHEScaleWeight
-keep MET_*
+#keep MET_*
 keep Muon_*
-#keep PV_*
+keep PV_*
 #keep Photon_*
-keep Pileup_*
-keep RawMET_*
+#keep Pileup_*
+#keep RawMET_*
 # keep btagWeight_CSVV2
 keep event
 keep genWeight

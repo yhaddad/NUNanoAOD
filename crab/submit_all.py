@@ -31,6 +31,7 @@ config.JobType.sendPythonFolder	       = True
 config.Data.inputDataset               = '{DATASET}'
 config.Data.inputDBS                   = 'global'
 config.Data.splitting                  = 'FileBased'
+# config.Data.lumiMask                   = ../configs/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON.txt
 config.Data.unitsPerJob                = 1
 config.Data.outLFNDirBase              = '/store/user/yhaddad/MonoZAnalysis'
 config.Data.publication                = False
@@ -59,15 +60,17 @@ with open(options.inputs, 'r') as stream:
 	tag = sample.split("/")[1]
 	if not options.isMC:
 		tag = sample.split("/")[1] + "_" + sample.split("/")[2]
-	crab_config = crab_template.replace("{JOBNAME}", "1110_data_" + tag)
+	crab_config = crab_template.replace("{JOBNAME}", "NewHope_1210" + tag)
         crab_config = crab_config.replace("{DATASET}", sample)
         crab_config = crab_config.replace("{ISMC}", str(options.isMC) )
-        crab_config = crab_config.replace("{OUTPUTTAG}", "MonoZ2017_1110_data")
-        crab_file = "job_submit_%s.py" % tag
+        crab_config = crab_config.replace("{OUTPUTTAG}", "RogueOne_MonoZ_2017_2610")
+        if not options.isMC:
+	 	crab_config = crab_config.replace("# config.Data.lumiMask", "config.Data.lumiMask")
+	crab_file = "job_submit_%s.py" % tag
         os.system("rm -f " +  crab_file)
 	with open(crab_file, 'a') as the_file:
     		the_file.write(crab_config)
 
         cmd = "crab submit " + crab_file
         print cmd
-        os.system(cmd)
+        #os.system(cmd)
