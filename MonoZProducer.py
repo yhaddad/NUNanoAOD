@@ -217,15 +217,14 @@ class MonoZProducer(Module):
                         zcand_p4 = zcand_
                         z_candidate = list(pair)
                         lep3_idx_ = 3 - good_leptons.index(pair[0]) - good_leptons.index(pair[1])
-                        print "3rd lepton idx : ", lep3_idx_
-                        print "good_leptons.index(pair[0]) : ", good_leptons.index(pair[0])
-                        print "good_leptons.index(pair[1]) : ", good_leptons.index(pair[1])
-                        
-                        emulated_met = good_leptons[lep3_idx_].p4 + met_p4
-                        all_lepton_p4 = zcand_ + good_leptons[lep3_idx_].p4 
-                        if abs(pair[0]) == 11:
+                        #print "3rd lepton idx : ", lep3_idx_
+                        #print "good_leptons.index(pair[0]) : ", good_leptons.index(pair[0])
+                        #print "good_leptons.index(pair[1]) : ", good_leptons.index(pair[1])
+                        emulated_met = good_leptons[lep3_idx_].p4() + met_p4
+                        all_lepton_p4 = zcand_ + good_leptons[lep3_idx_].p4()
+                        if abs(pair[0].pdgId) == 11:
                             lep_category = 4 # EEL category
-                        if abs(pair[0]) == 13:
+                        if abs(pair[0].pdgId) == 13:
                             lep_category = 5 # MML category
         elif len(good_leptons)>=2 and (len(good_leptons) + len(extra_leptons)) == 4:
             # constructing the 4 leptons CR
