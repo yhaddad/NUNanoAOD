@@ -176,6 +176,7 @@ class MonoZProducer(Module):
         zcand_p4 = ROOT.TLorentzVector()
         emulated_met = ROOT.TLorentzVector()
         all_lepton_p4 = ROOT.TLorentzVector()
+        rem_lepton_p4 = ROOT.TLorentzVector()
         
         good_leptons = good_electrons + good_muons
         good_leptons.sort(key=lambda x: x.pt, reverse=True)
@@ -222,6 +223,7 @@ class MonoZProducer(Module):
                         #print "good_leptons.index(pair[1]) : ", good_leptons.index(pair[1])
                         emulated_met = good_leptons[lep3_idx_].p4() + met_p4
                         all_lepton_p4 = zcand_ + good_leptons[lep3_idx_].p4()
+                        rem_lepton_p4 = good_leptons[lep3_idx_].p4()
                         if abs(pair[0].pdgId) == 11:
                             lep_category = 4 # EEL category
                         if abs(pair[0].pdgId) == 13:
@@ -240,6 +242,7 @@ class MonoZProducer(Module):
                         z_candidate = pair
                         emulated_met =  zcand_1 + met_p4
                         all_lepton_p4 = zcand_p4 + zcand_1
+                        rem_lepton_p4 = zcand_1
                         if abs(pair[0].pdgId) == 11:
                             lep_category = 6 # EELL category
                         if abs(pair[0].pdgId) == 13:
@@ -282,6 +285,17 @@ class MonoZProducer(Module):
         self.out.fillBranch("emulatedMET_phi{}".format(self.syst_suffix), emulated_met.Phi())
         self.out.fillBranch("mass_alllep{}".format(self.syst_suffix), all_lepton_p4.M())
         self.out.fillBranch("pt_alllep{}".format(self.syst_suffix), all_lepton_p4.Pt())
+        
+        # checking the transverse mass
+        import math
+        print "transverse mass : ", emulated_met.Mt(), " : ", lep_category
+        print "     -- pt      : ", rem_lepton_p4.Pt()
+        print "     -- met     : ", met.pt 
+        print "     -- phi     : ", tk.deltaPhi(met.phi, rem_lepton_p4.Phi())
+        print "     -- almost  : ", math.sqrt(2*rem_lepton_p4.Pt()*met.pt*(1-math.cos(tk.deltaPhi(met.phi,rem_lepton_p4.Phi()))))
+        tt = ROOT.TLorentzVector()
+        tt.SetPtEtaPhiM(rem_lepton_p4.Pt(), 0, rem_lepton_p4.Phi(), 0)
+        print "     -- almost  : ", (tt + rem_lepton_p4).Pt()
         
         # process jet
         good_jets  = []
