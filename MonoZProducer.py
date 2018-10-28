@@ -62,6 +62,7 @@ class MonoZProducer(Module):
         self.out.branch("emulatedMET_phi{}".format(self.syst_suffix), "F")
         
         self.out.branch("mass_alllep{}".format(self.syst_suffix), "F")
+        self.out.branch("trans_mass{}".format(self.syst_suffix), "F")
         self.out.branch("pt_alllep{}".format(self.syst_suffix), "F")
         
         self.out.branch("nhad_taus{}".format(self.syst_suffix), "I")
@@ -249,7 +250,12 @@ class MonoZProducer(Module):
                             lep_category = 7 # MMLL category
         else:
             # too many bad leptons, with no obvious meaning ? 
-            lep_category = -2 
+            if len(good_leptons)==1 and (len(good_leptons) + len(extra_leptons))>=1:
+                lep_category = -2
+            elif len(good_leptons)>=2 and (len(good_leptons) + len(extra_leptons))>=2:
+                lep_category = -3
+            else:
+                lep_category = -4
 
         self.out.fillBranch("lep_category{}".format(self.syst_suffix), lep_category)
         # filling MonoZ type of variables
@@ -266,6 +272,7 @@ class MonoZProducer(Module):
         _vec_delta_balance  = (met_p4 - zcand_p4).Pt()/zcand_p4.Pt() if zcand_p4.Pt() != 0 else -1
         _sca_delta_balance  = met.pt/zcand_p4.Pt() if zcand_p4.Pt() != 0 else -1
         
+        # hadronic recoil
         had_recoil_p4 = ROOT.TLorentzVector()
         had_recoil_p4 += met_p4
         for lep in good_leptons + extra_leptons:
@@ -287,15 +294,9 @@ class MonoZProducer(Module):
         self.out.fillBranch("pt_alllep{}".format(self.syst_suffix), all_lepton_p4.Pt())
         
         # checking the transverse mass
-        import math
-        print "transverse mass : ", emulated_met.Mt(), " : ", lep_category
-        print "     -- pt      : ", rem_lepton_p4.Pt()
-        print "     -- met     : ", met.pt 
-        print "     -- phi     : ", tk.deltaPhi(met.phi, rem_lepton_p4.Phi())
-        print "     -- almost  : ", math.sqrt(2*rem_lepton_p4.Pt()*met.pt*(1-math.cos(tk.deltaPhi(met.phi,rem_lepton_p4.Phi()))))
-        tt = ROOT.TLorentzVector()
-        tt.SetPtEtaPhiM(rem_lepton_p4.Pt(), 0, rem_lepton_p4.Phi(), 0)
-        print "     -- almost  : ", (tt + rem_lepton_p4).Pt()
+        _rem_p4 = ROOT.TLorentzVector()
+        _rem_p4.SetPtEtaPhiM(rem_lepton_p4.Pt(), 0, rem_lepton_p4.Phi(), 0)
+        self.out.fillBranch("trans_mass{}".format(self.syst_suffix), (_rem_p4 + met_p4).M())
         
         # process jet
         good_jets  = []

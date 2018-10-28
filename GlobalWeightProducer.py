@@ -9,9 +9,12 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 
-class GenMonoZProducer(Module):
-    def __init__(self):
-        pass
+class GlobalWeightProducer(Module):
+    def __init__(self, isMC, lumiWeight, do_syst=False, syst_var=None):
+        self.isMC = isMC
+        self.lumiWeight = lumiWeight
+        self.do_syst = do_syst
+        self.syst_var = syst_var
 
     def beginJob(self):
         pass
@@ -21,46 +24,20 @@ class GenMonoZProducer(Module):
 
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
-        self.out.branch("GEN_Z_pt", "F")
-        self.out.branch("GEN_Z_mass", "F")
-        self.out.branch("GEN_Z_eta", "F")
-        self.out.branch("GEN_Z_phi", "F")
-        self.out.branch("GEN_n_jets_30", "F")
-        self.out.branch("GEN_n_leptons", "F")
-        self.out.branch("GEN_leadjet_pt", "F")
+        self.out.branch("weight", "F")
+        self.out.branch("lumiWeight", "F")
+        
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
 
     def analyze(self, event):
         # only valid in the MC samples
-
-        gen_part = Collection(event, "GenPart")
-        gen_jets = Collection(event, "GenJet")
-
-        p4Gen_ms = ROOT.TLorentzVector()
-        p4Gen_ll = ROOT.TLorentzVector()
-        n_leptons = 0
-        for part in gen_part:
-            id_gen_part = part.pdgId
-            if id_gen_part == 12 or id_gen_part == 14 or id_gen_part == 16:
-                n_leptons += 1
-                p4Gen_ms += part.p4()
-            elif id_gen_part == 11 or id_gen_part == 13:
-                n_leptons += 1
-                p4Gen_ll += part.p4()
-        mZ = p4Gen_ll.M()
-
-        self.out.fillBranch("GEN_Z_pt", p4Gen_ll.Pt())
-        self.out.fillBranch("GEN_Z_mass", mZ)
-        self.out.fillBranch("GEN_Z_eta", p4Gen_ll.Eta())
-        self.out.fillBranch("GEN_Z_phi", p4Gen_ll.Phi())
-
-        _gen_jets = []
-        for gen_j in gen_jets:
-            if gen_j.Pt() > 30.0 and abs(gen_j.Eta()) < 5.0:
-                _gen_jets.append(gen_j)
-        self.out.fillBranch("GEN_n_jets_30", len(_gen_jets))
-        self.out.fillBranch("GEN_n_leptons", n_leptons)
-        self.out.fillBranch("GEN_leadjet_pt", _gen_jets[0].Pt() if len(_gen_jets) > 0 else 0)
+        if self.isMC:
+            weight = event.genWeight * self.lumiWeight 
+        else:
+            weight = 1.0
+        
+        self.out.fillBranch("weight", weight)
+        self.out.fillBranch("lumiWeight", self.lumiWeight if self.isMC else 1.0)
         return True

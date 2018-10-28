@@ -18,22 +18,24 @@ config.JobType.scriptArgs = [
     'isMC={ISMC}',
     'era=2017',
     'doSyst=0',
-    'dataRun=X'
+    'dataset=X',
+    'catalog=catalogue_2017.yaml',
 ]
 
 config.JobType.inputFiles = [
     '../keep_and_drop.txt',
     '../postproc.py',
-    '../haddnano.py'
+    '../haddnano.py',
+    '../configs/catalogue_2017.yaml',
 ]
 
 config.JobType.sendPythonFolder	       = True
 config.Data.inputDataset               = '{DATASET}'
 config.Data.inputDBS                   = 'global'
 config.Data.splitting                  = 'FileBased'
-# config.Data.lumiMask                   = ../configs/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON.txt
+# config.Data.lumiMask                   = '../configs/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON.txt'
 config.Data.unitsPerJob                = 1
-config.Data.outLFNDirBase              = '/store/user/yhaddad/MonoZAnalysis'
+config.Data.outLFNDirBase              = '/eos/cms/store/group/phys_exotica/monoZ/MonoZAnalysis_{OUTPUTTAG}/'
 config.Data.publication                = False
 config.Data.outputDatasetTag           = '{OUTPUTTAG}'
 config.Data.allowNonValidInputDataset  = True
@@ -60,10 +62,10 @@ with open(options.inputs, 'r') as stream:
 	tag = sample.split("/")[1]
 	if not options.isMC:
 		tag = sample.split("/")[1] + "_" + sample.split("/")[2]
-	crab_config = crab_template.replace("{JOBNAME}", "NewHope_1210" + tag)
+	crab_config = crab_template.replace("{JOBNAME}", "RogueOne_2810" + tag)
         crab_config = crab_config.replace("{DATASET}", sample)
         crab_config = crab_config.replace("{ISMC}", str(options.isMC) )
-        crab_config = crab_config.replace("{OUTPUTTAG}", "RogueOne_MonoZ_2017_2610")
+        crab_config = crab_config.replace("{OUTPUTTAG}", "RogueOne_MonoZ_2017_2810")
         if not options.isMC:
 	 	crab_config = crab_config.replace("# config.Data.lumiMask", "config.Data.lumiMask")
 	crab_file = "job_submit_%s.py" % tag

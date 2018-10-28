@@ -58,9 +58,9 @@ class GenMonoZProducer(Module):
 
         _gen_jets = []
         for gen_j in gen_jets:
-            if gen_j.Pt() > 30.0 and abs(gen_j.Eta()) < 5.0:
+            if gen_j.pt > 30.0 and abs(gen_j.eta) < 5.0:
                 _gen_jets.append(gen_j)
-        self.out.fillBranch("GEN_n_jets_30", len(_gen_jets))
-        self.out.fillBranch("GEN_n_leptons", n_leptons)
-        self.out.fillBranch("GEN_leadjet_pt", _gen_jets[0].Pt() if len(_gen_jets) > 0 else 0)
+        self.out.fillBranch("GEN_n_jets_30" , len(_gen_jets))
+        self.out.fillBranch("GEN_n_leptons" , n_leptons)
+        self.out.fillBranch("GEN_leadjet_pt", _gen_jets[0].pt if len(_gen_jets) > 0 else 0)
         return True

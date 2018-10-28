@@ -4,8 +4,8 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import PostProcessor
 
-from PhysicsTools.NanoAODTools.postprocessing.monoZ.JetProducer import *
 from PhysicsTools.NanoAODTools.postprocessing.monoZ.MonoZProducer import *
+from PhysicsTools.NanoAODTools.postprocessing.monoZ.GlobalWeightProducer import *
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jecUncertainties import *
@@ -24,12 +24,12 @@ era = "2017"
 dataRun = ""
 
 parser = argparse.ArgumentParser("")
-parser.add_argument('-isMC', '--isMC', type=int, default=1, help="")
-parser.add_argument('-jobNum', '--jobNum', type=int, default=1, help="")
-parser.add_argument('-era', '--era', type=str, default="2017", help="")
-parser.add_argument('-doSyst', '--doSyst', type=int, default=0, help="")
-parser.add_argument('-dataRun', '--dataRun', type=str, default="X", help="")
-
+parser.add_argument('-isMC'   , '--isMC'   , type=int, default=1     , help="")
+parser.add_argument('-jobNum' , '--jobNum' , type=int, default=1     , help="")
+parser.add_argument('-era'    , '--era'    , type=str, default="2017", help="")
+parser.add_argument('-doSyst' , '--doSyst' , type=int, default=0     , help="")
+parser.add_argument('-dataRun', '--dataRun', type=str, default="X"   , help="")
+parser.add_argument('-c'      , '--catalog', type=str, default="configs/catalogue_2017.yaml", help="")
 options  = parser.parse_args()
 print(" -- options = ", options)
 isMC = options.isMC
@@ -49,30 +49,51 @@ pre_selection = " || ".join([
     "Sum$(Electron_pt>20&&abs(Electron_eta)<2.5) + Sum$(Muon_pt>20&&abs(Muon_eta)<2.5)>=1"
 ])
 
-pre_selection = " && ".join([pre_selection, "(Entry$ < 20000)"])
-#pre_selection = "(Entry$ < 2000)"
+pre_selection = " && ".join([pre_selection, "(Entry$ < 2000)"])
 print("pre_selection : ", pre_selection)
 
-#modules_2017 = [
-#    jetmetUncertainties2017All(),
-#    JetProducer(systvals=['jesTotalUp', 'jesTotalUp'], jetSelection= lambda j : j.pt > 30),
+modules_2017 = []
+#    MonoZProducer(options.isMC, str(options.era))
 #]
-modules_2017 = [
-    #puAutoWeight(),
-    #muonScaleRes2017(),
-    #btagSFProducer("2017", "deepcsv"),
-    MonoZProducer(options.isMC, str(options.era))
-]
+
+lumiWeight  = 1.0
+if isMC:
+    sample_name = files[0].split('store/mc/RunIIFall17NanoAOD/')[1].split('/NANOAODSIM/')[0]
+    import yaml
+    with open(options.catalog, 'r') as stream:
+        try:
+            catalog = yaml.load(stream)
+        except yaml.YAMLError as exc:
+            print(exc)
+    for ds, m in catalog.items():
+        if sample_name == m.get("sample", ""):
+            print m.get("sample", "")
+            lumiWeight = 1000.0 * m.get("xsec") * m.get("br", 1.0) * m.get("kf",1.0) / float(m.get("nevents", 1))
+            print "---------------------------"
+            print "xsection   == ", m.get("xsec"), " [pb]"
+            print "nevents    == ", m.get("nevents", 1)
+            print "lumiWeight == ", lumiWeight
+            break
+    
+else:
+    lumiWeight = 1.0
+    print "---------------------------"
+    print "lumiWeight == ", lumiWeight
 
 
+print "---------------------------"
+modules_2017.append(GlobalWeightProducer(options.isMC, lumiWeight) )
+print "---------------------------"
+
+print modules_2017
 p = PostProcessor(
     ".", files, cut=pre_selection,
-    #branchsel="keep_and_drop.txt",
-    #outputbranchsel="keep_and_drop.txt",
+    branchsel="keep_and_drop.txt",
+    outputbranchsel="keep_and_drop.txt",
     modules=modules_2017,
     provenance=True,
     noOut=False,
-    fwkJobReport=True,
+    fwkJobReport=False,
     # jsonInput=runsAndLumis()
 )
 

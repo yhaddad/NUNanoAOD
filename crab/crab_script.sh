@@ -24,6 +24,5 @@ else
     mv python $CMSSW_BASE/python
 
     echo Found Proxy in: $X509_USER_PROXY
-    #python postproc.py $1 $2
-    python postproc.py --jobNum=$1 --$2 --$3 --$4
+    python postproc.py --jobNum=$1 --$2 --$3 --$4 --$5 --$6
 fi

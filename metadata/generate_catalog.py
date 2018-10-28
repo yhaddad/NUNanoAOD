@@ -8,6 +8,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-c", "--config", type=str, default='configs/sample_mc_2017.dat',help="directory config")
 parser.add_argument("-p", "--use_parent", type=str, default='True',
                     help="use MiniAOD parent instead of NanoAOD")
+parser.add_argument("--include_files", "--include_files", type=str, default='True', help="")
 options = parser.parse_args()
 
 def get_nevent(infile):
@@ -42,20 +43,30 @@ data_file = open(options.config, "r")
 data = data_file.read()
 
 catalog = {}
+import yaml
+
+xsection = None
+with open("configs/xsections.yaml", 'r') as stream:
+        try:
+                xsection = yaml.load(stream)
+        except yaml.YAMLError as exc:
+                print(exc)
+
+
 for s in data.split('\n'):
         if len(s) <= 1: continue
+        if "#" in s: continue
         tag = s.split("/")[1]
         print " --- ",  tag 
         files_, nevents = files_from_das(s)
-        xsec, err = 0, 0
-        catalog[tag] = { 
-                "files" : [ f["name"] for f in files_ ],
+        xsec = xsection[tag].get("xsec", 1.0)
+        catalog[s] = {
+                "sample": tag,
+                #"files" : [ f["name"] for f in files_ ],
                 "nevents" : nevents,
-                "xsec": xsec,
-                "xsec_err": err
-        } 
-
-
+                "xsec"    : xsec
+        }
+        
 import yaml
-with open('catalog.yml', 'w') as outfile:
+with open('catalog_2017.yml', 'w') as outfile:
         yaml.dump(catalog, outfile, default_flow_style=False)
