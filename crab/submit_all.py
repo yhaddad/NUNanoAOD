@@ -14,20 +14,8 @@ config.JobType.pluginName      = 'Analysis'
 config.JobType.psetName        = 'PSet.py'
 config.JobType.scriptExe       = 'crab_script.sh'
 
-config.JobType.scriptArgs = [
-    'isMC={ISMC}',
-    'era=2017',
-    'doSyst=0',
-    'dataset=X',
-    'catalog=catalogue_2017.yaml',
-]
-
-config.JobType.inputFiles = [
-    '../keep_and_drop.txt',
-    '../postproc.py',
-    '../haddnano.py',
-    '../configs/catalogue_2017.yaml',
-]
+config.JobType.scriptArgs=['isMC={ISMC}','era=2017','doSyst=0','dataset=X','catalog=catalogue_2017.yaml']
+config.JobType.inputFiles=['../keep_and_drop.txt','../postproc.py','../haddnano.py','../configs/catalogue_2017.yaml']
 
 config.JobType.sendPythonFolder	       = True
 config.Data.inputDataset               = '{DATASET}'
@@ -41,8 +29,6 @@ config.Data.outputDatasetTag           = '{OUTPUTTAG}'
 config.Data.allowNonValidInputDataset  = True
 config.JobType.allowUndistributedCMSSW = True
 config.Site.storageSite                = 'T2_CH_CERN'
-
-sites=['T2_CH_CERN']
 """
 
 
