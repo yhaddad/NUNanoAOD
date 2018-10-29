@@ -16,17 +16,18 @@ config.JobType.scriptExe       = 'crab_script.sh'
 
 config.JobType.scriptArgs=['isMC={ISMC}','era=2017','doSyst=0','dataset=X','catalog=catalogue_2017.yaml']
 config.JobType.inputFiles=['../keep_and_drop.txt','../postproc.py','../haddnano.py','../configs/catalogue_2017.yaml']
-
 config.JobType.sendPythonFolder	       = True
+
 config.Data.inputDataset               = '{DATASET}'
 config.Data.inputDBS                   = 'global'
 config.Data.splitting                  = 'FileBased'
 # config.Data.lumiMask                   = '../configs/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON.txt'
 config.Data.unitsPerJob                = 1
-config.Data.outLFNDirBase              = '/eos/cms/store/group/phys_exotica/monoZ/MonoZAnalysis_{OUTPUTTAG}/'
+config.Data.outLFNDirBase              = '/store/group/phys_exotica/monoZ/MonoZAnalysis_{OUTPUTTAG}/'
 config.Data.publication                = False
 config.Data.outputDatasetTag           = '{OUTPUTTAG}'
 config.Data.allowNonValidInputDataset  = True
+
 config.JobType.allowUndistributedCMSSW = True
 config.Site.storageSite                = 'T2_CH_CERN'
 """
