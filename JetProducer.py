@@ -19,35 +19,35 @@ class JetProducer(Module):
             'jms_up', 'jms_dn',
             'jmr_up', 'jmr_dn'
         ]
-        
+
         self.systvals = []
         for isys,sys in enumerate(self.systs):
             setattr( self, sys, isys)
             self.systvals.append( getattr(self,sys) )
-            
+
         self.jets = None
         pass
-        
+
     def beginJob(self):
         pass
 
     def endJob(self):
         pass
-        
+
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
         self.out.branch("yacine_HT",  "F")
-        
+
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
-        
+
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         self.jets = Collection(event, "Jet")
-    
+        flag = Object(event, "Flag")
         jets = JetSysColl(self.jets, self.systvals, sel = lambda x : x.pt > 0)
         print " N_jets = ", len(jets.jets_raw()),  " jets : ", len(self.jets)
-	print " --------------------------------------- "
+
         for ijet, jet in enumerate(jets.jets_raw()):
            	# if ijet not in jets[self.nom].keys():
         	print "    jets[",ijet, "] : pt_nom : ", jet.pt_nom,  " : pt_jerUp : ", jet.pt_jerUp
@@ -55,7 +55,7 @@ class JetProducer(Module):
         #print "             : ", self.systvals
         print "             : ", self.systs
         var_HT = ROOT.TLorentzVector()
-        
+
         #for j in filter(self.jetSel,jets):
         #    var_HT += j.p4()
         #

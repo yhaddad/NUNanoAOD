@@ -2,6 +2,7 @@ import ROOT
 import sys
 import numpy as np
 from importlib import import_module
+import itertools
 from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import PostProcessor
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection, Object
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
@@ -16,6 +17,7 @@ class MonoZProducer(Module):
         self.era = era
         self.do_syst = do_syst
         self.syst_var = syst_var
+        self.zmass = 91.1876
         self.syst_suffix = '_sys_' + self.syst_var if self.do_syst else ''
 
     def beginJob(self):
@@ -29,8 +31,10 @@ class MonoZProducer(Module):
         self.out.branch("met_pt{}".format(self.syst_suffix), "F")
         self.out.branch("met_phi{}".format(self.syst_suffix), "F")
         self.out.branch("ngood_leptons{}".format(self.syst_suffix), "I")
-        self.out.branch("nmore_leptons{}".format(self.syst_suffix), "I")
+        self.out.branch("nextra_leptons{}".format(self.syst_suffix), "I")
         self.out.branch("lep_category{}".format(self.syst_suffix), "I")
+
+        self.out.branch("met_filter{}".format(self.syst_suffix), "I")
 
         self.out.branch("Z_pt{}".format(self.syst_suffix), "F")
         self.out.branch("Z_eta{}".format(self.syst_suffix), "F")
@@ -39,7 +43,8 @@ class MonoZProducer(Module):
         self.out.branch("Z_mt{}".format(self.syst_suffix), "F")
 
         self.out.branch("delta_phi_ZMet{}".format(self.syst_suffix), "F")
-        self.out.branch("Balance{}".format(self.syst_suffix), "F")
+        self.out.branch("vec_balance{}".format(self.syst_suffix), "F")
+        self.out.branch("sca_balance{}".format(self.syst_suffix), "F")
         self.out.branch("delta_phi_ll{}".format(self.syst_suffix), "F")
         self.out.branch("delta_eta_ll{}".format(self.syst_suffix), "F")
         self.out.branch("delta_R_ll{}".format(self.syst_suffix), "F")
@@ -50,23 +55,21 @@ class MonoZProducer(Module):
         self.out.branch("lead_bjet_pt{}".format(self.syst_suffix), "F")
         self.out.branch("delta_phi_j_met{}".format(self.syst_suffix), "F")
 
+        self.out.branch("delta_met_rec".format(self.syst_suffix), "F")
+        self.out.branch("hadronic_recoil".format(self.syst_suffix), "F")
+        
+        self.out.branch("emulatedMET{}".format(self.syst_suffix), "F")
+        self.out.branch("emulatedMET_phi{}".format(self.syst_suffix), "F")
+        
+        self.out.branch("mass_alllep{}".format(self.syst_suffix), "F")
+        self.out.branch("trans_mass{}".format(self.syst_suffix), "F")
+        self.out.branch("pt_alllep{}".format(self.syst_suffix), "F")
+        
         self.out.branch("nhad_taus{}".format(self.syst_suffix), "I")
         self.out.branch("lead_tau_pt{}".format(self.syst_suffix), "F")
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
-
-    # def met(self, met, isMC):
-    # """
-    # The MC has JER smearing applied which has output
-    # branch met_[pt/phi]_nom this should be compared
-    # with data branch MET_[pt/phi]. This essentially
-    # aliases the two branches to one common variable.
-    # """
-    # if isMC:
-    # return (met.pt_nom, met.phi_nom)
-    # else:
-    # return (met.pt, met.phi)
 
     def electron_id(self, electron, wp):
         if (self.era == "2016" and wp == "80"):
@@ -81,6 +84,30 @@ class MonoZProducer(Module):
     def corrected_pt(self):
         pass
 
+    def btag(self, jet, era, wp):
+        pass
+
+    def met_filter(self, flag, filter_mask=True):
+        return filter_mask and (
+              (flag.HBHENoiseFilter)
+           or (flag.HBHENoiseIsoFilter)
+           or (flag.EcalDeadCellTriggerPrimitiveFilter)
+           or (flag.goodVertices)
+           or (flag.eeBadScFilter)
+           or (flag.globalTightHalo2016Filter)
+           or (flag.BadChargedCandidateFilter)
+           or (flag.BadPFMuonFilter)
+        )
+
+    def duplicate_removal(self):
+        """
+        For data, same event could come from different datasets
+        FIXME: need to be implemented check the source from
+        the old MonoZ code
+        https://github.com/NEUAnalyses/monoZ_Analysis/blob/master/src/MonoZSelector.cc#L463
+        """
+        pass
+
     def analyze(self, event):
         """
         process event, return True (go to next module)
@@ -90,21 +117,30 @@ class MonoZProducer(Module):
         muons = list(Collection(event, "Muon"))
         jets = list(Collection(event, "Jet"))
         taus = list(Collection(event, "Tau"))
+        flag = Object(event, "Flag")
         met = Object(event, "MET")
+        
+        met_p4 = ROOT.TLorentzVector()
+        met_p4.SetPtEtaPhiM(met.pt,0.0,met.phi, 0.0)
 
         # met_pt, met_phi = self.met(met, self.isMC)
         self.out.fillBranch("met_pt{}".format(self.syst_suffix), met.pt)
         self.out.fillBranch("met_phi{}".format(self.syst_suffix), met.phi)
+
+        pass_met_filter = self.met_filter(flag, True)
+        self.out.fillBranch("met_filter{}".format(self.syst_suffix), pass_met_filter)
 
         # count electrons and muons
         good_leptons = []
         good_muons = []
         good_electrons = []
         lep_category = -1
+
+        # Choose tight-quality e/mu for event categorization
         for mu in muons:
-            isoLep = mu.pfRelIso04_all
+            isoLep   = mu.pfRelIso04_all
             pass_ips = abs(mu.dxy) < 0.02 and abs(mu.dz) < 0.1
-            pass_fid = abs(mu.eta) < 2.4
+            pass_fid = abs(mu.eta) < 2.4 and mu.pt >= 20
             pass_ids = mu.tightId and isoLep <= 0.15
             if pass_fid and pass_ids and pass_ips:
                 good_muons.append(mu)
@@ -118,60 +154,152 @@ class MonoZProducer(Module):
         good_muons.sort(key=lambda x: x.pt, reverse=True)
         good_electrons.sort(key=lambda x: x.pt, reverse=True)
 
+        # Find any remaining e/mu that pass looser selection
+        extra_leptons = []
+        for mu in muons:
+            isoLep   = mu.pfRelIso04_all
+            pass_ids = mu.softId and isoLep <= 0.25
+            pass_fid = abs(mu.eta) < 2.4 and mu.pt >= 10
+            if tk.closest(mu, good_muons)[1] < 0.01:
+                continue
+            if pass_fid and pass_ids:
+                extra_leptons.append(mu)
+
+        for el in electrons:
+            pass_fid = abs(el.eta) < 2.5 and el.pt >= 10
+            if tk.closest(el, good_electrons)[1] < 0.01:
+                continue
+            if pass_fid and el.cutBased >= 2:
+                extra_leptons.append(el)
+
+        # find categories
         z_candidate = []
-        lep_category = 0
-        if len(good_muons) >= 2:
-            if good_muons[0].pt > 20:
-                for i in range(1, len(good_muons)):
-                    if good_muons[0].charge * good_muons[i].charge < 0:
-                        lep_category = 1
-                        z_candidate = [good_muons[0], good_muons[i]]
-                        break
-
-        elif len(good_electrons) >= 2:
-            if good_electrons[0].pt > 20:
-                for i in range(1, len(good_electrons)):
-                    if good_electrons[0].charge * good_electrons[i].charge < 0:
-                        lep_category = 2
-                        z_candidate = [good_electrons[0], good_electrons[i]]
-                        break
-        if len(good_electrons) == 1 and len(good_muons) == 1:
-            if good_electrons[0].pt < 20 or good_muons[0].pt < 20:
-                z_candidate = [good_electrons[0], good_muons[0]]
-                if good_electrons[0].charge * good_muons[0].charge < 0:
-                    lep_catgeory = 3
-                else:
-                    lep_catgeory = 4
-        ngood_leptons = len(good_leptons)
+        zcand_p4 = ROOT.TLorentzVector()
+        emulated_met = ROOT.TLorentzVector()
+        all_lepton_p4 = ROOT.TLorentzVector()
+        rem_lepton_p4 = ROOT.TLorentzVector()
+        
         good_leptons = good_electrons + good_muons
-
+        good_leptons.sort(key=lambda x: x.pt, reverse=True)
+        
+        ngood_leptons = len(good_leptons)
+        nextra_leptons = len(extra_leptons)
+        
+        if False:
+            print "number of leptons [all, good, extra]: ", ngood_leptons, " : ", nextra_leptons
+            print "        CBId electrons : ", [e.cutBased for e in good_electrons]
+            print "        WP90 electrons : ", [e.mvaFall17Iso_WP90 for e in good_electrons]
+            print "             muons     : ", [e.tightId for e in good_muons]
+            print "        lepton pts     : ", [e.pt for e in good_leptons]
+        
         self.out.fillBranch("ngood_leptons{}".format(self.syst_suffix), ngood_leptons)
-        self.out.fillBranch("lep_category{}".format(self.syst_suffix), lep_category)
-        Z_4vec = ROOT.TLorentzVector()
-        if lep_category > 0:
-            for lep in z_candidate:
-                lep_4vec = ROOT.TLorentzVector()
-                lep_4vec.SetPtEtaPhiM(lep.pt, lep.eta, lep.phi, lep.mass)
-                Z_4vec = Z_4vec + lep_4vec
+        self.out.fillBranch("nextra_leptons{}".format(self.syst_suffix), nextra_leptons)
+        
+        lep_category = 0
+        if ngood_leptons < 2:
+            lep_category = -1
+            
+        if ngood_leptons == 2 and nextra_leptons==0:
+            # constructing the signal region
+            if (good_leptons[0].pdgId * good_leptons[1].pdgId) == -11*11:
+                lep_category = 1 # EE category
+            if (good_leptons[0].pdgId * good_leptons[1].pdgId) == -11*13:
+                lep_category = 2 # EM category
+            if (good_leptons[0].pdgId * good_leptons[1].pdgId) == -13*13:
+                lep_category = 3 # MM category
+            z_candidate = [good_leptons[0], good_leptons[1]]
+            zcand_p4 = good_leptons[0].p4() + good_leptons[1].p4()
+            all_lepton_p4 = zcand_p4
+        elif ngood_leptons == 3 and nextra_leptons==0:
+            # constructing the 3 leptons CR
+            for pair in itertools.combinations(good_leptons, 2):
+                if pair[0].pdgId == -pair[1].pdgId:
+                    zcand_ = pair[0].p4() + pair[1].p4()
+                    if abs(zcand_.M()-self.zmass) < abs(zcand_p4.M()-self.zmass):
+                        zcand_p4 = zcand_
+                        z_candidate = list(pair)
+                        lep3_idx_ = 3 - good_leptons.index(pair[0]) - good_leptons.index(pair[1])
+                        #print "3rd lepton idx : ", lep3_idx_
+                        #print "good_leptons.index(pair[0]) : ", good_leptons.index(pair[0])
+                        #print "good_leptons.index(pair[1]) : ", good_leptons.index(pair[1])
+                        emulated_met = good_leptons[lep3_idx_].p4() + met_p4
+                        all_lepton_p4 = zcand_ + good_leptons[lep3_idx_].p4()
+                        rem_lepton_p4 = good_leptons[lep3_idx_].p4()
+                        if abs(pair[0].pdgId) == 11:
+                            lep_category = 4 # EEL category
+                        if abs(pair[0].pdgId) == 13:
+                            lep_category = 5 # MML category
+        elif len(good_leptons)>=2 and (len(good_leptons) + len(extra_leptons)) == 4:
+            # constructing the 4 leptons CR
+            for pair in itertools.combinations(good_leptons, 2):
+                # checking if OSSF pair
+                rem_pair = [x for x in good_leptons + extra_leptons if x not in pair]
+                if (pair[0].pdgId == -pair[1].pdgId) and (rem_pair[0].pdgId == -rem_pair[1].pdgId):
+                    zcand_0 = pair[0].p4() + pair[1].p4()
+                    zcand_1 = rem_pair[0].p4() + rem_pair[1].p4()
+                    
+                    if abs(zcand_0.M()-self.zmass) < abs(zcand_p4.M()-self.zmass):
+                        zcand_p4 = zcand_0
+                        z_candidate = pair
+                        emulated_met =  zcand_1 + met_p4
+                        all_lepton_p4 = zcand_p4 + zcand_1
+                        rem_lepton_p4 = zcand_1
+                        if abs(pair[0].pdgId) == 11:
+                            lep_category = 6 # EELL category
+                        if abs(pair[0].pdgId) == 13:
+                            lep_category = 7 # MMLL category
+        else:
+            # too many bad leptons, with no obvious meaning ? 
+            if len(good_leptons)==1 and (len(good_leptons) + len(extra_leptons))>=1:
+                lep_category = -2
+            elif len(good_leptons)>=2 and (len(good_leptons) + len(extra_leptons))>=2:
+                lep_category = -3
+            else:
+                lep_category = -4
 
-            self.out.fillBranch("Z_pt{}".format(self.syst_suffix), Z_4vec.Pt())
-            self.out.fillBranch("Z_eta{}".format(self.syst_suffix), Z_4vec.Eta())
-            self.out.fillBranch("Z_phi{}".format(self.syst_suffix), Z_4vec.Phi())
-            self.out.fillBranch("Z_mass{}".format(self.syst_suffix), Z_4vec.M())
-            self.out.fillBranch("Z_mt{}".format(self.syst_suffix), Z_4vec.Mt())
-            _delta_zphi = tk.deltaPhi(z_candidate[0].phi, z_candidate[1].phi)
-            _delta_zdR = tk.deltaR(z_candidate[0].eta, z_candidate[0].phi,
-                                   z_candidate[1].eta, z_candidate[1].phi,)
-            _delta_zeta = abs(z_candidate[0].eta - z_candidate[1].eta)
-            _delta_phi_zmet = tk.deltaPhi(Z_4vec.Phi(), met.phi)
-            _delta_balance = abs(met.pt - Z_4vec.Pt())/Z_4vec.Pt() if Z_4vec.Pt() != 0 else -1
-            self.out.fillBranch("delta_phi_ll{}".format(self.syst_suffix), _delta_zphi)
-            self.out.fillBranch("delta_eta_ll{}".format(self.syst_suffix), _delta_zeta)
-            self.out.fillBranch("delta_R_ll{}".format(self.syst_suffix), _delta_zdR)
-            self.out.fillBranch("delta_phi_ZMet{}".format(self.syst_suffix), _delta_phi_zmet)
-            self.out.fillBranch("Balance{}".format(self.syst_suffix), _delta_balance)
+        self.out.fillBranch("lep_category{}".format(self.syst_suffix), lep_category)
+        # filling MonoZ type of variables
+        self.out.fillBranch("Z_pt{}".format(self.syst_suffix), zcand_p4.Pt())
+        self.out.fillBranch("Z_eta{}".format(self.syst_suffix), zcand_p4.Eta())
+        self.out.fillBranch("Z_phi{}".format(self.syst_suffix), zcand_p4.Phi())
+        self.out.fillBranch("Z_mass{}".format(self.syst_suffix), zcand_p4.M())
+        self.out.fillBranch("Z_mt{}".format(self.syst_suffix), zcand_p4.Mt())
+        _delta_zphi = tk.deltaPhi(z_candidate[0].phi, z_candidate[1].phi) if lep_category > 0 else -99
+        _delta_zdR  = tk.deltaR(z_candidate[0].eta, z_candidate[0].phi,
+                                z_candidate[1].eta, z_candidate[1].phi,) if lep_category > 0 else -99
+        _delta_zeta     = abs(z_candidate[0].eta - z_candidate[1].eta) if lep_category > 0 else -99
+        _delta_phi_zmet = tk.deltaPhi(zcand_p4.Phi(), met.phi)
+        _vec_delta_balance  = (met_p4 - zcand_p4).Pt()/zcand_p4.Pt() if zcand_p4.Pt() != 0 else -1
+        _sca_delta_balance  = met.pt/zcand_p4.Pt() if zcand_p4.Pt() != 0 else -1
+        
+        # hadronic recoil
+        had_recoil_p4 = ROOT.TLorentzVector()
+        had_recoil_p4 += met_p4
+        for lep in good_leptons + extra_leptons:
+            had_recoil_p4 += lep.p4()
+        had_recoil_p4 = -had_recoil_p4
+        _delta_met_rec = tk.deltaPhi(met.phi, had_recoil_p4.Phi()) if lep_category > 0 else -99
+                
+        self.out.fillBranch("delta_phi_ll{}".format(self.syst_suffix), _delta_zphi)
+        self.out.fillBranch("delta_eta_ll{}".format(self.syst_suffix), _delta_zeta)
+        self.out.fillBranch("delta_R_ll{}".format(self.syst_suffix), _delta_zdR)
+        self.out.fillBranch("delta_phi_ZMet{}".format(self.syst_suffix), _delta_phi_zmet)
+        self.out.fillBranch("vec_balance{}".format(self.syst_suffix), _vec_delta_balance)
+        self.out.fillBranch("sca_balance{}".format(self.syst_suffix), _sca_delta_balance)
+        self.out.fillBranch("hadronic_recoil{}".format(self.syst_suffix), had_recoil_p4.Pt())
+        self.out.fillBranch("delta_met_rec{}".format(self.syst_suffix), _delta_met_rec)
+        self.out.fillBranch("emulatedMET{}".format(self.syst_suffix), emulated_met.Pt())
+        self.out.fillBranch("emulatedMET_phi{}".format(self.syst_suffix), emulated_met.Phi())
+        self.out.fillBranch("mass_alllep{}".format(self.syst_suffix), all_lepton_p4.M())
+        self.out.fillBranch("pt_alllep{}".format(self.syst_suffix), all_lepton_p4.Pt())
+        
+        # checking the transverse mass
+        _rem_p4 = ROOT.TLorentzVector()
+        _rem_p4.SetPtEtaPhiM(rem_lepton_p4.Pt(), 0, rem_lepton_p4.Phi(), 0)
+        self.out.fillBranch("trans_mass{}".format(self.syst_suffix), (_rem_p4 + met_p4).M())
+        
         # process jet
-        good_jets = []
+        good_jets  = []
         good_bjets = []
         for jet in jets:
             if jet.pt < 30.0 or abs(jet.eta) > 4.7:
@@ -201,13 +329,13 @@ class MonoZProducer(Module):
             if tk.closest(tau, good_leptons)[1] < 0.4:
                 continue
             # only hadronic tau decay
-            if tau.decayMode() != 5:
+            if tau.decayMode != 5:
                 continue
             if tau.pt > 18 and abs(tau.eta) <= 2.3:
                 had_taus.append(tau)
         self.out.fillBranch("nhad_taus{}".format(self.syst_suffix), len(had_taus))
         self.out.fillBranch("lead_tau_pt{}".format(self.syst_suffix), had_taus[0].pt if len(had_taus) else 0)
-
+        
         return True
 
 MonoZ_2016_mc = lambda: MonoZProducer(True, "2016")
