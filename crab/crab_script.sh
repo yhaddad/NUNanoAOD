@@ -25,4 +25,6 @@ else
 
     echo Found Proxy in: $X509_USER_PROXY
     python postproc.py --jobNum=$1 --$2 --$3 --$4 --$5 --$6
+    echo " ----------------------- "
+    cat jobReport.json
 fi

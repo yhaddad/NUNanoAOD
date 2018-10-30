@@ -1,7 +1,7 @@
 import os, sys
 import ROOT
 ROOT.PyConfig.IgnoreCommandLineOptions = True
-import PSet
+# import PSet
 from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import PostProcessor
 
 from PhysicsTools.NanoAODTools.postprocessing.monoZ.MonoZProducer import *
@@ -18,10 +18,6 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.crabhelper import inputF
 
 import argparse
 
-
-isMC = True
-era = "2017"
-dataRun = ""
 
 parser = argparse.ArgumentParser("")
 parser.add_argument('-isMC'   , '--isMC'   , type=int, default=1     , help="")
@@ -43,31 +39,25 @@ print "---------------------------"
 pre_selection = "Sum$(Electron_pt>20&&abs(Electron_eta)<2.5) + Sum$(Muon_pt>20&&abs(Muon_eta)<2.5)>=1"
 
 lumiWeight  = 1.0
-if isMC:
-   import yaml
+if options.isMC:
+   from PhysicsTools.NanoAODTools.postprocessing.monoZ.catalog_2017 import catalog
    if options.dataset == "X":
       options.dataset = inputFiles().value()[0]
       options.dataset = options.dataset.split('store/mc/RunIIFall17NanoAOD/')[1]
       options.dataset = options.dataset.split('/NANOAODSIM/')[0]
-   catalog = None
-   with open(options.catalog, 'r') as stream:
-      try:
-         catalog = yaml.load(stream)
-      except yaml.YAMLError as exc:
-         print(exc)
    for ds, m in catalog.items():
       if options.dataset == m.get("sample", ""):
-         print m.get("sample", "")
-         lumiWeight = 1000.0 * m.get("xsec") 
-         lumiWeight *= m.get("br", 1.0) 
-         lumiWeight *= m.get("kf",1.0) 
+         lumiWeight = 1000.0 * m.get("xsec")
+         lumiWeight *= m.get("br", 1.0)
+         lumiWeight *= m.get("kf", 1.0)
          lumiWeight = lumiWeight/float(m.get("nevents", 1))
          print "---------------------------"
+         print "sample     == ", m.get("sample", "")
+         print "dataset    == ", ds
          print "xsection   == ", m.get("xsec"), " [pb]"
          print "nevents    == ", m.get("nevents", 1)
          print "lumiWeight == ", lumiWeight
          break
-    
    else:
       lumiWeight = 1.0
       print "---------------------------"
@@ -81,9 +71,9 @@ modules_2017 = [
 if options.isMC:
    modules_2017.insert(0, puAutoWeight())
    modules_2017.insert(1, GenMonoZProducer())
-   modules_2017.insert(2, btagSFProducer("2017", "deepcsv"))   
+   modules_2017.insert(2, btagSFProducer("2017", "deepcsv"))
    modules_2017.insert(3, muonScaleRes2017())
-   
+
 if options.doSyst:
    modules_2017.insert(
       0, jetmetUncertainties2017All()
@@ -109,7 +99,7 @@ p = PostProcessor(
    modules=modules_2017,
    provenance=True,
    noOut=False,
-   fwkJobReport=False,
+   fwkJobReport=True,
    jsonInput=runsAndLumis()
 )
 

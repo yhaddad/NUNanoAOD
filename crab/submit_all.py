@@ -15,7 +15,7 @@ config.JobType.psetName        = 'PSet.py'
 config.JobType.scriptExe       = 'crab_script.sh'
 
 config.JobType.scriptArgs=['isMC={ISMC}','era=2017','doSyst=0','dataset=X','catalog=catalogue_2017.yaml']
-config.JobType.inputFiles=['../keep_and_drop.txt','../postproc.py','../haddnano.py','../configs/catalogue_2017.yaml']
+config.JobType.inputFiles=['../keep_and_drop.txt','../postproc.py','../haddnano.py']
 config.JobType.sendPythonFolder	       = True
 
 config.Data.inputDataset               = '{DATASET}'
@@ -30,6 +30,7 @@ config.Data.allowNonValidInputDataset  = True
 
 config.JobType.allowUndistributedCMSSW = True
 config.Site.storageSite                = 'T2_CH_CERN'
+config.Site.blacklist = ['T2_US_Caltech','T1_DE_KIT','T1_RU_JINR','T2_US_Wisconsin',"T1_DE_KIT"]
 """
 
 
@@ -45,7 +46,7 @@ with open(options.inputs, 'r') as stream:
     for sample in stream.read().split('\n'):
         if '#' in sample: continue
 	if len(sample.split('/')) <= 1: continue
-	
+
 	tag = sample.split("/")[1]
 	if not options.isMC:
 		tag = sample.split("/")[1] + "_" + sample.split("/")[2]
@@ -62,4 +63,4 @@ with open(options.inputs, 'r') as stream:
 
         cmd = "crab submit " + crab_file
         print cmd
-        #os.system(cmd)
+        os.system(cmd)
