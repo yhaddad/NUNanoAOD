@@ -1,14 +1,35 @@
-drop FatJet_*
-drop GenDressedLepton_*
-drop GenJetAK8_*
-drop GenVisTau_*
-drop L1simulation_*
-drop PuppiMET_*
-drop SoftActivityJet_*
-drop SoftActivityJetHT*
-drop SoftActivityJetNjets*
-drop SubGenJetAK8_*
-drop SubJet_*
-drop IsoTrack_*
-drop LHEPart_*
-drop TrigObj_*
+drop * 
+
+# Collections
+keep Electron_*
+keep Flag_*
+keep GenMET_*
+keep CaloMET_*
+keep GenPart_*
+keep Jet_*
+keep *LHEWeight*
+keep *LHEPdfWeight*
+keep *LHEScaleWeight*
+keep MET_*
+keep Muon_*
+keep Tau_*
+keep *PSWeight*
+keep PV_*
+keep Pileup_*
+keep RawMET_*
+keep PuppiMET_*
+keep TkMET_*
+keep *btagWeight*
+keep event
+keep genWeight
+keep luminosityBlock
+keep run
+
+# HLT paths
+keep HLT_Mu*
+keep HLT_Ele*
+keep HLT_DiMu*
+keep HLT_TripleMu*
+keep HLT_IsoMu*
+keep HLT_DoubleEle*
+

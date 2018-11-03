@@ -36,17 +36,18 @@ print " -- dataset  = ", options.dataset
 print " -- catalog  = ", options.catalog
 print "---------------------------"
 
-pre_selection = "Sum$(Electron_pt>20&&abs(Electron_eta)<2.5) + Sum$(Muon_pt>20&&abs(Muon_eta)<2.5)>=1"
-
 lumiWeight  = 1.0
 if options.isMC:
    from PhysicsTools.NanoAODTools.postprocessing.monoZ.catalog_2017 import catalog
+   condtag_ = "NANOAODSIM"
    if options.dataset == "X":
       options.dataset = inputFiles().value()[0]
       options.dataset = options.dataset.split('store/mc/RunIIFall17NanoAOD/')[1]
+      condtag_ = options.dataset.split('/')[2]
       options.dataset = options.dataset.split('/NANOAODSIM/')[0]
    for ds, m in catalog.items():
-      if options.dataset == m.get("sample", ""):
+      if options.dataset == m.get("sample", "") and condtag_ in ds:
+         # ----- 
          lumiWeight = 1000.0 * m.get("xsec")
          lumiWeight *= m.get("br", 1.0)
          lumiWeight *= m.get("kf", 1.0)
@@ -62,6 +63,44 @@ if options.isMC:
       lumiWeight = 1.0
       print "---------------------------"
       print "lumiWeight == ", lumiWeight
+
+
+
+HLT_paths = [
+   # DiElectron (DoubelEG)
+   "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL",
+   "HLT_DoubleEle33_CaloIdL_MW",
+   
+   # DiMuon (DoubleMuon)
+   "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8",
+   "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8",
+   
+   # MuonElectron
+   "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL",
+   "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ",
+   "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ",
+   "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ",
+   "HLT_DiMu9_Ele9_CaloIdL_TrackIdL_DZ",
+   "HLT_Mu8_DiEle12_CaloIdL_TrackIdL",
+   "HLT_Mu8_DiEle12_CaloIdL_TrackIdL_DZ",
+   
+   # TriElectron
+   "HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL",
+   
+   # TriMuon
+   "HLT_TripleMu_10_5_5_DZ",
+   "HLT_TripleMu_12_10_5",
+   
+   # SingleElectron
+   "HLT_Ele35_WPTight_Gsf",
+   "HLT_Ele38_WPTight_Gsf",
+   "HLT_Ele40_WPTight_Gsf",
+   
+   # Single Mu
+   "HLT_IsoMu27"
+] 
+pre_selection = "(Sum$(Electron_pt>20&&abs(Electron_eta)<2.5) + Sum$(Muon_pt>20&&abs(Muon_eta)<2.5)>=1)"
+pre_selection = pre_selection + " && (" + "||".join(HLT_paths) + ")"
 
 modules_2017 = [
    GlobalWeightProducer(options.isMC, lumiWeight), 
