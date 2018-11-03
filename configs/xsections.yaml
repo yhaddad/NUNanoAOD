@@ -22,6 +22,10 @@ WWZ_TuneCP5_13TeV-amcatnlo-pythia8:
   xsec: 0.16510
   br  : 1.0
   kr  : 1.0
+WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8:
+  xsec: 0.16510
+  br  : 1.0
+  kr  : 1.0
 DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8:
   xsec: 6529.0
   br  : 1.0

@@ -76,9 +76,8 @@ for s in data.split('\n'):
     print len(s), len(s.replace(" ", ""))
     _files, _nevt = file_from_das(s)
     _xsec = xsection[tag].get("xsec", 1.0)
-    catalog[tag] = {
+    catalog[s] = {
         "sample"  : tag,
-        # "Files"   : [ f["name"] for f in _files ],  #
         "xsec"    : _xsec,                          #
         "nevents" : _nevt
     }
