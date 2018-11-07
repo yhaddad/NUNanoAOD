@@ -134,7 +134,7 @@ p = PostProcessor(
    ".", inputFiles(), 
    cut=pre_selection,
    branchsel="keep_and_drop.txt",
-   outputbranchsel="keep_and_drop.txt",
+   outputbranchsel="keep_and_drop_post.txt",
    modules=modules_2017,
    provenance=True,
    noOut=False,
