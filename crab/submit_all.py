@@ -15,7 +15,7 @@ config.JobType.psetName        = 'PSet.py'
 config.JobType.scriptExe       = 'crab_script.sh'
 
 config.JobType.scriptArgs=['isMC={ISMC}','era=2017','doSyst=0','dataset=X','catalog=catalogue_2017.yaml']
-config.JobType.inputFiles=['../keep_and_drop.txt','../postproc.py','../haddnano.py']
+config.JobType.inputFiles=['../keep_and_drop.txt','../keep_and_drop_post.txt','../postproc.py','../haddnano.py']
 config.JobType.sendPythonFolder	       = True
 
 config.Data.inputDataset               = '{DATASET}'
