@@ -115,57 +115,40 @@ HLT_paths = [
    "HLT_DoubleEle25_CaloIdL_MW",
    "HLT_DoublePhoton70",
    "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL",
-   "HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL_DZ",
-   "HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL",
+   # These 2 triggers do not exist
+   # "HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL_DZ",
+   # "HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL",
    "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL"
 ] 
 
 dic_HLT_NotIn = {
-   "SingleElectron": [
+   "C": [
       "HLT_Ele32_WPTight_Gsf",
       "HLT_IsoMu30",
       "HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass3p8",
       "HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass8",
-      "HLT_DoubleEle25_CaloIdL_MW",
-      "HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL_DZ",
-      "HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL"
+      "HLT_DoubleEle25_CaloIdL_MW"
    ],
-   "SingleMuon": [
+   "B": [
+      "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8",
+      "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL",
+      "HLT_Ele115_CaloIdVT_GsfTrkIdT",
       "HLT_Ele32_WPTight_Gsf",
       "HLT_IsoMu30",
       "HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass3p8",
       "HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass8",
+      "HLT_DiEle27_WPTightCaloOnly_L1DoubleEG",
       "HLT_DoubleEle25_CaloIdL_MW",
-      "HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL_DZ",
-      "HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL"
-   ],
-   "DoubleMuon": [
-      "HLT_Ele32_WPTight_Gsf",
-      "HLT_IsoMu30",
-      "HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass3p8",
-      "HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass8",
-      "HLT_DoubleEle25_CaloIdL_MW",
-      "HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL_DZ",
-      "HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL"
-   ],
-   "MuonEG": [
-      "HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL_DZ",
-      "HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL"
-   ],
-   "DoubleEG": [
-      "HLT_Ele32_WPTight_Gsf",
-      "HLT_IsoMu30",
-      "HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass3p8",
-      "HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass8",
-      "HLT_DoubleEle25_CaloIdL_MW",
-      "HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL_DZ",
-      "HLT_Mu23_TrkIsoVVL_Ele8_CaloIdL_TrackIdL_IsoVL"
+      "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL",
+      "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL"
    ]
 }
 
-for dataset in dic_HLT_NotIn:
-   if options.isMC or options.dataset == 'X' or dataset in options.dataset:
-      HLT_paths = [ HLT for HLT in HLT_paths if HLT not in dic_HLT_NotIn[dataset] ]
+# This has only been tested on 2017 samples
+if not options.isMC:
+   letter = options.dataset.split('/')[2][7]
+   if letter == 'B' or (letter == 'C' and options.dataset.split('/')[1] != 'MuonEG'):
+      HLT_paths = [ HLT for HLT in HLT_paths if HLT not in dic_HLT_NotIn[letter] ]
 
 pre_selection = "(Sum$(Electron_pt>20&&abs(Electron_eta)<2.5) + Sum$(Muon_pt>20&&abs(Muon_eta)<2.5)>=1)"
 pre_selection = pre_selection + " && (" + "||".join(HLT_paths) + ")"
