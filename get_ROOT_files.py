@@ -1,8 +1,12 @@
 import yaml
+import sys
 import os
 
 def get_files():
+   # The top directory which contains all the datasets
    dir_monoZ = '/eos/cms/store/group/phys_exotica/monoZ/MonoZAnalysis_BladeRunner_MonoZ_2017_1111/'
+   if len(sys.argv) == 2:
+      dir_monoZ = sys.argv[1]
 
    dict_files = {}
    for path, subdirs, files in os.walk(dir_monoZ): 
