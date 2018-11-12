@@ -6,6 +6,10 @@ WWTo2L2Nu_NNPDF31_TuneCP5_13TeV-powheg-pythia8:
   xsec: 11.08
   br  : 1.0
   kr  : 1.0
+WWTo2L2Nu_DoubleScattering_13TeV-pythia8:
+  xsec: 0.1703
+  br  : 1.0
+  kr  : 1.0
 WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8:
   xsec: 5.052
   br  : 1.0
@@ -146,3 +150,19 @@ GluGluToContinToZZTo4tau_13TeV_MCFM701_pythia8:
   xsec: 1.407
   br  : 1.0
   kr  : 1.0
+WZTo3LNu_0Jets_MLL-50_TuneCP5_13TeV-madgraphMLM-pythia8:
+  xsec: 0.63820
+  br  : 1.109
+  kr  : 1.20
+WZTo3LNu_1Jets_MLL-50_TuneCP5_13TeV-madgraphMLM-pythia8:
+  xsec: 0.33815
+  br  : 1.109
+  kr  : 1.20
+WZTo3LNu_2Jets_MLL-50_TuneCP5_13TeV-madgraphMLM-pythia8:
+  xsec: 0.06622
+  br  : 1.109
+  kr  : 1.20
+WZTo3LNu_3Jets_MLL-50_TuneCP5_13TeV-madgraphMLM-pythia8:
+  xsec: 0.09545
+  br  : 1.109
+  kr  : 1.20

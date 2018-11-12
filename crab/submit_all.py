@@ -14,7 +14,7 @@ config.JobType.pluginName      = 'Analysis'
 config.JobType.psetName        = 'PSet.py'
 config.JobType.scriptExe       = 'crab_script.sh'
 
-config.JobType.scriptArgs=['isMC={ISMC}','era=2017','doSyst=0','dataset=X','catalog=catalogue_2017.yaml']
+config.JobType.scriptArgs=['isMC={ISMC}','era=2017','doSyst=0','dataset={DATASETARG}','catalog=catalogue_2017.yaml']
 config.JobType.inputFiles=['../keep_and_drop.txt','../keep_and_drop_post.txt','../postproc.py','../haddnano.py']
 config.JobType.sendPythonFolder	       = True
 
@@ -40,7 +40,6 @@ parser.add_argument("-isMC", "--isMC"  , type=int, default=1         , help="")
 
 options = parser.parse_args()
 proc_args = [ "'isMC=%i'" % options.isMC, "'era=2017'", "'doSyst=0'", "'dataRun=X'"]
-
 print(" configuration :", options.inputs )
 with open(options.inputs, 'r') as stream:
     for sample in stream.read().split('\n'):
@@ -50,10 +49,14 @@ with open(options.inputs, 'r') as stream:
 	tag = sample.split("/")[1]
 	if not options.isMC:
 		tag = sample.split("/")[1] + "_" + sample.split("/")[2]
-	crab_config = crab_template.replace("{JOBNAME}", "RogueOne_2810" + tag)
+	crab_config = crab_template.replace("{JOBNAME}", "BladeRunner_1111" + tag)
+	if options.isMC:
+		crab_config = crab_config.replace("{DATASETARG}", 'X')
+	else:
+		crab_config = crab_config.replace("{DATASETARG}", sample)
         crab_config = crab_config.replace("{DATASET}", sample)
         crab_config = crab_config.replace("{ISMC}", str(options.isMC) )
-        crab_config = crab_config.replace("{OUTPUTTAG}", "RogueOne_MonoZ_2017_2810")
+        crab_config = crab_config.replace("{OUTPUTTAG}", "BladeRunner_MonoZ_2017_1111")
         if not options.isMC:
 	 	crab_config = crab_config.replace("# config.Data.lumiMask", "config.Data.lumiMask")
 	crab_file = "job_submit_%s.py" % tag

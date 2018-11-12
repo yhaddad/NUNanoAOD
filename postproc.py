@@ -160,9 +160,9 @@ modules_2017 = [
 
 if options.isMC:
    modules_2017.insert(0, puAutoWeight())
-   modules_2017.insert(1, GenMonoZProducer())
-   modules_2017.insert(2, btagSFProducer("2017", "deepcsv"))
-   modules_2017.insert(3, muonScaleRes2017())
+   #modules_2017.insert(1, GenMonoZProducer())
+   #modules_2017.insert(2, btagSFProducer("2017", "deepcsv"))
+   modules_2017.insert(1, muonScaleRes2017())
 
 if options.doSyst:
    modules_2017.insert(
