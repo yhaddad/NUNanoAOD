@@ -147,7 +147,8 @@ class MonoZProducer(Module):
 
         for el in electrons:
             id_CB = el.cutBased
-            if el.pt >= 20 and abs(el.eta) <= 2.5 and id_CB >= 3:
+            # changing to MVA based ID : 
+            if el.pt >= 20 and abs(el.eta) <= 2.5 and self.electron_id(el, "80"):
                 good_electrons.append(el)
 
         # let sort the muons in pt
@@ -169,7 +170,7 @@ class MonoZProducer(Module):
             pass_fid = abs(el.eta) < 2.5 and el.pt >= 10
             if tk.closest(el, good_electrons)[1] < 0.01:
                 continue
-            if pass_fid and el.cutBased >= 2:
+            if pass_fid and self.electron_id(el, "90"):
                 extra_leptons.append(el)
 
         # find categories
@@ -307,7 +308,9 @@ class MonoZProducer(Module):
             if not jet.jetId:
                 continue
             good_jets.append(jet)
-            if abs(jet.eta) <= 2.4 and jet.btagCSVV2 > 0.8484:
+            # Count b-tag with medium WP DeepCSV 
+            # ref : https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
+            if abs(jet.eta) <= 2.4 and jet.btagDeepB > 0.4941:
                 good_bjets.append(jet)
 
         good_jets.sort(key=lambda jet: jet.pt, reverse=True)
