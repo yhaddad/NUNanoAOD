@@ -307,6 +307,8 @@ class MonoZProducer(Module):
                 continue
             if not jet.jetId:
                 continue
+            if tk.closest(jet, good_leptons)[1] < 0.4:
+                continue
             good_jets.append(jet)
             # Count b-tag with medium WP DeepCSV 
             # ref : https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
