@@ -3,9 +3,11 @@ drop *
 # Collections
 keep Electron_*
 keep Flag_*
-keep GenMET_*
+keep LHE_*
+# keep GenMET_*
 keep CaloMET_*
-keep GenPart_*
+# keep GenPart_*
+keep Gen*
 keep Jet_*
 keep *LHEWeight*
 keep *LHEPdfWeight*
