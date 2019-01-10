@@ -42,11 +42,13 @@ class GenMonoZProducer(Module):
         p4Gen_ll = ROOT.TLorentzVector()
         n_leptons = 0
         for part in gen_part:
+            if (part.statusFlags & 128) == 0:
+                continue
             id_gen_part = part.pdgId
-            if id_gen_part == 12 or id_gen_part == 14 or id_gen_part == 16:
+            if abs(id_gen_part) == 12 or abs(id_gen_part) == 14 or abs(id_gen_part) == 16:
                 n_leptons += 1
                 p4Gen_ms += part.p4()
-            elif id_gen_part == 11 or id_gen_part == 13:
+            elif abs(id_gen_part) == 11 or abs(id_gen_part) == 13:
                 n_leptons += 1
                 p4Gen_ll += part.p4()
         mZ = p4Gen_ll.M()

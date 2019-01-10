@@ -3,6 +3,7 @@ drop *
 # Collections
 keep Flag_*
 keep LHE_*
+keep GEN_*
 keep *LHEWeight*
 keep *LHEPdfWeight*
 keep *LHEScaleWeight*

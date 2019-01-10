@@ -150,7 +150,7 @@ if not options.isMC:
    if letter == 'B' or (letter == 'C' and options.dataset.split('/')[1] != 'MuonEG'):
       HLT_paths = [ HLT for HLT in HLT_paths if HLT not in dic_HLT_NotIn[letter] ]
 
-pre_selection = "(Sum$(Electron_pt>20&&abs(Electron_eta)<2.5) + Sum$(Muon_pt>20&&abs(Muon_eta)<2.5)>=1)"
+pre_selection = "( ( Sum$(Electron_pt>20&&abs(Electron_eta)<2.5) + Sum$(Muon_pt>20&&abs(Muon_eta)<2.5) )>=1 )"
 pre_selection = pre_selection + " && (" + "||".join(HLT_paths) + ")"
 
 modules_2017 = [
@@ -160,9 +160,9 @@ modules_2017 = [
 
 if options.isMC:
    modules_2017.insert(0, puAutoWeight())
-   #modules_2017.insert(1, GenMonoZProducer())
+   modules_2017.insert(1, GenMonoZProducer())
    #modules_2017.insert(2, btagSFProducer("2017", "deepcsv"))
-   modules_2017.insert(1, muonScaleRes2017())
+   modules_2017.insert(2, muonScaleRes2017())
 
 if options.doSyst:
    modules_2017.insert(
