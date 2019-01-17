@@ -83,6 +83,22 @@ class MonoZProducer(Module):
         elif (self.era == "2017" and wp == "WPL"):
             return electron.mvaFall17Iso_WPL
 
+    def btag_id(self, wp):
+        # ref : https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
+        if (self.era == "2016" and wp == "loose"):
+            return 0.2219
+        elif (self.era == "2016" and wp == "medium"):
+            return 0.6324
+        elif (self.era == "2016" and wp == "tight"):
+            return 0.8958
+        elif (self.era == "2017" and wp == "loose"):
+            return 0.1522
+        elif (self.era == "2017" and wp == "medium"):
+            return 0.4941
+        elif (self.era == "2017" and wp == "tight"):
+            return 0.8001
+
+
     def corrected_pt(self):
         pass
 
@@ -314,8 +330,7 @@ class MonoZProducer(Module):
             good_jets.append(jet)
             # Count b-tag with medium WP DeepCSV 
             # ref : https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
-            bt_cut = 0.4941 if self.era == "2017" else 0.6324 if self.era == "2016" else 0
-            if abs(jet.eta) <= 2.4 and jet.btagDeepB > bt_cut:
+            if abs(jet.eta) <= 2.4 and jet.btagDeepB > btag_id("medium"):
                 good_bjets.append(jet)
 
         good_jets.sort(key=lambda jet: jet.pt, reverse=True)
