@@ -330,7 +330,7 @@ class MonoZProducer(Module):
             good_jets.append(jet)
             # Count b-tag with medium WP DeepCSV 
             # ref : https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
-            if abs(jet.eta) <= 2.4 and jet.btagDeepB > btag_id("medium"):
+            if abs(jet.eta) <= 2.4 and jet.btagDeepB > self.btag_id("medium"):
                 good_bjets.append(jet)
 
         good_jets.sort(key=lambda jet: jet.pt, reverse=True)
