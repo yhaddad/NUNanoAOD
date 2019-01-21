@@ -80,6 +80,24 @@ class MonoZProducer(Module):
             return electron.mvaFall17Iso_WP80
         elif (self.era == "2017" and wp == "90"):
             return electron.mvaFall17Iso_WP90
+        elif (self.era == "2017" and wp == "WPL"):
+            return electron.mvaFall17Iso_WPL
+
+    def btag_id(self, wp):
+        # ref : https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
+        if (self.era == "2016" and wp == "loose"):
+            return 0.2219
+        elif (self.era == "2016" and wp == "medium"):
+            return 0.6324
+        elif (self.era == "2016" and wp == "tight"):
+            return 0.8958
+        elif (self.era == "2017" and wp == "loose"):
+            return 0.1522
+        elif (self.era == "2017" and wp == "medium"):
+            return 0.4941
+        elif (self.era == "2017" and wp == "tight"):
+            return 0.8001
+
 
     def corrected_pt(self):
         pass
@@ -148,7 +166,7 @@ class MonoZProducer(Module):
         for el in electrons:
             id_CB = el.cutBased
             # changing to MVA based ID : 
-            if el.pt >= 20 and abs(el.eta) <= 2.5 and self.electron_id(el, "80"):
+            if el.pt >= 20 and abs(el.eta) <= 2.5 and self.electron_id(el, "90"):
                 good_electrons.append(el)
 
         # let sort the muons in pt
@@ -170,7 +188,7 @@ class MonoZProducer(Module):
             pass_fid = abs(el.eta) < 2.5 and el.pt >= 10
             if tk.closest(el, good_electrons)[1] < 0.01:
                 continue
-            if pass_fid and self.electron_id(el, "90"):
+            if pass_fid and self.electron_id(el, "WPL"):
                 extra_leptons.append(el)
 
         # find categories
@@ -312,7 +330,7 @@ class MonoZProducer(Module):
             good_jets.append(jet)
             # Count b-tag with medium WP DeepCSV 
             # ref : https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
-            if abs(jet.eta) <= 2.4 and jet.btagDeepB > 0.4941:
+            if abs(jet.eta) <= 2.4 and jet.btagDeepB > self.btag_id("medium"):
                 good_bjets.append(jet)
 
         good_jets.sort(key=lambda jet: jet.pt, reverse=True)
