@@ -119,36 +119,7 @@ def test(_variable,_nBins,_xLow,_xHi):
       chain.SetProof()
       hist_name = pd.split('_')[0]
       dathists[j] = TH1F('data', 'data',_nBins, _xLow, _xHi)
-      if pd == 'SingleElectron':
-	HLT_Cuts = '1'
-      if pd == 'SingleMuon':
-	HLT_Cuts = '(HLT_Ele115_CaloIdVT_GsfTrkIdT==0 && HLT_Ele27_WPTight_Gsf==0 && HLT_Ele32_WPTight_Gsf==0 && HLT_Ele35_WPTight_Gsf==0 && HLT_Ele32_WPTight_Gsf_L1DoubleEG==0 && HLT_Photon200==0 )'
-      if pd == 'DoubleEG':
-        HLT_Cuts = '(HLT_Ele115_CaloIdVT_GsfTrkIdT==0 && HLT_Ele27_WPTight_Gsf==0 && HLT_Ele32_WPTight_Gsf==0 && HLT_Ele35_WPTight_Gsf==0 && HLT_Ele32_WPTight_Gsf_L1DoubleEG==0 && HLT_Photon200==0 && HLT_IsoMu24==0 && HLT_IsoMu27==0 && HLT_IsoMu30==0 && HLT_Mu50==0)'
-      if pd == 'DoubleMuon':
-        HLT_Cuts = '(HLT_Ele115_CaloIdVT_GsfTrkIdT==0 && HLT_Ele27_WPTight_Gsf==0 && HLT_Ele32_WPTight_Gsf==0 && HLT_Ele35_WPTight_Gsf==0 && HLT_Ele32_WPTight_Gsf_L1DoubleEG==0 && HLT_Photon200==0 && HLT_IsoMu24==0 && HLT_IsoMu27==0 && HLT_IsoMu30==0 && HLT_Mu50==0 && HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ==0 && HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL==0 && HLT_DiEle27_WPTightCaloOnly_L1DoubleEG==0 && HLT_DoubleEle33_CaloIdL_MW==0 && HLT_DoubleEle25_CaloIdL_MW==0 && HLT_DoublePhoton70==0)'
-      if pd == 'MuonEG':
-        HLT_Cuts = '(HLT_Ele115_CaloIdVT_GsfTrkIdT==0 && HLT_Ele27_WPTight_Gsf==0 && HLT_Ele32_WPTight_Gsf==0 && HLT_Ele35_WPTight_Gsf==0 && HLT_Ele32_WPTight_Gsf_L1DoubleEG==0 && HLT_Photon200==0 && HLT_IsoMu24==0 && HLT_IsoMu27==0 && HLT_IsoMu30==0 && HLT_Mu50==0 && HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ==0 && HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL==0 && HLT_DiEle27_WPTightCaloOnly_L1DoubleEG==0 && HLT_DoubleEle33_CaloIdL_MW==0 && HLT_DoubleEle25_CaloIdL_MW==0 && HLT_DoublePhoton70==0 && HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8==0 && HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8==0 && HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass3p8==0 && HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass8==0)'
-
-
-#      if pd == 'SingleElectron':
-#        HLT_Cuts = '1'
-#      if pd == 'SingleMuon':
-#        HLT_Cuts = '(HLT_Ele115_CaloIdVT_GsfTrkIdT==0 && HLT_Ele27_WPTight_Gsf==0 && HLT_Ele32_WPTight_Gsf==0 && HLT_Ele35_WPTight_Gsf==0 && HLT_Ele32_WPTight_Gsf_L1DoubleEG==0 )'
-#      if pd == 'DoubleEG':
-#        HLT_Cuts = '(HLT_Ele115_CaloIdVT_GsfTrkIdT==0 && HLT_Ele27_WPTight_Gsf==0 && HLT_Ele32_WPTight_Gsf==0 && HLT_Ele35_WPTight_Gsf==0 && HLT_Ele32_WPTight_Gsf_L1DoubleEG==0 && HLT_IsoMu24==0 && HLT_IsoMu27==0 && HLT_IsoMu30==0 && HLT_Mu50==0)'
-#      if pd == 'DoubleMuon':
-#        HLT_Cuts = '(HLT_Ele115_CaloIdVT_GsfTrkIdT==0 && HLT_Ele27_WPTight_Gsf==0 && HLT_Ele32_WPTight_Gsf==0 && HLT_Ele35_WPTight_Gsf==0 && HLT_Ele32_WPTight_Gsf_L1DoubleEG==0 && HLT_IsoMu24==0 && HLT_IsoMu27==0 && HLT_IsoMu30==0 && HLT_Mu50==0 && HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ==0 && HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL==0 && HLT_DiEle27_WPTightCaloOnly_L1DoubleEG==0 && HLT_DoubleEle33_CaloIdL_MW==0 && HLT_DoubleEle25_CaloIdL_MW==0)'
-#      if pd == 'MuonEG':
-#        HLT_Cuts = '(HLT_Ele115_CaloIdVT_GsfTrkIdT==0 && HLT_Ele27_WPTight_Gsf==0 && HLT_Ele32_WPTight_Gsf==0 && HLT_Ele35_WPTight_Gsf==0 && HLT_Ele32_WPTight_Gsf_L1DoubleEG==0 && HLT_IsoMu24==0 && HLT_IsoMu27==0 && HLT_IsoMu30==0 && HLT_Mu50==0 && HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ==0 && HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL==0 && HLT_DiEle27_WPTightCaloOnly_L1DoubleEG==0 && HLT_DoubleEle33_CaloIdL_MW==0 && HLT_DoubleEle25_CaloIdL_MW==0 && HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8==0 && HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8==0 && HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass3p8==0 && HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass8==0)'
-
-
-
-        #HLT_Cuts = '&& HLT_Ele35_WPTight_Gsf==false && HLT_IsoMu27==false && HLT_DoubleEle33_CaloIdL_MW==false && HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL==false && HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8==false && HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8==false'
-      #chain.Project('data', _variable, _cuts + HLT_Cuts)
-      #chain.Project('data', _variable, HLT_Cuts + "*" + _cuts)
       chain.Project('data', _variable, _cuts)
-      #chain.Project('data', 'Z_mass', "(lep_category==2  && Z_pt>60 && met_pt>40 && ngood_jets<2 && ngood_bjets==0)")
       dathists[j].SetName(hist_name)
       chain.Reset()
       chain.Delete()
