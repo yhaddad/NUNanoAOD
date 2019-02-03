@@ -5,6 +5,7 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import PostProcessor
 
 from PhysicsTools.NanoAODTools.postprocessing.monoZ.MonoZProducer import *
+from PhysicsTools.NanoAODTools.postprocessing.monoZ.GenMonoZProducer import *
 from PhysicsTools.NanoAODTools.postprocessing.monoZ.GlobalWeightProducer import *
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import *
@@ -52,10 +53,6 @@ pre_selection = " || ".join([
 pre_selection = " && ".join([pre_selection, "(Entry$ < 2000)"])
 print("pre_selection : ", pre_selection)
 
-modules_2017 = []
-#    MonoZProducer(options.isMC, str(options.era))
-#]
-
 lumiWeight  = 1.0
 if isMC:
     sample_name = files[0].split('store/mc/RunIIFall17NanoAOD/')[1].split('/NANOAODSIM/')[0]
@@ -82,7 +79,39 @@ else:
 
 
 print "---------------------------"
-modules_2017.append(GlobalWeightProducer(options.isMC, lumiWeight) )
+
+modules_2017 = [
+    GlobalWeightProducer(options.isMC, lumiWeight),
+    MonoZProducer(
+	isMC=options.isMC, era=str(options.era), 
+	do_syst=options.doSyst
+    )
+]
+
+#modules_2017.append(GlobalWeightProducer(options.isMC, lumiWeight) )
+if options.doSyst:
+   modules_2017.insert(
+      0, jetmetUncertainties2017All()
+   )
+   modules_2017.insert(
+      1, MonoZProducer(
+         isMC=options.isMC, era=str(options.era),
+         do_syst=options.doSyst, syst_var='jesTotalUp'
+   )
+   )
+   modules_2017.insert(
+      2, MonoZProducer(
+      isMC=options.isMC, era=str(options.era),
+         do_syst=options.doSyst, syst_var='jesTotalDown'
+      )
+   )
+if options.isMC:
+   modules_2017.insert(0, puAutoWeight())
+   #modules_2017.insert(1, btagSFProducer("2017", "deepcsv"))
+   #modules_2017.insert(1, muonScaleRes2017())
+
+
+
 print "---------------------------"
 
 print modules_2017

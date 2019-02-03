@@ -12,13 +12,16 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 
 class MonoZProducer(Module):
-    def __init__(self, isMC, era, do_syst=False, syst_var=None):
+    def __init__(self, isMC, era, do_syst=False, syst_var=''):
         self.isMC = isMC
         self.era = era
         self.do_syst = do_syst
         self.syst_var = syst_var
-        self.zmass = 91.1876
-        self.syst_suffix = '_sys_' + self.syst_var if self.do_syst else ''
+        self.zmass = 91.1873
+	if self.syst_var !='':
+        	self.syst_suffix = '_sys_' + self.syst_var if self.do_syst else ''
+	else:
+		self.syst_suffix = syst_var
 
     def beginJob(self):
         pass
@@ -55,8 +58,8 @@ class MonoZProducer(Module):
         self.out.branch("lead_bjet_pt{}".format(self.syst_suffix), "F")
         self.out.branch("delta_phi_j_met{}".format(self.syst_suffix), "F")
 
-        self.out.branch("delta_met_rec".format(self.syst_suffix), "F")
-        self.out.branch("hadronic_recoil".format(self.syst_suffix), "F")
+        self.out.branch("delta_met_rec{}".format(self.syst_suffix), "F")
+        self.out.branch("hadronic_recoil{}".format(self.syst_suffix), "F")
         
         self.out.branch("emulatedMET{}".format(self.syst_suffix), "F")
         self.out.branch("emulatedMET_phi{}".format(self.syst_suffix), "F")
@@ -140,7 +143,29 @@ class MonoZProducer(Module):
         
         met_p4 = ROOT.TLorentzVector()
         met_p4.SetPtEtaPhiM(met.pt,0.0,met.phi, 0.0)
-
+        # in case of systematic take the shifted values are default
+        if self.do_syst:
+            if self.syst_var == "":
+                syst_var = "nom"
+            else:
+                syst_var = self.syst_var
+                
+            var_jet_pts = getattr(event,  "Jet_pt_{}".format(syst_var), None)
+            var_met_pt  = getattr(event,  "MET_pt_{}".format(syst_var), None)
+            var_met_phi = getattr(event, "MET_phi_{}".format(syst_var), None)
+            
+            if var_jet_pts:
+                for i,jet in enumerate(jets):
+                    jet.pt = var_jet_pts[i]
+            else: print 'WARNING: jet pts with variation {} not available, using the nominal value'.format(syst_var)
+                                
+            if var_met_pt:
+                met.pt = var_met_pt
+            else: print 'WARNING: MET pt with variation {} not available, using the nominal value'.format(syst_var)
+            if var_met_phi:
+                met.phi = var_met_phi
+            else: print 'WARNING: MET phi with variation {} not available, using the nominal value'.format(syst_var)
+            
         # met_pt, met_phi = self.met(met, self.isMC)
         self.out.fillBranch("met_pt{}".format(self.syst_suffix), met.pt)
         self.out.fillBranch("met_phi{}".format(self.syst_suffix), met.phi)
