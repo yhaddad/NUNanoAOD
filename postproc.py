@@ -65,12 +65,38 @@ if options.isMC:
       print "lumiWeight == ", lumiWeight
 
 # This has only been tested on 2017 samples
-from PhysicsTools.NanoAODTools.postprocessing.monoZ.HLT_NotIn_2017 import HLT_paths, HLT_not_in
-if options.dataset in HLT_not_in:
-   HLT_paths = [ HLT for HLT in HLT_paths if HLT not in HLT_not_in[options.dataset] ]
+HLT_paths = [
+    "HLT_Ele115_CaloIdVT_GsfTrkIdT", 
+    "HLT_Ele27_WPTight_Gsf", 
+    "HLT_Ele32_WPTight_Gsf", 
+    "HLT_Ele35_WPTight_Gsf", 
+    "HLT_Ele32_WPTight_Gsf_L1DoubleEG", 
+    "HLT_Photon200", 
+    "HLT_IsoMu24", 
+    "HLT_IsoMu27", 
+    "HLT_IsoMu30", 
+    "HLT_Mu50", 
+    "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8", 
+    "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8", 
+    "HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass3p8", 
+    "HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass8", 
+    "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ", 
+    "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL", 
+    "HLT_DiEle27_WPTightCaloOnly_L1DoubleEG", 
+    "HLT_DoubleEle33_CaloIdL_MW", 
+    "HLT_DoubleEle25_CaloIdL_MW", 
+    "HLT_DoublePhoton70", 
+    "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ", 
+    "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL", 
+    "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ", 
+    "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL", 
+    "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ", 
+    "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL"
+]
 
 pre_selection = "( ( Sum$(Electron_pt>20&&abs(Electron_eta)<2.5) + Sum$(Muon_pt>20&&abs(Muon_eta)<2.5) )>=1 )"
-pre_selection = pre_selection + " && (" + "||".join(HLT_paths) + ")"
+if options.isMC: 
+   pre_selection = pre_selection + " && (" + "||".join(HLT_paths) + ")"
 
 modules_2017 = [
    GlobalWeightProducer(options.isMC, lumiWeight), 
