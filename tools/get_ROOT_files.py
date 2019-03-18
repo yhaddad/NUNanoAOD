@@ -9,8 +9,14 @@ from ROOT import *
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--dir", type=str, 
-   default='/eos/cms/store/group/phys_exotica/monoZ/MonoZAnalysis_BladeRunner_MonoZ_2017/', 
+   default='/eos/cms/store/group/phys_exotica/monoZ/MonoZAnalysis_BladeRunner_MonoZ_2016_0212/', 
+   # default='/eos/cms/store/group/phys_exotica/monoZ/MonoZAnalysis_BladeRunner_MonoZ_2016_0212_data/', 
+   # default='/eos/cms/store/group/phys_exotica/monoZ/MonoZAnalysis_BladeRunner_MonoZ_2016_0212_data_test/', 
    help="top directory containing all the datasets")
+parser.add_argument("-out", "--outfile", type=str, 
+   default='ROOTfiles_2016.yml', 
+   # default='ROOTfiles_CtgryFltrd_2016.yml', 
+   help="name of output YML file")
 options = parser.parse_args()
 
 gROOT.SetBatch(1)
@@ -69,7 +75,7 @@ def main():
    pool.close()
    pool.join()
 
-   with open('ROOTfiles.yml', 'w') as outfile:
+   with open(options.outfile, 'w') as outfile:
       yaml.dump(dict_files, outfile, default_flow_style=False)
 
 

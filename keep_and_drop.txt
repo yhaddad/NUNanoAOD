@@ -34,4 +34,6 @@ keep HLT_DiMu*
 keep HLT_TripleMu*
 keep HLT_IsoMu*
 keep HLT_DoubleEle*
+keep HLT_Photon*
+keep HLT_DoublePhoton*
 
