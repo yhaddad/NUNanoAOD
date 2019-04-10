@@ -12,6 +12,44 @@ with open('ROOTfiles.yml', 'r') as f_yml:
 with open('ROOTfiles_CtgryFltrd.yml', 'r') as f2_yml:
     _dict_yml_ctgry = yaml.load(f2_yml)
 
+Dict = [
+	{'dataset':'GluGluToContinToZZTo2e2mu_13TeV_MCFM701_pythia8',				'name':'Other',			'Scale':1.0000362066412656*1.0/1000.0, 		'FillColor': 880+1, 		'LineColor':880+1 },
+        {'dataset':'GluGluToContinToZZTo2e2nu_13TeV_MCFM701_pythia8',                   	'name':'Other',                 'Scale':1.0000377165908536*1.0/1000.0,          'FillColor': 880+1,               'LineColor':880+1 },
+        {'dataset':'GluGluToContinToZZTo2e2tau_13TeV_MCFM701_pythia8',                   	'name':'Other',                 'Scale':1.0000360831761363*1.0/1000.0,          'FillColor': 880+1,               'LineColor':880+1 },
+        {'dataset':'GluGluToContinToZZTo2mu2nu_13TeV_MCFM701_pythia8',                   	'name':'Other',                 'Scale':1.000036739050646*1.0/1000.0,           'FillColor': 880+1,               'LineColor':880+1 },
+        {'dataset':'GluGluToContinToZZTo2mu2tau_13TeV_MCFM701_pythia8',                   	'name':'Other',                 'Scale':1.0000344760838633*1.0/1000.0,          'FillColor': 880+1,               'LineColor':880+1 },
+        {'dataset':'GluGluToContinToZZTo4e_13TeV_MCFM701_pythia8',                   		'name':'Other',                 'Scale':1.0000344984862481*1.0/1000.0,          'FillColor': 880+1,               'LineColor':880+1 },
+        {'dataset':'GluGluToContinToZZTo4mu_13TeV_MCFM701_pythia8',                   		'name':'Other',                 'Scale':1.000033746620705*1.0/1000.0,           'FillColor': 880+1,               'LineColor':880+1 },
+        {'dataset':'GluGluToContinToZZTo4tau_13TeV_MCFM701_pythia8',                   		'name':'Other',                 'Scale':1.0000342868480752*1.0/1000.0,          'FillColor': 880+1,               'LineColor':880+1 },
+        {'dataset':'ZZTo2L2Nu_13TeV_powheg_pythia8',                   				'name':'ZZ',                    'Scale':1.6642683283450472,                     'FillColor': 800-2,               'LineColor':800-2 },
+        {'dataset':'WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8',                   		'name':'WZ',                    'Scale':0.11620249895326198*0.85,               'FillColor': 860-4,                'LineColor':860-4 },
+        {'dataset':'WWTo2L2Nu_NNPDF31_TuneCP5_13TeV-powheg-pythia8',                   		'name':'WW',                    'Scale':0.09026903803982789,                    'FillColor': 840+2,                 'LineColor':840+2 },
+        #{'dataset':'WWTo2L2Nu_NNPDF31_TuneCP5_PSweights_13TeV-powheg-pythia8',                 'name':'WW',                    'Scale':0.11620249895326198,                    'FillColor': 840+2,                 'LineColor':840+2 },
+        {'dataset':'ZZZ_TuneCP5_13TeV-amcatnlo-pythia8',                   			'name':'VVV',                   'Scale':67.8391334859334,                      	'FillColor': 900-5,                 'LineColor':900-5 },
+        {'dataset':'WZZ_TuneCP5_13TeV-amcatnlo-pythia8',                   			'name':'VVV',                   'Scale':17.926871172229877,                     'FillColor': 900-5,                 'LineColor':900-5 },
+        #{'dataset':'WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8',                   			'name':'VVV',                   'Scale':1.0000342868480752,                     'FillColor': 900-5,                 'LineColor':900-5 },
+        #{'dataset':'TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8',                   		'name':'TT',                    'Scale':0.013873208098316917,                   'FillColor': 920+1,                 'LineColor':920+1 },
+        {'dataset':'TTZToQQ_TuneCP5_13TeV-amcatnlo-pythia8',                   			'name':'TT',                    'Scale':1.9579072463512601,                     'FillColor': 920+1,                 'LineColor':920+1 },
+        {'dataset':'TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8',                  		'name':'TT',                    'Scale':4.114175980028324,                      'FillColor': 920+1,                 'LineColor':920+1 },
+        {'dataset':'TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8',                   'name':'TT',                    'Scale':2.9187223944620277,                     'FillColor': 920+1,                 'LineColor':920+1 },
+        {'dataset':'TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8',                    'name':'TT',                    'Scale':1.4479458997439978,                     'FillColor': 920+1,                 'LineColor':920+1 },
+        {'dataset':'ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8',             'name':'TT',                    'Scale':0.028592390600870286,                   'FillColor': 920+1,                 'LineColor':920+1 },
+        {'dataset':'ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8',                 'name':'TT',                    'Scale':0.028646991701397357,                   'FillColor': 920+1,                 'LineColor':920+1 },
+        {'dataset':'TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8',                  	'name':'TT',                    'Scale':0.013873005409467596,                   'FillColor': 920+1,                 'LineColor':920+1 },
+        #{'dataset':'DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8',                   	'name':'DY',                    'Scale':0.00005603985310*5.0/6.0,               'FillColor': 900+1,                 'LineColor':900+1 },
+        {'dataset':'DY1JetsToLL_M-50_LHEZpT_50-150_TuneCP5_13TeV-amcnloFXFX-pythia8',           'name':'DY',                    'Scale':0.00019966935814257948,                 'FillColor': 900+1,                 'LineColor':900+1 },
+        {'dataset':'DY1JetsToLL_M-50_LHEZpT_150-250_TuneCP5_13TeV-amcnloFXFX-pythia8',          'name':'DY',                    'Scale':0.016779882370808786,                   'FillColor': 900+1,                 'LineColor':900+1 },
+        {'dataset':'DY1JetsToLL_M-50_LHEZpT_250-400_TuneCP5_13TeV-amcnloFXFX-pythia8',          'name':'DY',                    'Scale':0.13838894560722576,                    'FillColor': 900+1,                 'LineColor':900+1 },
+        {'dataset':'DY1JetsToLL_M-50_LHEZpT_400-inf_TuneCP5_13TeV-amcnloFXFX-pythia8',          'name':'DY',                    'Scale':1.1417575373019058,                     'FillColor': 900+1,                 'LineColor':900+1 },
+        {'dataset':'DY2JetsToLL_M-50_LHEZpT_50-150_TuneCP5_13TeV-amcnloFXFX-pythia8',           'name':'DY',                    'Scale':0.0003776394424266632,                  'FillColor': 900+1,                 'LineColor':900+1 },
+        {'dataset':'DY2JetsToLL_M-50_LHEZpT_150-250_TuneCP5_13TeV-amcnloFXFX-pythia8',          'name':'DY',                    'Scale':0.014432142715805535,                   'FillColor': 900+1,                 'LineColor':900+1 },
+        {'dataset':'DY2JetsToLL_M-50_LHEZpT_250-400_TuneCP5_13TeV-amcnloFXFX-pythia8',          'name':'DY',                    'Scale':0.11950809213291834,                    'FillColor': 900+1,                 'LineColor':900+1 },
+        {'dataset':'DY2JetsToLL_M-50_LHEZpT_400-inf_TuneCP5_13TeV-amcnloFXFX-pythia8',          'name':'DY',                    'Scale':1.0074427610853405,                     'FillColor': 900+1,                 'LineColor':900+1 },
+        {'dataset':'ZZTo4L_13TeV_powheg_pythia8',                   				'name':'ZZ',                    'Scale':0.7548052739055428,                     'FillColor': 800-2,               'LineColor':800-2 }
+	]
+
+_ndatasets = len(Dict)
+
 _datasets = [
    'GluGluToContinToZZTo2e2mu_13TeV_MCFM701_pythia8',
    'GluGluToContinToZZTo2e2nu_13TeV_MCFM701_pythia8',
@@ -48,7 +86,7 @@ _datasets = [
    'DY2JetsToLL_M-50_LHEZpT_400-inf_TuneCP5_13TeV-amcnloFXFX-pythia8',
    'ZZTo4L_13TeV_powheg_pythia8']
 
-_ndatasets = len(_datasets)
+#_ndatasets = len(_datasets)
 
 _HLTs = [
    "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL",
@@ -171,44 +209,47 @@ def test(_variable,_nBins,_xLow,_xHi):
    stk = ROOT.THStack("stk", ";;Events / Bin ")
    mc = TH1F('h', 'h', _nBins, _xLow, _xHi)
    for i in range(_ndatasets):
-      dataset = _datasets[i]
+      #dataset = _datasets[i]
+      dictionary = Dict[i]
+      dataset = dictionary['dataset']
+      name = dictionary['name']
       chain = TChain("Events") 
       for file in _dict_yml[dataset]['files']:
          chain.Add(file)
       chain.SetProof()
-      if dataset == 'GluGluToContinToZZTo2e2mu_13TeV_MCFM701_pythia8': name = 'Other'
-      if dataset == 'GluGluToContinToZZTo2e2nu_13TeV_MCFM701_pythia8': name = 'Other'
-      if dataset == 'GluGluToContinToZZTo2e2tau_13TeV_MCFM701_pythia8': name = 'Other'
-      if dataset == 'GluGluToContinToZZTo2mu2nu_13TeV_MCFM701_pythia8': name = 'Other'
-      if dataset == 'GluGluToContinToZZTo2mu2tau_13TeV_MCFM701_pythia8': name = 'Other'
-      if dataset == 'GluGluToContinToZZTo4e_13TeV_MCFM701_pythia8': name = 'Other'
-      if dataset == 'GluGluToContinToZZTo4mu_13TeV_MCFM701_pythia8': name = 'Other'
-      if dataset == 'GluGluToContinToZZTo4tau_13TeV_MCFM701_pythia8': name = 'Other'
-      if dataset == 'TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8': name = 'TT'
-      if dataset == 'TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8': name = 'TT'
-      if dataset == 'TTZToQQ_TuneCP5_13TeV-amcatnlo-pythia8': name = 'TT'
-      if dataset == 'TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8': name = 'TT'
-      if dataset == 'TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8': name = 'TT'
-      if dataset == 'TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8': name = 'TT'
-      if dataset == 'ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8': name = 'TT'
-      if dataset == 'ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8': name = 'TT'
-      if dataset == 'DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8': name = 'DY'
-      if dataset == 'DY1JetsToLL_M-50_LHEZpT_50-150_TuneCP5_13TeV-amcnloFXFX-pythia8': name = 'DY'
-      if dataset == 'DY1JetsToLL_M-50_LHEZpT_150-250_TuneCP5_13TeV-amcnloFXFX-pythia8': name = 'DY'
-      if dataset == 'DY1JetsToLL_M-50_LHEZpT_250-400_TuneCP5_13TeV-amcnloFXFX-pythia8': name = 'DY'
-      if dataset == 'DY1JetsToLL_M-50_LHEZpT_400-inf_TuneCP5_13TeV-amcnloFXFX-pythia8': name = 'DY'
-      if dataset == 'DY2JetsToLL_M-50_LHEZpT_50-150_TuneCP5_13TeV-amcnloFXFX-pythia8': name = 'DY'
-      if dataset == 'DY2JetsToLL_M-50_LHEZpT_150-250_TuneCP5_13TeV-amcnloFXFX-pythia8': name = 'DY'
-      if dataset == 'DY2JetsToLL_M-50_LHEZpT_250-400_TuneCP5_13TeV-amcnloFXFX-pythia8': name = 'DY'
-      if dataset == 'DY2JetsToLL_M-50_LHEZpT_400-inf_TuneCP5_13TeV-amcnloFXFX-pythia8': name = 'DY'    
-      if dataset == 'WWTo2L2Nu_NNPDF31_TuneCP5_13TeV-powheg-pythia8': name = 'WW'
-      if dataset == 'WWTo2L2Nu_NNPDF31_TuneCP5_PSweights_13TeV-powheg-pythia8': name = 'WW' 
-      if dataset == 'ZZTo2L2Nu_13TeV_powheg_pythia8': name = 'ZZ'
-      if dataset == 'WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8': name = 'WZ'
-      if dataset == 'ZZZ_TuneCP5_13TeV-amcatnlo-pythia8': name = 'VVV'
-      if dataset == 'WZZ_TuneCP5_13TeV-amcatnlo-pythia8': name = 'VVV'
-      if dataset == 'WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8': name = 'VVV'
-      if dataset == 'ZZTo4L_13TeV_powheg_pythia8': name = 'ZZ'
+      #if dataset == 'GluGluToContinToZZTo2e2mu_13TeV_MCFM701_pythia8': name = 'Other'
+      #if dataset == 'GluGluToContinToZZTo2e2nu_13TeV_MCFM701_pythia8': name = 'Other'
+      #if dataset == 'GluGluToContinToZZTo2e2tau_13TeV_MCFM701_pythia8': name = 'Other'
+      #if dataset == 'GluGluToContinToZZTo2mu2nu_13TeV_MCFM701_pythia8': name = 'Other'
+      #if dataset == 'GluGluToContinToZZTo2mu2tau_13TeV_MCFM701_pythia8': name = 'Other'
+      #if dataset == 'GluGluToContinToZZTo4e_13TeV_MCFM701_pythia8': name = 'Other'
+      #if dataset == 'GluGluToContinToZZTo4mu_13TeV_MCFM701_pythia8': name = 'Other'
+      #if dataset == 'GluGluToContinToZZTo4tau_13TeV_MCFM701_pythia8': name = 'Other'
+      #if dataset == 'TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8': name = 'TT'
+      #if dataset == 'TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8': name = 'TT'
+      #if dataset == 'TTZToQQ_TuneCP5_13TeV-amcatnlo-pythia8': name = 'TT'
+      #if dataset == 'TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8': name = 'TT'
+      #if dataset == 'TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8': name = 'TT'
+      #if dataset == 'TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8': name = 'TT'
+      #if dataset == 'ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8': name = 'TT'
+      #if dataset == 'ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8': name = 'TT'
+      #if dataset == 'DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8': name = 'DY'
+      #if dataset == 'DY1JetsToLL_M-50_LHEZpT_50-150_TuneCP5_13TeV-amcnloFXFX-pythia8': name = 'DY'
+      #if dataset == 'DY1JetsToLL_M-50_LHEZpT_150-250_TuneCP5_13TeV-amcnloFXFX-pythia8': name = 'DY'
+      #if dataset == 'DY1JetsToLL_M-50_LHEZpT_250-400_TuneCP5_13TeV-amcnloFXFX-pythia8': name = 'DY'
+      #if dataset == 'DY1JetsToLL_M-50_LHEZpT_400-inf_TuneCP5_13TeV-amcnloFXFX-pythia8': name = 'DY'
+      #if dataset == 'DY2JetsToLL_M-50_LHEZpT_50-150_TuneCP5_13TeV-amcnloFXFX-pythia8': name = 'DY'
+      #if dataset == 'DY2JetsToLL_M-50_LHEZpT_150-250_TuneCP5_13TeV-amcnloFXFX-pythia8': name = 'DY'
+      #if dataset == 'DY2JetsToLL_M-50_LHEZpT_250-400_TuneCP5_13TeV-amcnloFXFX-pythia8': name = 'DY'
+      #if dataset == 'DY2JetsToLL_M-50_LHEZpT_400-inf_TuneCP5_13TeV-amcnloFXFX-pythia8': name = 'DY'    
+      #if dataset == 'WWTo2L2Nu_NNPDF31_TuneCP5_13TeV-powheg-pythia8': name = 'WW'
+      #if dataset == 'WWTo2L2Nu_NNPDF31_TuneCP5_PSweights_13TeV-powheg-pythia8': name = 'WW' 
+      #if dataset == 'ZZTo2L2Nu_13TeV_powheg_pythia8': name = 'ZZ'
+      #if dataset == 'WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8': name = 'WZ'
+      #if dataset == 'ZZZ_TuneCP5_13TeV-amcatnlo-pythia8': name = 'VVV'
+      #if dataset == 'WZZ_TuneCP5_13TeV-amcatnlo-pythia8': name = 'VVV'
+      #if dataset == 'WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8': name = 'VVV'
+      #if dataset == 'ZZTo4L_13TeV_powheg_pythia8': name = 'ZZ'
       hists[i] = TH1F(name, name,_nBins, _xLow, _xHi)
       chain.Project(name, _variable, "puWeight * weight * " + _cuts)
       #chain.Project(name, 'Z_mass', "puWeight * lumiWeight * (lep_category==2 && Z_pt>60 && met_pt>40 && ngood_jets<2 && ngood_bjets==0)")
@@ -216,158 +257,168 @@ def test(_variable,_nBins,_xLow,_xHi):
       chain.Reset()
       chain.Delete()
       hists[i].Scale(41.5)
-      if dataset == 'GluGluToContinToZZTo2e2mu_13TeV_MCFM701_pythia8': 
-                hists[i].Scale(1.0/1000.0)
-                hists[i].Scale(1.0000362066412656)
-		hists[i].SetFillColor(kViolet+1)
-      if dataset == 'GluGluToContinToZZTo2e2nu_13TeV_MCFM701_pythia8': 
-                hists[i].Scale(1.0/1000.0)
-                hists[i].Scale(1.0000377165908536)
-		hists[i].SetFillColor(kViolet+1)
-      if dataset == 'GluGluToContinToZZTo2e2tau_13TeV_MCFM701_pythia8': 
-                hists[i].Scale(1.0/1000.0)
-                hists[i].Scale(1.0000360831761363)
-		hists[i].SetFillColor(kViolet+1)
-      if dataset == 'GluGluToContinToZZTo2mu2nu_13TeV_MCFM701_pythia8': 
-                hists[i].Scale(1.0/1000.0)
-                hists[i].Scale(1.000036739050646)
-		hists[i].SetFillColor(kViolet+1)
-      if dataset == 'GluGluToContinToZZTo2mu2tau_13TeV_MCFM701_pythia8': 
-                hists[i].Scale(1.0/1000.0)
-                hists[i].Scale(1.0000344760838633)
-		hists[i].SetFillColor(kViolet+1)
-      if dataset == 'GluGluToContinToZZTo4e_13TeV_MCFM701_pythia8': 
-                hists[i].Scale(1.0/1000.0)
-                hists[i].Scale(1.0000344984862481)
-		hists[i].SetFillColor(kViolet+1)
-      if dataset == 'GluGluToContinToZZTo4mu_13TeV_MCFM701_pythia8': 
-                hists[i].Scale(1.0/1000.0)
-                hists[i].Scale(1.000033746620705)
-		hists[i].SetFillColor(kViolet+1)
-      if dataset == 'GluGluToContinToZZTo4tau_13TeV_MCFM701_pythia8': 
-                hists[i].Scale(1.0/1000.0)
-                hists[i].Scale(1.0000342868480752)
-		hists[i].SetFillColor(kViolet+1)
+      #scale_factor = dictionary['Scale']
+      #hFillColor = dictionary['FillColor']
+      #hLineColor = dictionary['LineColor']
+      hists[i].Scale(dictionary['Scale'])
+      #hFillColor = ROOT.TColor(dictionary['FillColor'])
+      #hLineColor = ROOT.TColor(dictionary['LineColor'])
+      #hists[i].SetFillColor(hFillColor)
+      #hists[i].SetLineColor(hLineColor)
+      hists[i].SetFillColor(dictionary['FillColor'])
+      hists[i].SetLineColor(dictionary['LineColor'])
+      #if dataset == 'GluGluToContinToZZTo2e2mu_13TeV_MCFM701_pythia8': 
+      #          hists[i].Scale(1.0/1000.0)
+      #          hists[i].Scale(1.0000362066412656)
+      #  	hists[i].SetFillColor(880+1)
+      #if dataset == 'GluGluToContinToZZTo2e2nu_13TeV_MCFM701_pythia8': 
+      #          hists[i].Scale(1.0/1000.0)
+      #          hists[i].Scale(1.0000377165908536)
+      #  	hists[i].SetFillColor(880+1)
+      #if dataset == 'GluGluToContinToZZTo2e2tau_13TeV_MCFM701_pythia8': 
+      #          hists[i].Scale(1.0/1000.0)
+      #          hists[i].Scale(1.0000360831761363)
+      #  	hists[i].SetFillColor(880+1)
+      #if dataset == 'GluGluToContinToZZTo2mu2nu_13TeV_MCFM701_pythia8': 
+      #          hists[i].Scale(1.0/1000.0)
+      #          hists[i].Scale(1.000036739050646)
+      #  	hists[i].SetFillColor(880+1)
+      #if dataset == 'GluGluToContinToZZTo2mu2tau_13TeV_MCFM701_pythia8': 
+      #          hists[i].Scale(1.0/1000.0)
+      #          hists[i].Scale(1.0000344760838633)
+      #  	hists[i].SetFillColor(880+1)
+      #if dataset == 'GluGluToContinToZZTo4e_13TeV_MCFM701_pythia8': 
+      #          hists[i].Scale(1.0/1000.0)
+      #          hists[i].Scale(1.0000344984862481)
+      #  	hists[i].SetFillColor(880+1)
+      #if dataset == 'GluGluToContinToZZTo4mu_13TeV_MCFM701_pythia8': 
+      #          hists[i].Scale(1.0/1000.0)
+      #          hists[i].Scale(1.000033746620705)
+      #  	hists[i].SetFillColor(880+1)
+      #if dataset == 'GluGluToContinToZZTo4tau_13TeV_MCFM701_pythia8': 
+      #          hists[i].Scale(1.0/1000.0)
+      #          hists[i].Scale(1.0000342868480752)
+      #  	hists[i].SetFillColor(880+1)
 
-####################################
-      if dataset == 'TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8': 
-                hists[i].Scale(0.013873208098316917)
-		hists[i].SetFillColor(kGray+1)
-           	hists[i].SetLineColor(kGray+1)
-      if dataset == 'TTZToQQ_TuneCP5_13TeV-amcatnlo-pythia8': 
-                hists[i].Scale(1.9579072463512601)
-		hists[i].SetFillColor(kGray+1)
-                hists[i].SetLineColor(kGray+1)
-      if dataset == 'TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8': 
-                hists[i].Scale(4.114175980028324)
-		hists[i].SetFillColor(kGray+1)
-                hists[i].SetLineColor(kGray+1)
-      if dataset == 'TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8': 
-                hists[i].Scale(2.9187223944620277)
-		hists[i].SetFillColor(kGray+1)
-                hists[i].SetLineColor(kGray+1)
-      if dataset == 'TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8': 
-                hists[i].Scale(1.4479458997439978)
-		hists[i].SetFillColor(kGray+1)
-                hists[i].SetLineColor(kGray+1)
-      if dataset == 'ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8': 
-                hists[i].Scale(0.028592390600870286)
-		hists[i].SetFillColor(kGray+1)
-                hists[i].SetLineColor(kGray+1)
-      if dataset == 'ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8': 
-                hists[i].Scale(0.028646991701397357)
-		hists[i].SetFillColor(kGray+1)
-                hists[i].SetLineColor(kGray+1)
-      if dataset == 'TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8': 
-                hists[i].Scale(0.013873208098316917)
-		hists[i].SetFillColor(kGray+1)
-                hists[i].SetLineColor(kGray+1)
-      if dataset == 'TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8':
-         #hists[i].Scale(687.1/66761812)
-         #hists[i].Scale(87.3/66761.812)
-                hists[i].Scale(0.013873005409467596)
-         	hists[i].SetFillColor(kGray+1)
-      if dataset == 'DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8':
-         	#hists[i].Scale(41.5*6529000/207497932)
-                hists[i].Scale(0.00005603985310)
-                hists[i].Scale(5.0/6.0)
-         	hists[i].SetFillColor(kPink+1)
-      if dataset == 'WWTo2L2Nu_NNPDF31_TuneCP5_13TeV-powheg-pythia8': 
-                hists[i].Scale(0.09026903803982789)
-		hists[i].SetFillColor(kTeal+2)
-      if dataset == 'WWTo2L2Nu_NNPDF31_TuneCP5_PSweights_13TeV-powheg-pythia8': 
-                hists[i].Scale(0.11620249895326198)
-		hists[i].SetFillColor(kTeal+2)
-      if dataset == 'ZZTo2L2Nu_13TeV_powheg_pythia8': 
-                hists[i].Scale(1.6642683283450472)
-		hists[i].SetFillColor(kOrange-2)
-      if dataset == 'ZZTo4L_13TeV_powheg_pythia8': 
-                hists[i].Scale(0.7548052739055428)
-		hists[i].SetFillColor(kOrange-2)
-      if dataset == 'WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8': 
-        	#hists[i].Scale(1.109)
-                hists[i].Scale(0.11620249895326198)
-                hists[i].Scale(0.85)
-		hists[i].SetFillColor(kAzure-4)
-      if dataset == 'ZZZ_TuneCP5_13TeV-amcatnlo-pythia8': 
-		hists[i].Scale(67.8391334859334)
-		hists[i].SetFillColor(kPink-5)
-      if dataset == 'WZZ_TuneCP5_13TeV-amcatnlo-pythia8': 
-                hists[i].Scale(17.926871172229877)
-		hists[i].SetFillColor(kPink-5)
-      if dataset == 'WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8': 
-                hists[i].Scale(1.0000342868480752)
-		hists[i].SetFillColor(kPink-5)
-      if dataset == 'DY1JetsToLL_M-50_LHEZpT_50-150_TuneCP5_13TeV-amcnloFXFX-pythia8': 
-	hists[i].SetFillColor(kPink+1)
-        hists[i].SetLineColor(kPink+1)
-	#hists[i].Scale(1.0/1.2)
-        hists[i].Scale(0.00019966935814257948)
-      if dataset == 'DY1JetsToLL_M-50_LHEZpT_150-250_TuneCP5_13TeV-amcnloFXFX-pythia8': 
-        hists[i].SetFillColor(kPink+1)
-        hists[i].SetLineColor(kPink+1)
-        #hists[i].Scale(1.0/1.2)
-        hists[i].Scale(0.016779882370808786)
-      if dataset == 'DY1JetsToLL_M-50_LHEZpT_250-400_TuneCP5_13TeV-amcnloFXFX-pythia8': 
-        hists[i].SetFillColor(kPink+1)
-        hists[i].SetLineColor(kPink+1)
-        #hists[i].Scale(1.0/1.2)
-        hists[i].Scale(0.13838894560722576)
-      if dataset == 'DY1JetsToLL_M-50_LHEZpT_400-inf_TuneCP5_13TeV-amcnloFXFX-pythia8': 
-        hists[i].SetFillColor(kPink+1)
-        hists[i].SetLineColor(kPink+1)
-        #hists[i].Scale(1.0//1.2)
-        hists[i].Scale(1.1417575373019058)
-      if dataset == 'DY2JetsToLL_M-50_LHEZpT_50-150_TuneCP5_13TeV-amcnloFXFX-pythia8': 
-	hists[i].SetFillColor(kPink+1)
-        hists[i].SetLineColor(kPink+1)
-        #hists[i].Scale(1.0//1.2)
-        hists[i].Scale(0.0003776394424266632)
-      if dataset == 'DY2JetsToLL_M-50_LHEZpT_150-250_TuneCP5_13TeV-amcnloFXFX-pythia8': 
-	hists[i].SetFillColor(kPink+1)
-        hists[i].SetLineColor(kPink+1)
-        #hists[i].Scale(1.0//1.2)
-        hists[i].Scale(0.014432142715805535)
-      if dataset == 'DY2JetsToLL_M-50_LHEZpT_250-400_TuneCP5_13TeV-amcnloFXFX-pythia8': 
-	hists[i].SetFillColor(kPink+1)
-        hists[i].SetLineColor(kPink+1)
-        #hists[i].Scale(1.0//1.2)
-        hists[i].Scale(0.11950809213291834)
-      if dataset == 'DY2JetsToLL_M-50_LHEZpT_400-inf_TuneCP5_13TeV-amcnloFXFX-pythia8': 
-	hists[i].SetFillColor(kPink+1)
-        hists[i].SetLineColor(kPink+1)
-        #hists[i].Scale(1.0//1.2)
-        hists[i].Scale(1.0074427610853405)
+#####################################
+      #if dataset == 'TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8': 
+      #          hists[i].Scale(0.013873208098316917)
+      #  	hists[i].SetFillColor(920+1)
+      #     	hists[i].SetLineColor(920+1)
+      #if dataset == 'TTZToQQ_TuneCP5_13TeV-amcatnlo-pythia8': 
+      #          hists[i].Scale(1.9579072463512601)
+      #  	hists[i].SetFillColor(920+1)
+      #          hists[i].SetLineColor(920+1)
+      #if dataset == 'TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8': 
+      #          hists[i].Scale(4.114175980028324)
+      #  	hists[i].SetFillColor(920+1)
+      #          hists[i].SetLineColor(920+1)
+      #if dataset == 'TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8': 
+      #          hists[i].Scale(2.9187223944620277)
+      #  	hists[i].SetFillColor(920+1)
+      #          hists[i].SetLineColor(920+1)
+      #if dataset == 'TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8': 
+      #          hists[i].Scale(1.4479458997439978)
+      #  	hists[i].SetFillColor(920+1)
+      #          hists[i].SetLineColor(920+1)
+      #if dataset == 'ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8': 
+      #          hists[i].Scale(0.028592390600870286)
+      #  	hists[i].SetFillColor(920+1)
+      #          hists[i].SetLineColor(920+1)
+      #if dataset == 'ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8': 
+      #          hists[i].Scale(0.028646991701397357)
+      #  	hists[i].SetFillColor(920+1)
+      #          hists[i].SetLineColor(920+1)
+      #if dataset == 'TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8': 
+      #          hists[i].Scale(0.013873208098316917)
+      #  	hists[i].SetFillColor(920+1)
+      #          hists[i].SetLineColor(920+1)
+      #if dataset == 'TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8':
+      #   #hists[i].Scale(687.1/66761812)
+      #   #hists[i].Scale(87.3/66761.812)
+      #          hists[i].Scale(0.013873005409467596)
+      #   	hists[i].SetFillColor(920+1)
+      #if dataset == 'DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8':
+      #   	#hists[i].Scale(41.5*6529000/207497932)
+      #          hists[i].Scale(0.00005603985310)
+      #          hists[i].Scale(5.0/6.0)
+      #   	hists[i].SetFillColor(900+1)
+      #if dataset == 'WWTo2L2Nu_NNPDF31_TuneCP5_13TeV-powheg-pythia8': 
+      #          hists[i].Scale(0.09026903803982789)
+      #  	hists[i].SetFillColor(840+2)
+      #if dataset == 'WWTo2L2Nu_NNPDF31_TuneCP5_PSweights_13TeV-powheg-pythia8': 
+      #          hists[i].Scale(0.11620249895326198)
+      #  	hists[i].SetFillColor(840+2)
+      #if dataset == 'ZZTo2L2Nu_13TeV_powheg_pythia8': 
+      #          hists[i].Scale(1.6642683283450472)
+      #  	hists[i].SetFillColor(800-2)
+      #if dataset == 'ZZTo4L_13TeV_powheg_pythia8': 
+      #          hists[i].Scale(0.7548052739055428)
+      #  	hists[i].SetFillColor(800-2)
+      #if dataset == 'WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8': 
+      #  	#hists[i].Scale(1.109)
+      #          hists[i].Scale(0.11620249895326198)
+      #          hists[i].Scale(0.85)
+      #  	hists[i].SetFillColor(860-4)
+      #if dataset == 'ZZZ_TuneCP5_13TeV-amcatnlo-pythia8': 
+      #  	hists[i].Scale(67.8391334859334)
+      #  	hists[i].SetFillColor(900-5)
+      #if dataset == 'WZZ_TuneCP5_13TeV-amcatnlo-pythia8': 
+      #          hists[i].Scale(17.926871172229877)
+      #  	hists[i].SetFillColor(900-5)
+      #if dataset == 'WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8': 
+      #          hists[i].Scale(1.0000342868480752)
+      #  	hists[i].SetFillColor(900-5)
+      #if dataset == 'DY1JetsToLL_M-50_LHEZpT_50-150_TuneCP5_13TeV-amcnloFXFX-pythia8': 
+      #  hists[i].SetFillColor(900+1)
+      #  hists[i].SetLineColor(900+1)
+      #  #hists[i].Scale(1.0/1.2)
+      #  hists[i].Scale(0.00019966935814257948)
+      #if dataset == 'DY1JetsToLL_M-50_LHEZpT_150-250_TuneCP5_13TeV-amcnloFXFX-pythia8': 
+      #  hists[i].SetFillColor(900+1)
+      #  hists[i].SetLineColor(900+1)
+      #  #hists[i].Scale(1.0/1.2)
+      #  hists[i].Scale(0.016779882370808786)
+      #if dataset == 'DY1JetsToLL_M-50_LHEZpT_250-400_TuneCP5_13TeV-amcnloFXFX-pythia8': 
+      #  hists[i].SetFillColor(900+1)
+      #  hists[i].SetLineColor(900+1)
+      #  #hists[i].Scale(1.0/1.2)
+      #  hists[i].Scale(0.13838894560722576)
+      #if dataset == 'DY1JetsToLL_M-50_LHEZpT_400-inf_TuneCP5_13TeV-amcnloFXFX-pythia8': 
+      #  hists[i].SetFillColor(900+1)
+      #  hists[i].SetLineColor(900+1)
+      #  #hists[i].Scale(1.0//1.2)
+      #  hists[i].Scale(1.1417575373019058)
+      #if dataset == 'DY2JetsToLL_M-50_LHEZpT_50-150_TuneCP5_13TeV-amcnloFXFX-pythia8': 
+      #  hists[i].SetFillColor(900+1)
+      #  hists[i].SetLineColor(900+1)
+      #  #hists[i].Scale(1.0//1.2)
+      #  hists[i].Scale(0.0003776394424266632)
+      #if dataset == 'DY2JetsToLL_M-50_LHEZpT_150-250_TuneCP5_13TeV-amcnloFXFX-pythia8': 
+      #  hists[i].SetFillColor(900+1)
+      #  hists[i].SetLineColor(900+1)
+      #  #hists[i].Scale(1.0//1.2)
+      #  hists[i].Scale(0.014432142715805535)
+      #if dataset == 'DY2JetsToLL_M-50_LHEZpT_250-400_TuneCP5_13TeV-amcnloFXFX-pythia8': 
+      #  hists[i].SetFillColor(900+1)
+      #  hists[i].SetLineColor(900+1)
+      #  #hists[i].Scale(1.0//1.2)
+      #  hists[i].Scale(0.11950809213291834)
+      #if dataset == 'DY2JetsToLL_M-50_LHEZpT_400-inf_TuneCP5_13TeV-amcnloFXFX-pythia8': 
+      #  hists[i].SetFillColor(900+1)
+      #  hists[i].SetLineColor(900+1)
+      #  #hists[i].Scale(1.0//1.2)
+      #  hists[i].Scale(1.0074427610853405)
       stk.Add(hists[i])
       mc.Add(hists[i])
 
-   Other.SetFillColor(kViolet+1)
-   TT.SetFillColor(kGray+1)
-   WW.SetFillColor(kTeal+2)
-   ZZ.SetFillColor(kOrange-2)
-   WZ.SetFillColor(kAzure-4)
-   DY.SetFillColor(kPink+1)
-   VVV.SetFillColor(kPink-5)
+   Other.SetFillColor(880+1)
+   TT.SetFillColor(920+1)
+   WW.SetFillColor(840+2)
+   ZZ.SetFillColor(800-2)
+   WZ.SetFillColor(860-4)
+   DY.SetFillColor(900+1)
+   VVV.SetFillColor(900-5)
 
    leg  = TLegend(.7,.7,.9,.9, "", "fNDC")
    leg.AddEntry(Other, "Other","F")

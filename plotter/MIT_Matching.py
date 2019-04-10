@@ -97,12 +97,15 @@ _variable = [
 _nVars = len(_variable)
 
 
-_Stuff = [100,125,150,175,200,250,300,350,400,500,600]
+_Stuff = [100, 125,150,175,200,250,300,350,400,500,600]
+#_Stuff = [100, 125,600]
 #_Stuff = [0.0,0.2,0.4,0.6,0.8,1.0,1.2,1.4,1.6,1.8,2.0]
 #_cuts = "(lep_category==7 && Z_mass > 81 && Z_mass < 101  && Z_pt>60 && met_pt>40 && ngood_bjets==0 && delta_phi_ZMet > 2)"
 #_cuts = "((lep_category==1 || lep_category==3) && Z_mass > 81 && Z_mass < 101  && Z_pt>60 && met_pt>40 && ngood_jets < 2 && ngood_bjets == 0)"   
 #_cuts = "((lep_category==1 || lep_category==3) && Z_mass > 76 && Z_mass < 106 && Z_pt>60 && ngood_jets < 2 && ngood_bjets == 0 && delta_phi_ZMet > 2.8 && met_pt>100 && delta_R_ll < 1.8 && delta_phi_j_met > 0.5)" #&& vec_balance < 0.4)"# && delta_R_ll < 1.8 && delta_phi_j_met > 0.5)"
-_cuts = "((lep_category==1) && Z_mass > 76 && Z_mass < 106 && Z_pt>60 && ngood_jets < 2 && ngood_bjets == 0 && abs(delta_phi_ZMet) > 2.8 && met_pt>100 && delta_R_ll < 1.8 && abs(delta_phi_j_met) > 0.5 && vec_balance > 0.4 && nhad_taus==0)"
+#_cuts = "((lep_category==1 || lep_category==3) && Z_mass > 76 && Z_mass < 106 && Z_pt>60 && ngood_jets < 2 && ngood_bjets == 0 && abs(delta_phi_ZMet) > 2.8 && met_pt>100 && delta_R_ll < 1.8 && abs(delta_phi_j_met) > 0.5 && sca_balance < 1.4 && sca_balance > 0.6  && nhad_taus==0)"
+_cuts = "1"
+_HLT_cuts = "(HLT_Ele115_CaloIdVT_GsfTrkIdT ==1  || HLT_Ele27_WPTight_Gsf ==1 || HLT_Ele32_WPTight_Gsf ==1 || HLT_Ele35_WPTight_Gsf ==1 || HLT_Ele32_WPTight_Gsf_L1DoubleEG ==1 || HLT_Photon200 ==1 || HLT_IsoMu24 ==1 || HLT_IsoMu27 ==1 || HLT_IsoMu30 ==1 || HLT_Mu50 ==1 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8 ==1 || HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8 ==1 || HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass3p8 ==1 || HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass8 ==1 || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ ==1 || HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL ==1 || HLT_DiEle27_WPTightCaloOnly_L1DoubleEG ==1 || HLT_DoubleEle33_CaloIdL_MW ==1 || HLT_DoubleEle25_CaloIdL_MW ==1 || HLT_DoublePhoton70 ==1 || HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ ==1 || HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL ==1 || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ ==1 || HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL ==1 || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ ==1 || HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL ==1)"
 def test(_variable):
    prf = TProof.Open("lite://")
    hists = [None] * _ndatasets
@@ -149,12 +152,16 @@ def test(_variable):
       if dataset == 'ZZTo4L_13TeV_powheg_pythia8': name = 'ZZ'
       hists[i] = TH1F(name, name,10,array('d',_Stuff))
       #print chain.GetEntries(_cuts)
-      chain.Project(name, _variable, "abs(weight) * " + _cuts)
+      print " cuts : ", _cuts
+      #chain.Project(name, _variable, "41.5 * lumiWeight * LHEWeight_originalXWGTUP * " + _cuts)
+      #chain.Project(name, _variable, "41.5 * lumiWeight * LHEScaleWeight[0] * TMath::Sign(1,weight) * " + _cuts)
+      chain.Project(name, _variable, "41.5 * weight * " + _cuts + "*" + _HLT_cuts)
+      #chain.Project(name, _variable,  _HLT_cuts)
       #chain.Project(name, 'Z_mass', "puWeight * lumiWeight * (lep_category==2 && Z_pt>60 && met_pt>40 && ngood_jets<2 && ngood_bjets==0)")
       hists[i].SetName(name)
       chain.Reset()
       chain.Delete()
-      hists[i].Scale(41.5)
+      # hists[i].Scale(41.5)
       if dataset == 'GluGluToContinToZZTo2e2mu_13TeV_MCFM701_pythia8': 
                 hists[i].Scale(1.0/1000.0)
 		hists[i].SetFillColor(kViolet+1)
@@ -243,9 +250,10 @@ def test(_variable):
       stk.Add(hists[i])
       mc.Add(hists[i])
 
-      integ = hists[i].Integral(0,1000)
-      print dataset
-      print integ
+      integ = hists[i].Integral(0,11)
+      #integ = hists[i].Integral(0,3)
+      print " dataset : ", dataset
+      print " sumW    : ", integ
 
    #Other.SetFillColor(kOrange-5)
    #TT.SetFillColor(kGray+1)

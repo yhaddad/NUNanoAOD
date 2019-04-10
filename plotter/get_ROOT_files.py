@@ -4,7 +4,7 @@ import os
 
 def get_files():
    # The top directory which contains all the datasets
-   dir_monoZ = '/eos/cms/store/group/phys_exotica/monoZ/MonoZAnalysis_BladeRunner_MonoZ_2017/'
+   dir_monoZ = '/eos/cms/store/group/phys_exotica/monoZ/MonoZAnalysis_BladeRunner_MonoZ_2016_0212_data/'
    if len(sys.argv) == 2:
       dir_monoZ = sys.argv[1]
 
@@ -20,7 +20,7 @@ def get_files():
          if name.split('.')[-1] == 'root':
             dict_files[dataset]['files'].append( os.path.join(path, name) )
 
-   with open('ROOTfiles.yml', 'w') as outfile:
+   with open('ROOTfiles_2016_data_final.yml', 'w') as outfile:
       yaml.dump(dict_files, outfile, default_flow_style=False)
 
 get_files()
