@@ -369,10 +369,10 @@ class VBSProducer(Module):
         _lead_jet_pt = good_jets[0].pt if len(good_jets) else 0.0
         _lead_bjet_pt = good_bjets[0].pt if len(good_bjets) else 0.0
         _sublead_jet_pt = good_jets[1].pt if len(good_jets) >= 2 else 0.0
-        _lead_jet_eta = good_jets[0].eta if len(good_jets) else 0.0
-        _lead_bjet_eta = good_bjets[0].eta if len(good_bjets) else 0.0
-        _sublead_jet_eta = good_jets[1].eta if len(good_jets) >= 2 else 0.0
-        _dijet_abs_delta_eta = abs(_lead_jet_eta-_sublead_jet_eta) if len(good_jets) >= 2 else 0.0
+        _lead_jet_eta = good_jets[0].eta if len(good_jets) else -99.0
+        _lead_bjet_eta = good_bjets[0].eta if len(good_bjets) else -99.0
+        _sublead_jet_eta = good_jets[1].eta if len(good_jets) >= 2 else -99.0
+        _dijet_abs_delta_eta = abs(_lead_jet_eta-_sublead_jet_eta) if len(good_jets) >= 2 else -99.0
         _dijet_Mjj = (good_jets[0].p4() + good_jets[1].p4()).M() if len(good_jets) >= 2 else 0.0
         _dijet_Zep = abs((good_leptons[0].p4() + good_leptons[1].p4()).Eta() - 0.5*(good_jets[0].eta + good_jets[1].eta)) if len(good_leptons) >=2 and len(good_jets) >= 2 else -99.0
         _dijet_centrality_gg = np.exp(-4*pow(_dijet_Zep/good_jets[0].eta,2)) if len(good_jets) >= 2 else -99.0
@@ -431,7 +431,6 @@ class VBSProducer(Module):
                 _deltaPhiFarthestJetMet = abs(tk.deltaPhi(jet.phi,met.phi))
     
         _etaThirdJet = good_jets[2].eta if len(good_jets) >=3 else -99.0
-
 
         self.out.fillBranch("ngood_jets{}".format(self.syst_suffix), len(good_jets))
         self.out.fillBranch("ngood_bjets{}".format(self.syst_suffix), len(good_bjets))
