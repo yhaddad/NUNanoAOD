@@ -19,7 +19,7 @@ class VBSProducer(Module):
         self.syst_var = syst_var
         self.zmass = 91.1876
         self.syst_suffix = '_sys_' + self.syst_var if self.do_syst else ''
-	# by default, syst_suffix = '_sys_'
+        # by default, syst_suffix = '_sys_'
     def beginJob(self):
         pass
 
@@ -52,10 +52,17 @@ class VBSProducer(Module):
         self.out.branch("ngood_jets{}".format(self.syst_suffix), "I")
         self.out.branch("ngood_bjets{}".format(self.syst_suffix), "I")
         self.out.branch("lead_jet_pt{}".format(self.syst_suffix), "F")
+        self.out.branch("sublead_jet_pt{}".format(self.syst_suffix), "F")
         self.out.branch("lead_bjet_pt{}".format(self.syst_suffix), "F")
         self.out.branch("delta_phi_j_met{}".format(self.syst_suffix), "F")
+        self.out.branch("lead_jet_eta{}".format(self.syst_suffix), "F")
+        self.out.branch("sublead_jet_eta{}".format(self.syst_suffix), "F")
+        self.out.branch("dijet_abs_delta_eta{}".format(self.syst_suffix), "F")
+        self.out.branch("dijet_Mjj{}".format(self.syst_suffix), "F")
+        self.out.branch("dijet_Zep{}".format(self.syst_suffix), "F")
+        self.out.branch("dijet_centrality_gg{}".format(self.syst_suffix), "F")
 
-	self.out.branch("x_Z{}".format(self.syst_suffix), "F")
+        self.out.branch("x_Z{}".format(self.syst_suffix), "F")
         self.out.branch("x_jet20{}".format(self.syst_suffix),"F")
         self.out.branch("x_jet30{}".format(self.syst_suffix),"F")
         self.out.branch("x_MET{}".format(self.syst_suffix),"F")
@@ -101,8 +108,8 @@ class VBSProducer(Module):
         elif (self.era == "2017" and wp == "WPL"):
             return electron.mvaFall17Iso_WPL
 
-    def btag_id(self, wp):	
-	# deepCSV tag:
+    def btag_id(self, wp):
+        # deepCSV tag:
         # ref : https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
         if (self.era == "2016" and wp == "loose"):
             return 0.2219
@@ -294,9 +301,9 @@ class VBSProducer(Module):
                 lep_category = -3
             else:
                 lep_category = -4
-	
-	Z_pt = zcand_p4.Pt()
-	Z_eta = zcand_p4.Eta()
+
+        Z_pt = zcand_p4.Pt()
+        Z_eta = zcand_p4.Eta()
 
         self.out.fillBranch("lep_category{}".format(self.syst_suffix), lep_category)
         # filling MonoZ type of variables
@@ -361,87 +368,100 @@ class VBSProducer(Module):
         _dphi_j_met = tk.deltaPhi(good_jets[0], met.phi) if len(good_jets) else -99.0
         _lead_jet_pt = good_jets[0].pt if len(good_jets) else 0.0
         _lead_bjet_pt = good_bjets[0].pt if len(good_bjets) else 0.0
-	_sublead_jet_pt = good_jets[1].pt if len(good_jets) >= 2 else 0.0
-	_lead_jet_eta = good_jets[0].eta if len(good_jets) else 0.0
-	_sublead_jet_eta = good_jets[1].eta if len(good_jets) >= 2 else 0.0
+        _sublead_jet_pt = good_jets[1].pt if len(good_jets) >= 2 else 0.0
+        _lead_jet_eta = good_jets[0].eta if len(good_jets) else -99.0
+        _lead_bjet_eta = good_bjets[0].eta if len(good_bjets) else -99.0
+        _sublead_jet_eta = good_jets[1].eta if len(good_jets) >= 2 else -99.0
+        _dijet_abs_delta_eta = abs(_lead_jet_eta-_sublead_jet_eta) if len(good_jets) >= 2 else -99.0
+        _dijet_Mjj = (good_jets[0].p4() + good_jets[1].p4()).M() if len(good_jets) >= 2 else 0.0
+        _dijet_Zep = abs((good_leptons[0].p4() + good_leptons[1].p4()).Eta() - 0.5*(good_jets[0].eta + good_jets[1].eta)) if len(good_leptons) >=2 and len(good_jets) >= 2 else -99.0
+        _dijet_centrality_gg = np.exp(-4*pow(_dijet_Zep/good_jets[0].eta,2)) if len(good_jets) >= 2 else -99.0
 
-	et_jets20 = 0.0
-	et_jets30 = 0.0
-	for jet in jets:
-	    if not jet.jetId:
-		continue
-	    if jet.pt <= 20 or abs(jet.eta) > 5:
-		continue
-	    if tk.closest(jet, good_leptons)[1] < 0.4:
-		continue
-	    et_jets20 += jet.p4().Et();
-	    if jet.pt >=30:
-        	et_jets30 += jet.p4().Et();
-	x_denom20 = ( et_jets20 + met.pt + Z_pt )
-	x_denom30 = ( et_jets30 + met.pt + Z_pt )
+        et_jets20 = 0.0
+        et_jets30 = 0.0
+        for jet in jets:
+            if not jet.jetId:
+                continue
+            if jet.pt <= 20 or abs(jet.eta) > 5:
+                continue
+            if tk.closest(jet, good_leptons)[1] < 0.4:
+                continue
+            et_jets20 += jet.p4().Et();
+            if jet.pt >=30:
+                et_jets30 += jet.p4().Et();
+        x_denom20 = ( et_jets20 + met.pt + Z_pt )
+        x_denom30 = ( et_jets30 + met.pt + Z_pt )
 
-	x_jet20 = et_jets20 / x_denom20 if x_denom20!=0 else -10.0 
-	x_jet30 = et_jets30 / x_denom30 if x_denom30!=0 else -10.0
-	x_Z = Z_pt / x_denom30 if x_denom30!=0 else -10.0
-	x_MET = met.pt / x_denom30 if x_denom30!=0 else -10.0
-	zeppenfeld = Z_eta - (_lead_jet_eta + _sublead_jet_eta)/2 
-	H_T = 0.0
-	for jet in good_jets:
-    	    H_T += jet.pt
-	HT_F = (_lead_jet_pt +_sublead_jet_pt) / H_T if H_T!=0 else 0.0
-	Jet_pt_Ratio = _sublead_jet_pt / _lead_jet_pt if len(good_jets) else 0.0
-	R_pt = good_leptons[0].pt * good_leptons[1].pt / (_lead_jet_pt * _sublead_jet_pt) if len(good_leptons) >=2 and len(good_jets) >=2 else 0.0
-	Jet_etas_multiplied = _lead_jet_eta * _sublead_jet_eta
-	dPT_OZ = (_lead_jet_pt + _sublead_jet_pt) / Z_pt if Z_pt!=0 else -10.0
-	
-	CJV_Pt = 0.0
-	CJV_Pt_Sum = 0.0
-	for jet in good_jets:
-	    if _lead_jet_eta > 0 and jet.eta < _lead_jet_eta:
-	        if jet.eta > _sublead_jet_eta:
-	            if jet.pt > CJV_Pt:
-	                CJV_Pt = jet.pt
-	            CJV_Pt_Sum += jet.pt
-	    elif _lead_jet_eta < 0 and jet.eta > _lead_jet_eta:
-        	if jet.eta < _sublead_jet_eta:
-          	    if jet.pt > CJV_Pt:
-                	CJV_Pt = jet.pt
-                    CJV_Pt_Sum += jet.pt
+        _x_jet20 = et_jets20 / x_denom20 if x_denom20!=0 else -10.0 
+        _x_jet30 = et_jets30 / x_denom30 if x_denom30!=0 else -10.0
+        _x_Z = Z_pt / x_denom30 if x_denom30!=0 else -10.0
+        _x_MET = met.pt / x_denom30 if x_denom30!=0 else -10.0
+        _zeppenfeld = Z_eta - (_lead_jet_eta + _sublead_jet_eta)/2
+        _H_T = 0.0
+        for jet in good_jets:
+            _H_T += jet.pt
+        _HT_F = (_lead_jet_pt +_sublead_jet_pt) / _H_T if _H_T != 0 else 0.0
+        _Jet_pt_Ratio = _sublead_jet_pt / _lead_jet_pt if len(good_jets) >=2 else -99.0
+        _R_pt = good_leptons[0].pt * good_leptons[1].pt / (_lead_jet_pt * _sublead_jet_pt) if len(good_leptons) >=2 and len(good_jets) >=2 else -99.0
+        _Jet_etas_multiplied = _lead_jet_eta * _sublead_jet_eta
+        _dPT_OZ =(_lead_jet_pt + _sublead_jet_pt) / Z_pt if Z_pt!=0 else -99.0
+        #_dPT_OZ = (good_jets[0].pt + good_jets[1].pt) / Z_pt if Z_pt!=0 else -10.0
 
-	deltaPhiLeadingJetMet = abs(tk.deltaPhi(good_jets[0].phi,met.phi)) if len(good_jets) else abs(met.phi) 
-	deltaPhiClosestJetMet = 10.0
-	deltaPhiFarthestJetMet = -1.0
-	for jet in good_jets:
-	    if deltaPhiClosestJetMet > abs(tk.deltaPhi(jet.phi,met.phi)):
-	        deltaPhiClosestJetMet = abs(tk.deltaPhi(jet.phi,met.phi))
-	    if deltaPhiFarthestJetMet < abs(tk.deltaPhi(jet.phi,met.phi)):
-	        deltaPhiFarthestJetMet = abs(tk.deltaPhi(jet.phi,met.phi))
-	
-	etaThirdJet = good_jets[2].eta if len(good_jets) >=3 else -10.0
+        _CJV_Pt = 0.0
+        _CJV_Pt_Sum = 0.0
+        for jet in good_jets:
+            if _lead_jet_eta > 0 and jet.eta < _lead_jet_eta:
+                if jet.eta > _sublead_jet_eta:
+                    if jet.pt > _CJV_Pt:
+                        _CJV_Pt = jet.pt
+                    _CJV_Pt_Sum += jet.pt
+            elif _lead_jet_eta < 0 and jet.eta > _lead_jet_eta:
+                if jet.eta < _sublead_jet_eta:
+                    if jet.pt > _CJV_Pt:
+                        _CJV_Pt = jet.pt
+                    _CJV_Pt_Sum += jet.pt
 
+        _deltaPhiLeadingJetMet = abs(tk.deltaPhi(good_jets[0].phi,met.phi)) if len(good_jets) else abs(met.phi) 
+        _deltaPhiClosestJetMet = 10.0
+        _deltaPhiFarthestJetMet = -1.0
+        for jet in good_jets:
+            if _deltaPhiClosestJetMet > abs(tk.deltaPhi(jet.phi,met.phi)):
+                _deltaPhiClosestJetMet = abs(tk.deltaPhi(jet.phi,met.phi))
+            if _deltaPhiFarthestJetMet < abs(tk.deltaPhi(jet.phi,met.phi)):
+                _deltaPhiFarthestJetMet = abs(tk.deltaPhi(jet.phi,met.phi))
+    
+        _etaThirdJet = good_jets[2].eta if len(good_jets) >=3 else -99.0
 
         self.out.fillBranch("ngood_jets{}".format(self.syst_suffix), len(good_jets))
         self.out.fillBranch("ngood_bjets{}".format(self.syst_suffix), len(good_bjets))
         self.out.fillBranch("lead_jet_pt{}".format(self.syst_suffix), _lead_jet_pt)
-        self.out.fillBranch("lead_bjet_pt{}".format(self.syst_suffix), _lead_bjet_pt)
+        self.out.fillBranch("lead_jet_eta{}".format(self.syst_suffix), _lead_jet_eta)
+        self.out.fillBranch("sublead_jet_pt{}".format(self.syst_suffix), _sublead_jet_pt)
+        self.out.fillBranch("sublead_jet_eta{}".format(self.syst_suffix), _sublead_jet_eta)
+        self.out.fillBranch("dijet_abs_delta_eta{}".format(self.syst_suffix), _dijet_abs_delta_eta)
+        self.out.fillBranch("dijet_Mjj{}".format(self.syst_suffix), _dijet_Mjj)
+        self.out.fillBranch("dijet_Zep{}".format(self.syst_suffix), _dijet_Zep)
+        self.out.fillBranch("dijet_centrality_gg{}".format(self.syst_suffix), _dijet_centrality_gg)
+        self.out.fillBranch("lead_bjet_pt{}".format(self.syst_suffix), _lead_bjet_pt) 
+
         self.out.fillBranch("delta_phi_j_met{}".format(self.syst_suffix), _dphi_j_met)
-	self.out.fillBranch("x_Z{}".format(self.syst_suffix), x_Z)
-	self.out.fillBranch("x_jet20{}".format(self.syst_suffix),x_jet20)
-	self.out.fillBranch("x_jet30{}".format(self.syst_suffix),x_jet30)
-	self.out.fillBranch("x_MET{}".format(self.syst_suffix),x_MET)
-	self.out.fillBranch("zeppenfeld{}".format(self.syst_suffix),zeppenfeld)
-	self.out.fillBranch("H_T{}".format(self.syst_suffix),H_T)
-	self.out.fillBranch("HT_F{}".format(self.syst_suffix),HT_F)
-	self.out.fillBranch("Jet_pt_Ratio{}".format(self.syst_suffix),Jet_pt_Ratio)
-	self.out.fillBranch("R_pt{}".format(self.syst_suffix),R_pt)
-	self.out.fillBranch("Jet_etas_multiplied{}".format(self.syst_suffix),Jet_etas_multiplied)	
-	self.out.fillBranch("dPT_OZ{}".format(self.syst_suffix),dPT_OZ)
-	self.out.fillBranch("CJV_Pt{}".format(self.syst_suffix),CJV_Pt)
-	self.out.fillBranch("CJV_Pt_Sum{}".format(self.syst_suffix),CJV_Pt_Sum)
-	self.out.fillBranch("deltaPhiLeadingJetMet{}".format(self.syst_suffix),deltaPhiLeadingJetMet)
-	self.out.fillBranch("deltaPhiClosestJetMet{}".format(self.syst_suffix),deltaPhiClosestJetMet)
-	self.out.fillBranch("deltaPhiFarthestJetMet{}".format(self.syst_suffix),deltaPhiFarthestJetMet)
-	self.out.fillBranch("etaThirdJet{}".format(self.syst_suffix),etaThirdJet)
+        self.out.fillBranch("x_Z{}".format(self.syst_suffix), _x_Z)
+        self.out.fillBranch("x_jet20{}".format(self.syst_suffix),_x_jet20)
+        self.out.fillBranch("x_jet30{}".format(self.syst_suffix),_x_jet30)
+        self.out.fillBranch("x_MET{}".format(self.syst_suffix),_x_MET)
+        self.out.fillBranch("zeppenfeld{}".format(self.syst_suffix),_zeppenfeld)
+        self.out.fillBranch("H_T{}".format(self.syst_suffix),_H_T)
+        self.out.fillBranch("HT_F{}".format(self.syst_suffix),_HT_F)
+        self.out.fillBranch("Jet_pt_Ratio{}".format(self.syst_suffix),_Jet_pt_Ratio)
+        self.out.fillBranch("R_pt{}".format(self.syst_suffix),_R_pt)
+        self.out.fillBranch("Jet_etas_multiplied{}".format(self.syst_suffix),_Jet_etas_multiplied)    
+        self.out.fillBranch("dPT_OZ{}".format(self.syst_suffix),_dPT_OZ)
+        self.out.fillBranch("CJV_Pt{}".format(self.syst_suffix),_CJV_Pt)
+        self.out.fillBranch("CJV_Pt_Sum{}".format(self.syst_suffix),_CJV_Pt_Sum)
+        self.out.fillBranch("deltaPhiLeadingJetMet{}".format(self.syst_suffix),_deltaPhiLeadingJetMet)
+        self.out.fillBranch("deltaPhiClosestJetMet{}".format(self.syst_suffix),_deltaPhiClosestJetMet)
+        self.out.fillBranch("deltaPhiFarthestJetMet{}".format(self.syst_suffix),_deltaPhiFarthestJetMet)
+        self.out.fillBranch("etaThirdJet{}".format(self.syst_suffix),_etaThirdJet)
 
         # process taus
         had_taus = []
