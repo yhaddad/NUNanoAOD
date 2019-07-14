@@ -108,7 +108,7 @@ def main():
                     from PhysicsTools.MonoZ.catalog_2016 import catalog
                 elif options.era=="2017":
                     from PhysicsTools.MonoZ.catalog_2017 import catalog
-                elif options.era=="2017":
+                elif options.era=="2018":
                     from PhysicsTools.MonoZ.catalog_2018 import catalog
                 else:
                     raise "Era not reconised! only 2016, 2017 and 2018 are supported."
