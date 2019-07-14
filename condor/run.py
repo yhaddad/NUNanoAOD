@@ -98,7 +98,7 @@ def main():
                 redone_proxy = True
         shutil.copyfile('/tmp/'+proxy_base,  proxy_copy)
 
-
+    print "dumb"
     with open(options.input, 'r') as stream:
         for sample in stream.read().split('\n'):
             if '#' in sample: continue
