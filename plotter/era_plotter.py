@@ -26,25 +26,26 @@ lumi = {
         "2017" : 41.5,
         "2018" : 60.0
 }
+print lumi[options.era]
 xsections = {}
 dataset_info = {}
 if options.era == "2018":
 	with open('LionKing2018_ROOTfiles.yml', 'r') as f_yml:
-    		_dict_yml = yaml.load(f_yml)
+    		_dict_yml = yaml.safe_load(f_yml)
 	with open("xsections_{}.yaml".format(2018), 'r') as stream:
     		xsections = yaml.safe_load(stream)
         with open("datasets_{}.yaml".format(2018), 'r') as dset:
                 dataset_info = yaml.load(dset)
 elif options.era == "2017":
         with open('LionKing2017_ROOTfiles.yml', 'r') as f_yml:
-                _dict_yml = yaml.load(f_yml)
+                _dict_yml = yaml.safe_load(f_yml)
         with open("xsections_{}.yaml".format(2017), 'r') as stream:
                 xsections = yaml.safe_load(stream)
         with open("datasets_{}.yaml".format(2017), 'r') as dset:
                 dataset_info = yaml.safe_load(dset)
 elif options.era == "2016":
         with open('LionKing2016_ROOTfiles.yml', 'r') as f_yml:
-                _dict_yml = yaml.load(f_yml)
+                _dict_yml = yaml.safe_load(f_yml)
         with open("xsections_{}.yaml".format(2016), 'r') as stream:
                 xsections = yaml.safe_load(stream)
         with open("datasets_{}.yaml".format(2016), 'r') as dset:
@@ -63,7 +64,9 @@ Var_Dict = [
         #{'variable':'delta_phi_j_met',               'nBins':32,             'xLow':-3.2,               'xHi':3.2,        'title':'#Delta#phi(Jet,p_{T}^{miss})'},
         #{'variable':'met_phi',               'nBins':32,             'xLow':-3.2,               'xHi':3.2,        'title':'p_{T}^{miss} #phi'}
         #{'variable':'met_pt',                  'nBins':10,             'xLow':50,               'xHi':100,	'title':'p_{T}^{miss} [GeV]'}
-        {'variable':'met_pt',              'nBins':10,             'xAxis':ar.array('d', [50,55,60,65,70,75,80,85,90,95,100]),     'title':'p_{T}^{miss} [GeV]'},
+        {'variable':'delta_phi_ZMet',              'nBins':10,             'xAxis':np.linspace(-3.2, 3.2, num=11),     'title':'M_{T} [GeV]'},
+        #{'variable':'MT',              'nBins':12,             'xAxis':ar.array('d', [50,100,125,150,175,200,250,300,350,400,500,600,800]),     'title':'M_{T} [GeV]'},
+        #{'variable':'met_pt',              'nBins':10,             'xAxis':ar.array('d', [50,55,60,65,70,75,80,85,90,95,100]),     'title':'p_{T}^{miss} [GeV]'},
 	#{'variable':'emulatedMET',              'nBins':11,             'xAxis':ar.array('d', [50,100,125,150,175,200,250,300,350,400,500,600]),     'title':'Emulated p_{T}^{miss} [GeV]'},
         #{'variable':'met_pt',              'nBins':11,             'xAxis':ar.array('d', [50,100,125,150,175,200,250,300,350,400,500,600]),     'title':'p_{T}^{miss} [GeV]'},
 	]
@@ -73,11 +76,15 @@ _nVars = len(Var_Dict)
 #WZ Control Region
 #_cuts = "((lep_category==4 || lep_category==5) && Z_pt>60 && Z_mass > 76 && Z_mass < 106 && ngood_jets < 2 && ngood_bjets == 0 && met_pt > 30 && mass_alllep > 100 && abs(sca_balance) < 1.5 && abs(MET_phi - Z_phi) > 2.6)"
 #ZZ Control Region
-_cuts = "((lep_category==6 || lep_category==7) && Z_pt>60 && Z_mass > 61 && Z_mass < 121 && ngood_jets < 2 && abs(MET_phi - Z_phi) > 2.6)"
+#_cuts = "((lep_category==6 || lep_category==7) && Z_pt>60 && Z_mass > 61 && Z_mass < 121 && ngood_jets < 2 && abs(MET_phi - Z_phi) > 2.6)"
 #NRB Control Region
 #_cuts = "((lep_category==2) && Z_pt>60 && Z_mass > 76 && Z_mass < 106 && ngood_jets < 2 && ngood_bjets == 0 && met_pt > 30 )"
 #DY Control Region
-_cuts = "((lep_category==3 || lep_category==1) && Z_mass > 76 && Z_mass < 106 && Z_pt>60 && ngood_jets < 2 && ngood_bjets == 0 && met_pt<100 && met_pt > 50 && abs(MET_phi - Z_phi) > 2.6 && nhad_taus == 0 && abs(sca_balance) < 1.5 && abs(delta_phi_j_met) > 0.5 && delta_R_ll < 1.8)"
+#_cuts = "((lep_category==3 || lep_category==1) && Z_mass > 76 && Z_mass < 106 && Z_pt>60 && ngood_jets < 2 && ngood_bjets == 0 && met_pt<100 && met_pt > 50 && abs(MET_phi - Z_phi) > 2.6 && nhad_taus == 0 && abs(sca_balance) < 1.5 && abs(delta_phi_j_met) > 0.5 && delta_R_ll < 1.8)"
+#Signal Lite
+_cuts = "((lep_category==3 || lep_category==1) && Z_mass > 76 && Z_mass < 106 && Z_pt>60 && ngood_jets < 2 && ngood_bjets == 0)"
+
+
 #_cuts = "((lep_category==3 || lep_category==1) && Z_mass > 76 && Z_mass < 106 && Z_pt>60 && ngood_jets < 2 && ngood_bjets == 0 && met_pt<100 && met_pt > 50 && abs(delta_phi_ZMet) > 2.6 && delta_R_ll < 1.8 && abs(delta_phi_j_met) > 0.5 && sca_balance > 0.5 && sca_balance < 1.5 && nhad_taus == 0 )"
 #_cuts = "((lep_category==1 || lep_category==3))"# && Z_mass > 76 && Z_mass < 106 && Z_pt>60)"# && ngood_jets < 2 && ngood_bjets == 0)"# && met_pt > 100 && Flag_METFilters == 1)"# && abs(delta_met_rec) < 1)"
 #_cuts = "((lep_category==6 || lep_category==7) && Z_pt>60 && Z_mass > 61 && Z_mass < 121 && ngood_jets < 2 && abs(emulatedMET_phi-Z_phi) > 2.5 && emulatedMET > 100)"
@@ -224,7 +231,7 @@ def test(_variable,_nBins,_xAxis,title):
    lab2.SetTextSize(0.03)
    lab2.SetTextAlign(11)
    lab2.SetTextFont(42)
-   cmsTag = 'll ch., 60.0 fb^{-1} (13 TeV)'
+   cmsTag = 'll ch.,'+ str(lumi[options.era]) + 'fb^{-1} (13 TeV)'
    lab1.DrawLatexNDC(l+0.5, 1-t+0.029, cmsTag)
 
    cOutput.cd()
@@ -273,7 +280,7 @@ def test(_variable,_nBins,_xAxis,title):
    dat2.Draw("P")
    ll.Draw("same")
 
-   cOutput.SaveAs("plots/" + _variable + "_2018_redone.png")
+   cOutput.SaveAs("plots/" + _variable + options.era +"_redone.png")
 
    dat.Delete()
    dat2.Delete()

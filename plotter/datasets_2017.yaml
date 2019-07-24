@@ -100,56 +100,83 @@ DY2JetsToLL_M-50_LHEZpT_250-400_TuneCP5_13TeV-amcnloFXFX-pythia8:
 DY2JetsToLL_M-50_LHEZpT_400-inf_TuneCP5_13TeV-amcnloFXFX-pythia8:
         name: DY
         Color: 901   
-    
-SingleMuon_Run2018A-Nano1June2019-v1:
-        name: data
-        Color: 1
-SingleMuon_Run2018B-Nano1June2019-v1:
-        name: data
-        Color: 1
-SingleMuon_Run2018C-Nano1June2019-v1:
-        name: data
-        Color: 1
-SingleMuon_Run2018D-Nano1June2019-v1:
-        name: data
-        Color: 1
-MuonEG_Run2018A-Nano1June2019-v1:
-        name: data
-        Color: 1
-MuonEG_Run2018B-Nano1June2019-v1:
-        name: data
-        Color: 1
-MuonEG_Run2018C-Nano1June2019-v1:
-        name: data
-        Color: 1
-MuonEG_Run2018D-Nano1June2019_ver2-v1:
-        name: data
-        Color: 1
-DoubleMuon_Run2018A-Nano1June2019-v1:
-        name: data
-        Color: 1
-DoubleMuon_Run2018B-Nano1June2019-v1:
-        name: data
-        Color: 1
-DoubleMuon_Run2018C-Nano1June2019-v1:
-        name: data
-        Color: 1
-DoubleMuon_Run2018D-Nano1June2019_ver2-v1:
-        name: data
-        Color: 1
-EGamma_Run2018A-Nano1June2019-v1:
-        name: data
-        Color: 1
-EGamma_Run2018B-Nano1June2019-v1:
-        name: data
-        Color: 1
-EGamma_Run2018C-Nano1June2019-v1:
-        name: data
-        Color: 1
-EGamma_Run2018D-Nano1June2019-v1:
-        name: data
-        Color: 1
 
+SingleElectron_Run2017B-Nano1June2019-v1:
+        name: data
+        Color: 1
+SingleElectron_Run2017C-Nano1June2019-v1:
+        name: data
+        Color: 1
+SingleElectron_Run2017D-Nano1June2019-v1:
+        name: data
+        Color: 1
+SingleElectron_Run2017E-Nano1June2019-v1:
+        name: data
+        Color: 1
+SingleElectron_Run2017F-Nano1June2019-v1:
+        name: data
+        Color: 1
+SingleMuon_Run2017B-Nano1June2019-v1:
+        name: data
+        Color: 1
+SingleMuon_Run2017C-Nano1June2019-v1:
+        name: data
+        Color: 1
+SingleMuon_Run2017D-Nano1June2019-v1:
+        name: data
+        Color: 1
+SingleMuon_Run2017E-Nano1June2019-v1:
+        name: data
+        Color: 1
+SingleMuon_Run2017F-Nano1June2019-v1:
+        name: data
+        Color: 1
+MuonEG_Run2017B-Nano1June2019-v1:
+        name: data
+        Color: 1
+MuonEG_Run2017C-Nano1June2019-v1:
+        name: data
+        Color: 1
+MuonEG_Run2017D-Nano1June2019-v1:
+        name: data
+        Color: 1
+MuonEG_Run2017E-Nano1June2019-v1:
+        name: data
+        Color: 1
+MuonEG_Run2017F-Nano1June2019-v1:
+        name: data
+        Color: 1
+DoubleEG_Run2017B-Nano1June2019-v1:
+        name: data
+        Color: 1
+DoubleEG_Run2017C-Nano1June2019-v1:
+        name: data
+        Color: 1
+DoubleEG_Run2017D-Nano1June2019-v1:
+        name: data
+        Color: 1
+DoubleEG_Run2017E-Nano1June2019-v1:
+        name: data
+        Color: 1
+DoubleEG_Run2017F-Nano1June2019-v1:
+        name: data
+        Color: 1
+DoubleMuon_Run2017B-Nano1June2019-v1:
+        name: data
+        Color: 1
+DoubleMuon_Run2017C-Nano1June2019-v1:
+        name: data
+        Color: 1
+DoubleMuon_Run2017D-Nano1June2019-v1:
+        name: data
+        Color: 1
+DoubleMuon_Run2017E-Nano1June2019-v1:
+        name: data
+        Color: 1
+DoubleMuon_Run2017F-Nano1June2019-v1:
+        name: data
+        Color: 1
+    
 #DMSimp_MonoZLL_NLO_Axial_TuneCP3_GQ0p25_GDM1p0_MY1-1000_MXd-100: 
 #        name: signal
 #        Color: 3
