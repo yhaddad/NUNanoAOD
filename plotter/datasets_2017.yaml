@@ -100,6 +100,9 @@ DY2JetsToLL_M-50_LHEZpT_250-400_TuneCP5_13TeV-amcnloFXFX-pythia8:
 DY2JetsToLL_M-50_LHEZpT_400-inf_TuneCP5_13TeV-amcnloFXFX-pythia8:
         name: DY
         Color: 901   
+DYJetsToTauTau_ForcedMuEleDecay_M-50_TuneCP5_PSweights_13TeV-amcatnloFXFX-pythia8:
+        name: DY
+        Color: 901
 
 SingleElectron_Run2017B-Nano1June2019-v1:
         name: data
