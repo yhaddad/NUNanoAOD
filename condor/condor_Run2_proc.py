@@ -22,6 +22,7 @@ from PhysicsTools.MonoZ.EWProducer import *
 from PhysicsTools.MonoZ.NvtxPUreweight import *
 from PhysicsTools.MonoZ.BtagEventWeightProducer import *
 from PhysicsTools.MonoZ.TriggerSFProducer import *
+from PhysicsTools.MonoZ.VBSProducer import *
 
 import argparse
 
@@ -175,6 +176,7 @@ if options.isMC:
         modules_era.append(nvtxWeight_2018())
         modules_era.append(BtagEventWeight_2018())
    modules_era.append(MonoZProducer(isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
+   modules_era.append(VBSProducer(isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
    #modules_era.append(MonoZWSProducer(
    #   isMC=options.isMC, era=str(options.era),
    #   do_syst=1, syst_var='', sample=m.get("sample", "")
@@ -257,6 +259,7 @@ else:
    if options.era=="2018":
       modules_era.append(getattr(jetRecalib, 'jetRecalib2018%s' % condtag_.split(options.era)[1][:1])() )
    modules_era.append(MonoZProducer  (isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
+   modules_era.append(VBSProducer(isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
    modules_era.append(MonoZWSProducer(isMC=options.isMC, era=str(options.era),
                                        do_syst=1, syst_var='', sample="data"))
 
