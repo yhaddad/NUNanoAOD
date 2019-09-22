@@ -228,8 +228,36 @@ class MonoZWSProducer(Module):
                     pass
             # QCD Scale weights
             # TODO: add various variations
-            if "QCDScale" in self.syst_suffix:
-                weight *= getattr(event, self.syst_suffix, 1.0)
+            #if "QCDScale" in self.syst_suffix:
+            #    weight *= getattr(event, self.syst_suffix, 1.0)
+
+           # QCD Scale weights
+            # TODO: add various variations
+            if "QCDScale0" in self.syst_suffix:
+                try:
+                    if "Up" in self.syst_suffix:
+                        weight *= event.QCDScale0wUp
+                    else:
+                        weight *= event.QCDScale0wDown
+                except:
+                    pass
+            if "QCDScale1" in self.syst_suffix:
+                try:
+                    if "Up" in self.syst_suffix:
+                        weight *= event.QCDScale1wUp
+                    else:
+                        weight *= event.QCDScale1wDown
+                except:
+                    pass
+            if "QCDScale2" in self.syst_suffix:
+                try:
+                    if "Up" in self.syst_suffix:
+                        weight *= event.QCDScale2wUp
+                    else:
+                        weight *= event.QCDScale2wDown
+                except:
+                    pass
+
 
             if "MuonSF" in self.syst_suffix:
                 if "Up" in self.syst_suffix:
