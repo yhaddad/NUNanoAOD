@@ -107,23 +107,25 @@ modules_era.append(MonoZWSProducer(
     do_syst=1, syst_var='', sample=options.dataset
 ))
 
-for sys in pro_syst:
-   for var in ["Up", "Down"]:
-     # modules_era.append(MonoZProducer(options.isMC, str(options.era), do_syst=1, syst_var=sys+var))
-      modules_era.append(MonoZWSProducer(options.isMC, str(options.era), do_syst=1,
-                                         syst_var=sys+var, sample=options.dataset))
 
-for sys in ext_syst:
-   for var in ["Up", "Down"]:
-      modules_era.append(
-         MonoZWSProducer(
-            options.isMC, str(options.era),
-            do_syst=1, syst_var=sys+var,
-            weight_syst=True,
-            sample=options.dataset
+if options.isMC:
+   for sys in pro_syst:
+      for var in ["Up", "Down"]:
+        # modules_era.append(MonoZProducer(options.isMC, str(options.era), do_syst=1, syst_var=sys+var))
+         modules_era.append(MonoZWSProducer(options.isMC, str(options.era), do_syst=1,
+                                            syst_var=sys+var, sample=options.dataset))
+   
+   for sys in ext_syst:
+      for var in ["Up", "Down"]:
+         modules_era.append(
+            MonoZWSProducer(
+               options.isMC, str(options.era),
+               do_syst=1, syst_var=sys+var,
+               weight_syst=True,
+               sample=options.dataset
+            )
          )
-      )
-
+   
 
 #aif options.isMC:
 #   modules_era.append(VBSProducer(isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
