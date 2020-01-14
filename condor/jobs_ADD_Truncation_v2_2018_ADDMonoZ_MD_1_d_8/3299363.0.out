@@ -1,0 +1,294 @@
+
+/pool/condor/dir_23879
+
+... start job at 2020-01-13 21:48:08
+----- directory before running:
+.:
+total 100
+-rw-r--r--. 1 cfreer zh 11624 Jan 13 21:48 Cert_271036-284044_13TeV_ReReco_07Aug2017_Collisions16_JSON.txt
+-rw-r--r--. 1 cfreer zh 14638 Jan 13 21:48 Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt
+-rw-r--r--. 1 cfreer zh 13968 Jan 13 21:48 Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt
+-rw-r--r--. 1 cfreer zh     0 Jan 13 21:48 _condor_stderr
+-rw-r--r--. 1 cfreer zh    94 Jan 13 21:48 _condor_stdout
+-rw-------. 1 cfreer zh  2838 Jan 13 21:48 cfreer.cc
+-rw-r--r--. 1 cfreer zh 16092 Jan 13 21:48 combineHLT_Run2.yaml
+-rw-r--r--. 1 cfreer zh 10051 Jan 13 21:48 condor_Run2_proc.py
+-rwxr-xr-x. 1 cfreer zh   930 Jan 13 21:48 condor_exec.exe
+-rwxr-xr-x. 1 cfreer zh  2559 Jan 13 21:48 haddnano.py
+-rw-r--r--. 1 cfreer zh   499 Jan 13 21:48 keep_and_drop.txt
+drwx------. 3 cfreer zh  4096 Jan 13 21:48 tmp
+drwx------. 3 cfreer zh  4096 Jan 13 21:48 var
+
+./tmp:
+total 4
+drwxr-xr-x. 3 cfreer zh 4096 Jan 13 21:48 mjf-cfreer
+
+./tmp/mjf-cfreer:
+total 4
+drwxr-xr-x. 2 cfreer zh 4096 Jan 13 21:48 jobfeatures-bigbird09.cern.ch_3299363.0_1578948486
+
+./tmp/mjf-cfreer/jobfeatures-bigbird09.cern.ch_3299363.0_1578948486:
+total 28
+-rw-r--r--. 1 cfreer zh  1 Jan 13 21:48 allocated_cpu
+-rw-r--r--. 1 cfreer zh  6 Jan 13 21:48 cpu_limit_secs
+-rw-r--r--. 1 cfreer zh 38 Jan 13 21:48 job_id
+-rw-r--r--. 1 cfreer zh 10 Jan 13 21:48 jobstart_secs
+-rw-r--r--. 1 cfreer zh 10 Jan 13 21:48 max_rss_bytes
+-rw-r--r--. 1 cfreer zh 11 Jan 13 21:48 scratch_limit_bytes
+-rw-r--r--. 1 cfreer zh  6 Jan 13 21:48 wall_limit_secs
+
+./var:
+total 4
+drwx------. 2 cfreer zh 4096 Jan 13 21:48 tmp
+
+./var/tmp:
+total 0
+----- CMSSW BASE, python path, pwd:
++ CMSSW_BASE  = /afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4
++ PYTHON_PATH = 
++ PWD         = /pool/condor/dir_23879
+----- Found Proxy in: /afs/cern.ch/user/c/cfreer/x509up_u85831
+/store/mc/RunIIAutumn18NanoAODv5/ADDMonoZ_MD_1_d_8/NANOAODSIM/Nano1June2019_102X_upgrade2018_realistic_v19-v1/120000/F670C0C8-D621-7E4C-A9E5-9A7826214A3E.root  ->  root://eoscms.cern.ch//eos/cms/store/mc/RunIIAutumn18NanoAODv5/ADDMonoZ_MD_1_d_8/NANOAODSIM/Nano1June2019_102X_upgrade2018_realistic_v19-v1/120000/F670C0C8-D621-7E4C-A9E5-9A7826214A3E.root
+Testing file open
+---------------------------
+ -- options  =  Namespace(dataset='X', doSyst=1, era='2018', infile='root://cms-xrd-global.cern.ch//store/mc/RunIIAutumn18NanoAODv5/ADDMonoZ_MD_1_d_8/NANOAODSIM/Nano1June2019_102X_upgrade2018_realistic_v19-v1/120000/F670C0C8-D621-7E4C-A9E5-9A7826214A3E.root', isMC=1, jobNum=0, json=None, nevt=-1)
+ -- is MC    =  1
+ -- jobNum   =  0
+ -- era      =  2018
+ -- in file  =  root://cms-xrd-global.cern.ch//store/mc/RunIIAutumn18NanoAODv5/ADDMonoZ_MD_1_d_8/NANOAODSIM/Nano1June2019_102X_upgrade2018_realistic_v19-v1/120000/F670C0C8-D621-7E4C-A9E5-9A7826214A3E.root
+ -- dataset  =  X
+---------------------------
+[check] condtag_ ==  Nano1June2019_102X_upgrade2018_realistic_v19-v1
+[check] dataset  ==  ADDMonoZ_MD_1_d_8
+Loading btagSF weights for deep-CSV (b) algorithm from file '/afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/src/PhysicsTools/NanoAODTools/data/btagSF/DeepCSV_102XSF_V1.csv'
+Load Library 'CondFormatsBTauObjects'
+Load Library 'CondToolsBTau'
+Loading C++ helper from /afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/src/PhysicsTools/NanoAODTools/python/postprocessing/data/roccor.Run2.v3/RoccoR.cc
+Load C++ Worker
+/afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/src/PhysicsTools/MonoZ/data/Nvtx/npvWeights_2018.root
+/afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/src/PhysicsTools/MonoZ/data/BTagEff/BTagEff_2018.root
+modules :  <PhysicsTools.MonoZ.GenWeightProducer.GenWeightProducer object at 0x2ba7aeda8510>
+modules :  <PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer.puWeightProducer object at 0x2ba7aeda8550>
+modules :  <PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetUncertainties.jetmetUncertaintiesProducer object at 0x2ba7afc62550>
+modules :  <PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer.btagSFProducer object at 0x2ba7afc81d90>
+modules :  <PhysicsTools.NanoAODTools.postprocessing.modules.common.muonScaleResProducer.muonScaleResProducer object at 0x2ba7afc81dd0>
+modules :  <PhysicsTools.NanoAODTools.postprocessing.modules.common.lepSFProducer.lepSFProducer object at 0x2ba7afc8f850>
+modules :  <PhysicsTools.MonoZ.NvtxPUreweight.nvtxWeightProducer object at 0x2ba7afc94110>
+modules :  <PhysicsTools.MonoZ.MonoZProducer.MonoZProducer object at 0x2ba7afc94150>
+modules :  <PhysicsTools.MonoZ.TriggerSFProducer.TriggerSFProducer object at 0x2ba7afc94190>
+modules :  <PhysicsTools.MonoZ.BtagEventWeightProducer.BtagEventWeightProducer object at 0x2ba7afc941d0>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94210>
+modules :  <PhysicsTools.MonoZ.MonoZProducer.MonoZProducer object at 0x2ba7afc942d0>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94310>
+modules :  <PhysicsTools.MonoZ.MonoZProducer.MonoZProducer object at 0x2ba7afc94350>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94390>
+modules :  <PhysicsTools.MonoZ.MonoZProducer.MonoZProducer object at 0x2ba7afc943d0>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94410>
+modules :  <PhysicsTools.MonoZ.MonoZProducer.MonoZProducer object at 0x2ba7afc94450>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94490>
+modules :  <PhysicsTools.MonoZ.MonoZProducer.MonoZProducer object at 0x2ba7afc944d0>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94510>
+modules :  <PhysicsTools.MonoZ.MonoZProducer.MonoZProducer object at 0x2ba7afc94550>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94590>
+modules :  <PhysicsTools.MonoZ.MonoZProducer.MonoZProducer object at 0x2ba7afc945d0>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94610>
+modules :  <PhysicsTools.MonoZ.MonoZProducer.MonoZProducer object at 0x2ba7afc94650>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94690>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc946d0>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94710>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94750>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94790>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc947d0>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94810>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94850>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94890>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc948d0>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94910>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94950>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94990>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc949d0>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94a50>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94ad0>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94b50>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94bd0>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94c10>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94c50>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94c90>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94cd0>
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ba7afc94d10>
+Selection :  ((Sum$(Electron_pt>20 & &abs(Electron_eta)<2.5) + Sum$(Muon_pt>20 && abs(Muon_eta)<2.5) )>=2)&& Flag_METFilters
+Will write selected trees to .
+Loading jet energy scale (JES) uncertainties from file '/pool/condor/dir_23879/tmp/tmpUQy0iw/Autumn18_V8_MC_UncertaintySources_AK4PFchs.txt'
+Loading jet energy resolutions (JER) from file '/pool/condor/dir_23879/tmp/tmp6n7qlE/Fall17_V3_MC_PtResolution_AK4PFchs.txt'
+Loading JER scale factors and uncertainties from file '/pool/condor/dir_23879/tmp/tmp6n7qlE/Fall17_V3_MC_SF_AK4PFchs.txt'
+ --> opening this file : /afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/src/PhysicsTools/NanoAODTools/python/postprocessing/data/leptonSF/2018_Mu_EfficienciesStudies_2018_trigger_EfficienciesAndSF_2018Data_BeforeMuonHLTUpdate.root
+Loading histogram IsoMu24_PtEtaBins/pt_abseta_ratio from file /afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/src/PhysicsTools/NanoAODTools/python/postprocessing/data/leptonSF/2018_Mu_EfficienciesStudies_2018_trigger_EfficienciesAndSF_2018Data_BeforeMuonHLTUpdate.root... 
+---- doing a push_back
+---- closing the file
+---- file closed
+ --> opening this file : /afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/src/PhysicsTools/NanoAODTools/python/postprocessing/data/leptonSF/2018_Mu_EfficienciesStudies_2018_trigger_EfficienciesAndSF_2018Data_AfterMuonHLTUpdate.root
+Loading histogram IsoMu24_PtEtaBins/pt_abseta_ratio from file /afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/src/PhysicsTools/NanoAODTools/python/postprocessing/data/leptonSF/2018_Mu_EfficienciesStudies_2018_trigger_EfficienciesAndSF_2018Data_AfterMuonHLTUpdate.root... 
+---- doing a push_back
+---- closing the file
+---- file closed
+ --> opening this file : /afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/src/PhysicsTools/NanoAODTools/python/postprocessing/data/leptonSF/2018_Mu_EfficienciesStudies_2018_rootfiles_RunABCD_SF_ID.root
+Loading histogram NUM_LooseID_DEN_TrackerMuons_pt_abseta from file /afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/src/PhysicsTools/NanoAODTools/python/postprocessing/data/leptonSF/2018_Mu_EfficienciesStudies_2018_rootfiles_RunABCD_SF_ID.root... 
+---- doing a push_back
+---- closing the file
+---- file closed
+ --> opening this file : /afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/src/PhysicsTools/NanoAODTools/python/postprocessing/data/leptonSF/2018_Mu_EfficienciesStudies_2018_rootfiles_RunABCD_SF_ISO.root
+Loading histogram NUM_LooseRelIso_DEN_LooseID_pt_abseta from file /afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/src/PhysicsTools/NanoAODTools/python/postprocessing/data/leptonSF/2018_Mu_EfficienciesStudies_2018_rootfiles_RunABCD_SF_ISO.root... 
+---- doing a push_back
+---- closing the file
+---- file closed
+---- the end of the init function 
+ --> opening this file : /afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/src/PhysicsTools/NanoAODTools/python/postprocessing/data/leptonSF/2018_El_MVA90.root
+Loading histogram EGamma_SF2D from file /afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/src/PhysicsTools/NanoAODTools/python/postprocessing/data/leptonSF/2018_El_MVA90.root... 
+---- doing a push_back
+---- closing the file
+---- file closed
+ --> opening this file : /afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/src/PhysicsTools/NanoAODTools/python/postprocessing/data/leptonSF/2018_El_egammaEffi.txt_EGM2D_updatedAll.root
+Loading histogram EGamma_SF2D from file /afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/src/PhysicsTools/NanoAODTools/python/postprocessing/data/leptonSF/2018_El_egammaEffi.txt_EGM2D_updatedAll.root... 
+---- doing a push_back
+---- closing the file
+---- file closed
+---- the end of the init function 
+Pre-select 31841 entries out of 48000 (66.34%)
+Computing PU profile for this file
+----- transfert output to eos :
+----- directory after running :
+.:
+total 2420
+-rw-r--r--. 1 cfreer zh   11624 Jan 13 21:48 Cert_271036-284044_13TeV_ReReco_07Aug2017_Collisions16_JSON.txt
+-rw-r--r--. 1 cfreer zh   14638 Jan 13 21:48 Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt
+-rw-r--r--. 1 cfreer zh   13968 Jan 13 21:48 Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt
+-rw-r--r--. 1 cfreer zh 2359228 Jan 13 21:53 F670C0C8-D621-7E4C-A9E5-9A7826214A3E_Skim.root
+-rw-r--r--. 1 cfreer zh    1806 Jan 13 21:53 _condor_stderr
+-rw-r--r--. 1 cfreer zh   12204 Jan 13 21:53 _condor_stdout
+-rw-------. 1 cfreer zh    5262 Jan 13 21:48 cfreer.cc
+-rw-r--r--. 1 cfreer zh   16092 Jan 13 21:48 combineHLT_Run2.yaml
+-rw-r--r--. 1 cfreer zh   10051 Jan 13 21:48 condor_Run2_proc.py
+-rwxr-xr-x. 1 cfreer zh     930 Jan 13 21:48 condor_exec.exe
+-rwxr-xr-x. 1 cfreer zh    2559 Jan 13 21:48 haddnano.py
+-rw-r--r--. 1 cfreer zh     499 Jan 13 21:48 keep_and_drop.txt
+drwx------. 5 cfreer zh    4096 Jan 13 21:48 tmp
+drwx------. 3 cfreer zh    4096 Jan 13 21:48 var
+
+./tmp:
+total 12
+drwxr-xr-x. 3 cfreer zh 4096 Jan 13 21:48 mjf-cfreer
+drwx------. 2 cfreer zh 4096 Jan 13 21:48 tmp6n7qlE
+drwx------. 2 cfreer zh 4096 Jan 13 21:48 tmpUQy0iw
+
+./tmp/mjf-cfreer:
+total 4
+drwxr-xr-x. 2 cfreer zh 4096 Jan 13 21:48 jobfeatures-bigbird09.cern.ch_3299363.0_1578948486
+
+./tmp/mjf-cfreer/jobfeatures-bigbird09.cern.ch_3299363.0_1578948486:
+total 28
+-rw-r--r--. 1 cfreer zh  1 Jan 13 21:48 allocated_cpu
+-rw-r--r--. 1 cfreer zh  6 Jan 13 21:48 cpu_limit_secs
+-rw-r--r--. 1 cfreer zh 38 Jan 13 21:48 job_id
+-rw-r--r--. 1 cfreer zh 10 Jan 13 21:48 jobstart_secs
+-rw-r--r--. 1 cfreer zh 10 Jan 13 21:48 max_rss_bytes
+-rw-r--r--. 1 cfreer zh 11 Jan 13 21:48 scratch_limit_bytes
+-rw-r--r--. 1 cfreer zh  6 Jan 13 21:48 wall_limit_secs
+
+./tmp/tmp6n7qlE:
+total 408
+-rw-rw-r--. 1 cfreer zh 17775 Apr  2  2019 Fall17_V3_MC_EtaResolution_AK4PF.txt
+-rw-rw-r--. 1 cfreer zh 17775 Apr  2  2019 Fall17_V3_MC_EtaResolution_AK4PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh 17775 Apr  2  2019 Fall17_V3_MC_EtaResolution_AK4PFchs.txt
+-rw-rw-r--. 1 cfreer zh 17775 Apr  2  2019 Fall17_V3_MC_EtaResolution_AK8PF.txt
+-rw-rw-r--. 1 cfreer zh 17775 Apr  2  2019 Fall17_V3_MC_EtaResolution_AK8PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh 17775 Apr  2  2019 Fall17_V3_MC_EtaResolution_AK8PFchs.txt
+-rw-rw-r--. 1 cfreer zh 17775 Apr  2  2019 Fall17_V3_MC_PhiResolution_AK4PF.txt
+-rw-rw-r--. 1 cfreer zh 17775 Apr  2  2019 Fall17_V3_MC_PhiResolution_AK4PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh 17775 Apr  2  2019 Fall17_V3_MC_PhiResolution_AK4PFchs.txt
+-rw-rw-r--. 1 cfreer zh 17775 Apr  2  2019 Fall17_V3_MC_PhiResolution_AK8PF.txt
+-rw-rw-r--. 1 cfreer zh 17775 Apr  2  2019 Fall17_V3_MC_PhiResolution_AK8PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh 17775 Apr  2  2019 Fall17_V3_MC_PhiResolution_AK8PFchs.txt
+-rw-rw-r--. 1 cfreer zh 20537 Apr  2  2019 Fall17_V3_MC_PtResolution_AK4PF.txt
+-rw-rw-r--. 1 cfreer zh 20537 Apr  2  2019 Fall17_V3_MC_PtResolution_AK4PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh 20537 Apr  2  2019 Fall17_V3_MC_PtResolution_AK4PFchs.txt
+-rw-rw-r--. 1 cfreer zh 20537 Apr  2  2019 Fall17_V3_MC_PtResolution_AK8PF.txt
+-rw-rw-r--. 1 cfreer zh 20537 Apr  2  2019 Fall17_V3_MC_PtResolution_AK8PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh 20537 Apr  2  2019 Fall17_V3_MC_PtResolution_AK8PFchs.txt
+-rw-rw-r--. 1 cfreer zh   966 Apr  2  2019 Fall17_V3_MC_SF_AK4PF.txt
+-rw-rw-r--. 1 cfreer zh   966 Apr  2  2019 Fall17_V3_MC_SF_AK4PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh   966 Apr  2  2019 Fall17_V3_MC_SF_AK4PFchs.txt
+-rw-rw-r--. 1 cfreer zh   966 Apr  2  2019 Fall17_V3_MC_SF_AK8PF.txt
+-rw-rw-r--. 1 cfreer zh   966 Apr  2  2019 Fall17_V3_MC_SF_AK8PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh   966 Apr  2  2019 Fall17_V3_MC_SF_AK8PFchs.txt
+
+./tmp/tmpUQy0iw:
+total 18444
+-rwxrwxr-x. 1 cfreer zh     150 Apr  2  2019 Autumn18_V8_MC_L1FastJet_AK4Calo.txt
+-rwxrwxr-x. 1 cfreer zh     150 Apr  2  2019 Autumn18_V8_MC_L1FastJet_AK4JPT.txt
+-rw-rw-r--. 1 cfreer zh   15518 Apr  2  2019 Autumn18_V8_MC_L1FastJet_AK4PF.txt
+-rwxrwxr-x. 1 cfreer zh     150 Apr  2  2019 Autumn18_V8_MC_L1FastJet_AK4PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh   15518 Apr  2  2019 Autumn18_V8_MC_L1FastJet_AK4PFchs.txt
+-rw-rw-r--. 1 cfreer zh   15518 Apr  2  2019 Autumn18_V8_MC_L1FastJet_AK8PF.txt
+-rwxrwxr-x. 1 cfreer zh     150 Apr  2  2019 Autumn18_V8_MC_L1FastJet_AK8PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh   15518 Apr  2  2019 Autumn18_V8_MC_L1FastJet_AK8PFchs.txt
+-rw-rw-r--. 1 cfreer zh   15518 Apr  2  2019 Autumn18_V8_MC_L1JPTOffset_AK4JPT.txt
+-rw-rw-r--. 1 cfreer zh    8651 Apr  2  2019 Autumn18_V8_MC_L1RC_AK4PF.txt
+-rw-rw-r--. 1 cfreer zh    8651 Apr  2  2019 Autumn18_V8_MC_L1RC_AK4PFchs.txt
+-rw-rw-r--. 1 cfreer zh    8651 Apr  2  2019 Autumn18_V8_MC_L1RC_AK8PF.txt
+-rw-rw-r--. 1 cfreer zh    8651 Apr  2  2019 Autumn18_V8_MC_L1RC_AK8PFchs.txt
+-rw-rw-r--. 1 cfreer zh     176 Apr  2  2019 Autumn18_V8_MC_L2L3Residual_AK4Calo.txt
+-rw-rw-r--. 1 cfreer zh     176 Apr  2  2019 Autumn18_V8_MC_L2L3Residual_AK4JPT.txt
+-rw-rw-r--. 1 cfreer zh     176 Apr  2  2019 Autumn18_V8_MC_L2L3Residual_AK4PF.txt
+-rw-rw-r--. 1 cfreer zh     176 Apr  2  2019 Autumn18_V8_MC_L2L3Residual_AK4PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh     176 Apr  2  2019 Autumn18_V8_MC_L2L3Residual_AK4PFchs.txt
+-rw-rw-r--. 1 cfreer zh     176 Apr  2  2019 Autumn18_V8_MC_L2L3Residual_AK8PF.txt
+-rw-rw-r--. 1 cfreer zh     176 Apr  2  2019 Autumn18_V8_MC_L2L3Residual_AK8PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh     176 Apr  2  2019 Autumn18_V8_MC_L2L3Residual_AK8PFchs.txt
+-rw-rw-r--. 1 cfreer zh      76 Apr  2  2019 Autumn18_V8_MC_L2Relative_AK4Calo.txt
+-rw-rw-r--. 1 cfreer zh      76 Apr  2  2019 Autumn18_V8_MC_L2Relative_AK4JPT.txt
+-rw-rw-r--. 1 cfreer zh      76 Apr  2  2019 Autumn18_V8_MC_L2Relative_AK4PF.txt
+-rw-rw-r--. 1 cfreer zh  287389 Apr  2  2019 Autumn18_V8_MC_L2Relative_AK4PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh  299853 Apr  2  2019 Autumn18_V8_MC_L2Relative_AK4PFchs.txt
+-rw-rw-r--. 1 cfreer zh      76 Apr  2  2019 Autumn18_V8_MC_L2Relative_AK8PF.txt
+-rw-rw-r--. 1 cfreer zh  227197 Apr  2  2019 Autumn18_V8_MC_L2Relative_AK8PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh  268693 Apr  2  2019 Autumn18_V8_MC_L2Relative_AK8PFchs.txt
+-rw-rw-r--. 1 cfreer zh     176 Apr  2  2019 Autumn18_V8_MC_L2Residual_AK4Calo.txt
+-rw-rw-r--. 1 cfreer zh     176 Apr  2  2019 Autumn18_V8_MC_L2Residual_AK4JPT.txt
+-rw-rw-r--. 1 cfreer zh     176 Apr  2  2019 Autumn18_V8_MC_L2Residual_AK4PF.txt
+-rw-rw-r--. 1 cfreer zh     176 Apr  2  2019 Autumn18_V8_MC_L2Residual_AK4PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh     176 Apr  2  2019 Autumn18_V8_MC_L2Residual_AK4PFchs.txt
+-rw-rw-r--. 1 cfreer zh     176 Apr  2  2019 Autumn18_V8_MC_L2Residual_AK8PF.txt
+-rw-rw-r--. 1 cfreer zh     176 Apr  2  2019 Autumn18_V8_MC_L2Residual_AK8PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh     176 Apr  2  2019 Autumn18_V8_MC_L2Residual_AK8PFchs.txt
+-rw-rw-r--. 1 cfreer zh     105 Apr  2  2019 Autumn18_V8_MC_L3Absolute_AK4Calo.txt
+-rw-rw-r--. 1 cfreer zh     105 Apr  2  2019 Autumn18_V8_MC_L3Absolute_AK4JPT.txt
+-rwxrwxr-x. 1 cfreer zh     177 Apr  2  2019 Autumn18_V8_MC_L3Absolute_AK4PF.txt
+-rwxrwxr-x. 1 cfreer zh     177 Apr  2  2019 Autumn18_V8_MC_L3Absolute_AK4PFPuppi.txt
+-rwxrwxr-x. 1 cfreer zh     177 Apr  2  2019 Autumn18_V8_MC_L3Absolute_AK4PFchs.txt
+-rwxrwxr-x. 1 cfreer zh     177 Apr  2  2019 Autumn18_V8_MC_L3Absolute_AK8PF.txt
+-rwxrwxr-x. 1 cfreer zh     177 Apr  2  2019 Autumn18_V8_MC_L3Absolute_AK8PFPuppi.txt
+-rwxrwxr-x. 1 cfreer zh     177 Apr  2  2019 Autumn18_V8_MC_L3Absolute_AK8PFchs.txt
+-rw-rw-r--. 1 cfreer zh 2149862 Apr  2  2019 Autumn18_V8_MC_UncertaintySources_AK4Calo.txt
+-rw-rw-r--. 1 cfreer zh 2149862 Apr  2  2019 Autumn18_V8_MC_UncertaintySources_AK4JPT.txt
+-rw-rw-r--. 1 cfreer zh 2149862 Apr  2  2019 Autumn18_V8_MC_UncertaintySources_AK4PF.txt
+-rw-rw-r--. 1 cfreer zh 2149862 Apr  2  2019 Autumn18_V8_MC_UncertaintySources_AK4PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh 2149862 Apr  2  2019 Autumn18_V8_MC_UncertaintySources_AK4PFchs.txt
+-rw-rw-r--. 1 cfreer zh 2149862 Apr  2  2019 Autumn18_V8_MC_UncertaintySources_AK8PF.txt
+-rw-rw-r--. 1 cfreer zh 2149862 Apr  2  2019 Autumn18_V8_MC_UncertaintySources_AK8PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh 2149862 Apr  2  2019 Autumn18_V8_MC_UncertaintySources_AK8PFchs.txt
+-rw-rw-r--. 1 cfreer zh   40604 Apr  2  2019 Autumn18_V8_MC_Uncertainty_AK4Calo.txt
+-rw-rw-r--. 1 cfreer zh   40604 Apr  2  2019 Autumn18_V8_MC_Uncertainty_AK4JPT.txt
+-rw-rw-r--. 1 cfreer zh   40604 Apr  2  2019 Autumn18_V8_MC_Uncertainty_AK4PF.txt
+-rw-rw-r--. 1 cfreer zh   40604 Apr  2  2019 Autumn18_V8_MC_Uncertainty_AK4PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh   40604 Apr  2  2019 Autumn18_V8_MC_Uncertainty_AK4PFchs.txt
+-rw-rw-r--. 1 cfreer zh   40604 Apr  2  2019 Autumn18_V8_MC_Uncertainty_AK8PF.txt
+-rw-rw-r--. 1 cfreer zh   40604 Apr  2  2019 Autumn18_V8_MC_Uncertainty_AK8PFPuppi.txt
+-rw-rw-r--. 1 cfreer zh   40604 Apr  2  2019 Autumn18_V8_MC_Uncertainty_AK8PFchs.txt
+
+./var:
+total 4
+drwx------. 2 cfreer zh 4096 Jan 13 21:48 tmp
+
+./var/tmp:
+total 0
+ ------ THE END (everyone dies !) ----- 

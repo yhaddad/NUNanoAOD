@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "condor_WSProducer.py", line 153, in <module>
+    p.run()
+  File "/afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/python/PhysicsTools/NanoAODTools/postprocessing/framework/postprocessor.py", line 154, in run
+    inTree = InputTree(inTree, elist) 
+  File "/afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/python/PhysicsTools/NanoAODTools/postprocessing/framework/treeReaderArrayTools.py", line 10, in InputTree
+    tree._ttreereader = ROOT.TTreeReader(tree,tree._entrylist)
+TypeError: none of the 5 overloaded methods succeeded. Full details:
+  TTreeReader::TTreeReader() =>
+    takes at most 0 arguments (2 given)
+  TTreeReader::TTreeReader(TTree* tree, TEntryList* entryList = nullptr) =>
+    could not convert argument 2
+  TTreeReader::TTreeReader(const char* keyname, TDirectory* dir, TEntryList* entryList = nullptr) =>
+    could not convert argument 1 (expected string or Unicode object, TTree found)
+  TTreeReader::TTreeReader(const char* keyname, TEntryList* entryList = nullptr) =>
+    could not convert argument 1 (expected string or Unicode object, TTree found)
+  TTreeReader::TTreeReader(const TTreeReader&) =>
+    takes at most 1 arguments (2 given)
+xrdcp: No such file or directory processing tree_95.root

@@ -97,9 +97,9 @@ def main():
                         infiles.write(os.path.join(eosindir,_f))
                         infiles.write('\n')
                     infiles.close()
-            time.sleep(10)
+            time.sleep(1)
             #eosoutdir = eosbase.format(tag=options.tag,sample=sample_name).replace(group_base,my_base)
-            eosoutdir = eosbase.format(tag=options.tag+"_WS",sample=sample_name)
+            eosoutdir = eosbase.format(tag=options.tag+"_WS_MT",sample=sample_name)
             # crete a directory on eos
             if '/eos/cms' in eosoutdir:
                 eosoutdir = eosoutdir.replace('/eos/cms', 'root://eoscms.cern.ch/')

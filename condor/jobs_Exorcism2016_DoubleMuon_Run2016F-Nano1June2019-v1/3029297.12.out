@@ -1,0 +1,153 @@
+
+/pool/condor/dir_29158
+
+... start job at 2019-11-29 16:57:16
+----- directory before running:
+.:
+total 52
+-rw-r--r--. 1 cfreer zh     0 Nov 29 16:57 _condor_stderr
+-rw-r--r--. 1 cfreer zh    94 Nov 29 16:57 _condor_stdout
+-rw-------. 1 cfreer zh  2642 Nov 29 16:57 cfreer.cc
+-rw-r--r--. 1 cfreer zh 16092 Nov 29 16:57 combineHLT_Run2.yaml
+-rw-r--r--. 1 cfreer zh  5718 Nov 29 16:57 condor_WSProducer.py
+-rwxr-xr-x. 1 cfreer zh   835 Nov 29 16:57 condor_exec.exe
+-rwxr-xr-x. 1 cfreer zh  2559 Nov 29 16:57 haddnano.py
+-rw-r--r--. 1 cfreer zh     8 Nov 29 16:57 keep_and_drop_WS.txt
+drwx------. 3 cfreer zh  4096 Nov 29 16:57 tmp
+drwx------. 3 cfreer zh  4096 Nov 29 16:57 var
+
+./tmp:
+total 4
+drwxr-xr-x. 3 cfreer zh 4096 Nov 29 16:57 mjf-cfreer
+
+./tmp/mjf-cfreer:
+total 4
+drwxr-xr-x. 2 cfreer zh 4096 Nov 29 16:57 jobfeatures-bigbird09.cern.ch_3029297.12_1574941983
+
+./tmp/mjf-cfreer/jobfeatures-bigbird09.cern.ch_3029297.12_1574941983:
+total 28
+-rw-r--r--. 1 cfreer zh  1 Nov 29 16:57 allocated_cpu
+-rw-r--r--. 1 cfreer zh  6 Nov 29 16:57 cpu_limit_secs
+-rw-r--r--. 1 cfreer zh 39 Nov 29 16:57 job_id
+-rw-r--r--. 1 cfreer zh 10 Nov 29 16:57 jobstart_secs
+-rw-r--r--. 1 cfreer zh 10 Nov 29 16:57 max_rss_bytes
+-rw-r--r--. 1 cfreer zh 10 Nov 29 16:57 scratch_limit_bytes
+-rw-r--r--. 1 cfreer zh  6 Nov 29 16:57 wall_limit_secs
+
+./var:
+total 4
+drwx------. 2 cfreer zh 4096 Nov 29 16:57 tmp
+
+./var/tmp:
+total 0
+----- CMSSW BASE, python path, pwd:
++ CMSSW_BASE  = /afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4
++ PYTHON_PATH = 
++ PWD         = /pool/condor/dir_29158
+Adding file ./tree_8_Skim.root
+Merging measMET_monoZ_catSignal-0jet
+Merging MT_monoZ_catSignal-0jet
+Merging measMET_monoZ_catEM
+Merging MT_monoZ_catEM
+Merging measMET_monoZ_catSignal-1jet
+Merging MT_monoZ_catSignal-1jet
+Merging measMET_monoZ_cat3L
+Merging MT_monoZ_cat3L
+Merging measMET_monoZ_cat4L
+Merging MT_monoZ_cat4L
+Merging measMET_monoZ_catNRB
+Merging MT_monoZ_catNRB
+Merging measMET_monoZ_catTOP
+Merging MT_monoZ_catTOP
+Merging measMET_monoZ_catDY
+Merging MT_monoZ_catDY
+Merging balance_monoZ
+Merging phizmet_monoZ
+Merging njet_monoZ
+Merging Events
+Merging Runs
+Merging ParameterSets
+Merging LuminosityBlocks
+Merging MetaData
+Merging MT_data_catSignal-1jet
+Merging measMET_data_catTOP
+Merging MT_data_catEM
+Merging MT_data_catTOP
+Merging measMET_data_catNRB
+Merging phizmet_data
+Merging measMET_data_cat3L
+Merging njet_data
+Merging untagged
+Merging MT_data_cat3L
+Merging measMET_data_cat4L
+Merging measMET_data_catEM
+Merging MT_data_catDY
+Merging measMET_data_catSignal-0jet
+Merging MT_data_cat4L
+Merging balance_data
+Merging MT_data_catNRB
+Merging MT_data_catSignal-0jet
+Merging measMET_data_catSignal-1jet
+Merging measMET_data_catDY
+/eos/cms/store/group/phys_exotica/monoZ/Exorcism2016/DoubleMuon_Run2016F-Nano1June2019-v1/tree_8.root  ->  /eos/cms/store/group/phys_exotica/monoZ/Exorcism2016/DoubleMuon_Run2016F-Nano1June2019-v1/tree_8.root
+Testing file open
+Test OK
+---------------------------
+ -- options  =  Namespace(dataset='X', doSyst=1, era='2016', infile='/eos/cms/store/group/phys_exotica/monoZ/Exorcism2016/DoubleMuon_Run2016F-Nano1June2019-v1/tree_8.root', isMC=0, jobNum=12, nevt=-1)
+ -- is MC    =  0
+ -- jobNum   =  12
+ -- era      =  2016
+ -- in file  =  /eos/cms/store/group/phys_exotica/monoZ/Exorcism2016/DoubleMuon_Run2016F-Nano1June2019-v1/tree_8.root
+ -- dataset  =  X
+---------------------------
+modules :  <PhysicsTools.MonoZ.MonoZWSProducer.MonoZWSProducer object at 0x2ae27a9fb890>
+Selection :  
+Will write selected trees to .
+Pre-select 13102 entries out of 13102 (100.00%)
+Processed    10000/   13102 entries, 76.32% (elapsed time    22.1s, curr speed    0.453 kHz, avg speed    0.453 kHz), accepted    10001/   10001 events (100.00%)
+Processed 13102 preselected entries from /eos/cms/store/group/phys_exotica/monoZ/Exorcism2016/DoubleMuon_Run2016F-Nano1June2019-v1/tree_8.root (13102 entries). Finally selected 13102 entries
+Done ./tree_8_Skim.root
+346.522084105 Hz
+----- transfer output to eos :
+----- directory after running :
+.:
+total 7284
+-rw-r--r--. 1 cfreer zh    1206 Nov 29 16:58 FrameworkJobReport.xml
+-rw-r--r--. 1 cfreer zh       0 Nov 29 16:57 _condor_stderr
+-rw-r--r--. 1 cfreer zh    4043 Nov 29 16:58 _condor_stdout
+-rw-------. 1 cfreer zh    4914 Nov 29 16:58 cfreer.cc
+-rw-r--r--. 1 cfreer zh   16092 Nov 29 16:57 combineHLT_Run2.yaml
+-rw-r--r--. 1 cfreer zh    5718 Nov 29 16:57 condor_WSProducer.py
+-rwxr-xr-x. 1 cfreer zh     835 Nov 29 16:57 condor_exec.exe
+-rwxr-xr-x. 1 cfreer zh    2559 Nov 29 16:57 haddnano.py
+-rw-r--r--. 1 cfreer zh       8 Nov 29 16:57 keep_and_drop_WS.txt
+drwx------. 3 cfreer zh    4096 Nov 29 16:57 tmp
+-rw-r--r--. 1 cfreer zh 3697048 Nov 29 16:58 tree_12.root
+-rw-r--r--. 1 cfreer zh 3696920 Nov 29 16:58 tree_8_Skim.root
+drwx------. 3 cfreer zh    4096 Nov 29 16:57 var
+
+./tmp:
+total 4
+drwxr-xr-x. 3 cfreer zh 4096 Nov 29 16:57 mjf-cfreer
+
+./tmp/mjf-cfreer:
+total 4
+drwxr-xr-x. 2 cfreer zh 4096 Nov 29 16:57 jobfeatures-bigbird09.cern.ch_3029297.12_1574941983
+
+./tmp/mjf-cfreer/jobfeatures-bigbird09.cern.ch_3029297.12_1574941983:
+total 28
+-rw-r--r--. 1 cfreer zh  1 Nov 29 16:57 allocated_cpu
+-rw-r--r--. 1 cfreer zh  6 Nov 29 16:57 cpu_limit_secs
+-rw-r--r--. 1 cfreer zh 39 Nov 29 16:57 job_id
+-rw-r--r--. 1 cfreer zh 10 Nov 29 16:57 jobstart_secs
+-rw-r--r--. 1 cfreer zh 10 Nov 29 16:57 max_rss_bytes
+-rw-r--r--. 1 cfreer zh 10 Nov 29 16:57 scratch_limit_bytes
+-rw-r--r--. 1 cfreer zh  6 Nov 29 16:57 wall_limit_secs
+
+./var:
+total 4
+drwx------. 2 cfreer zh 4096 Nov 29 16:57 tmp
+
+./var/tmp:
+total 0
+ ------ THE END (everyone dies !) ----- 

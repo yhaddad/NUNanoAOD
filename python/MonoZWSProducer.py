@@ -1,5 +1,6 @@
 import ROOT
 from importlib import import_module
+import numpy as np
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection, Object
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
@@ -54,7 +55,7 @@ class MonoZWSProducer(Module):
                 "event.ngood_jets{sys}  <=  1" ,
                 "event.ngood_bjets{sys} ==  0" ,
                 "event.nhad_taus{sys}   ==  0" ,
-                "event.met_pt{sys}      >  50" ,
+                "event.met_pt{sys}      >  80" ,
                 "abs(event.delta_phi_ZMet{sys} ) > 2.6",
                 "abs(1 - event.sca_balance{sys}) < 0.4",
                 "abs(event.delta_phi_j_met{sys}) > 0.5",
@@ -65,7 +66,7 @@ class MonoZWSProducer(Module):
                 "abs(event.Z_mass{sys} - 91.1876) < 15",
                 "event.ngood_jets{sys}  <=  1" ,
                 "event.ngood_bjets{sys} ==  0" ,
-                "event.met_pt{sys}      >  30" ,
+                "event.met_pt{sys}      >  80" ,
                 "event.mass_alllep{sys} > 100" ,
                 "abs(1 -event.emulatedMET{sys}/event.Z_pt{sys}) < 0.4",
                 "abs(event.emulatedMET_phi{sys} - event.Z_phi{sys}) > 2.6"
@@ -81,14 +82,14 @@ class MonoZWSProducer(Module):
                 "abs(event.Z_mass{sys} - 91.1876) < 15",
                 "event.ngood_jets{sys}  <=  1" ,
                 "event.ngood_bjets{sys} ==  0" ,
-                "event.met_pt{sys}      >  30"
+                "event.met_pt{sys}      >  80"
             ],
             "catTOP": [
                 "event.Z_pt{sys}        >  60" ,
                 "abs(event.Z_mass{sys} - 91.1876) < 15",
                 "event.ngood_jets{sys}  >   2" ,
                 "event.ngood_bjets{sys} >=  1" ,
-                "event.met_pt{sys}      >  30"
+                "event.met_pt{sys}      >  80"
             ]
         }
         self.h_bal = ROOT.TH1F(
@@ -156,19 +157,28 @@ class MonoZWSProducer(Module):
             lep_category = getattr(event, "lep_category")
 
         if self.weight_syst:
-            meas_MET = getattr(event, "met_pt")
-            emul_MET = getattr(event, "emulatedMET")
-            meas_MT = getattr(event, "MT")
-            meas_Njet= getattr(event, "ngood_jets")
-            meas_BAL = getattr(event, "sca_balance")
+            meas_MET 	 = getattr(event, "met_pt")
+            emul_MET 	 = getattr(event, "emulatedMET")
+            meas_MT 	 = getattr(event, "MT")
+            meas_Njet	 = getattr(event, "ngood_jets")
+            meas_BAL 	 = getattr(event, "sca_balance")
             meas_ZMETPHI = getattr(event, "delta_phi_ZMet")
+	    Z_pT 	 = getattr(event, "Z_pt")
+	    emul_MET_phi = getattr(event, "emulatedMET_phi")
+	    Z_phi 	 = getattr(event, "Z_phi")
         else:
-            meas_MET = getattr(event, "met_pt{}".format(self.syst_suffix))
-            emul_MET = getattr(event, "emulatedMET{}".format(self.syst_suffix))
-            meas_MT  = getattr(event, "MT{}".format(self.syst_suffix))
-            meas_Njet= getattr(event, "ngood_jets{}".format(self.syst_suffix))
-            meas_BAL = getattr(event, "sca_balance{}".format(self.syst_suffix))
+            meas_MET 	 = getattr(event, "met_pt{}".format(self.syst_suffix))
+            emul_MET 	 = getattr(event, "emulatedMET{}".format(self.syst_suffix))
+            meas_MT  	 = getattr(event, "MT{}".format(self.syst_suffix))
+            meas_Njet	 = getattr(event, "ngood_jets{}".format(self.syst_suffix))
+            meas_BAL 	 = getattr(event, "sca_balance{}".format(self.syst_suffix))
             meas_ZMETPHI = getattr(event, "delta_phi_ZMet{}".format(self.syst_suffix))
+            Z_pT         = getattr(event, "Z_pt".format(self.syst_suffix))
+            emul_MET_phi = getattr(event, "emulatedMET_phi".format(self.syst_suffix))
+            Z_phi        = getattr(event, "Z_phi".format(self.syst_suffix))
+
+
+	emu_MT = np.sqrt(2*Z_pT*emul_MET*(1-np.cos(emul_MET_phi - Z_phi)))
 
         new_lepcat = lep_category
         if (lep_category == 1 or lep_category == 3) and meas_Njet==0:
@@ -191,6 +201,8 @@ class MonoZWSProducer(Module):
         except:
             return "ERROR: weight branch doesn't exist"
 
+
+        weight *= event.ADDWeight #for ADD samples only (EFT weights)
         # pu uncertainty
         if self.isMC:
             # weight *= event.genWeight
@@ -350,11 +362,9 @@ class MonoZWSProducer(Module):
             self.h_mT[7].Fill(meas_MT, weight)
         # Mass: Cat3L
         if ( (new_lepcat == 4) and self.passbut(event, cat="cat3L") ):
-            self.h_mT[4].Fill(meas_MT, weight)
+            self.h_mT[4].Fill(emu_MT, weight)
         # Mass: Cat4L
         if ( (new_lepcat == 5) and self.passbut(event, cat="cat4L") ):
-            self.h_mT[5].Fill(meas_MT, weight)
-
-
+            self.h_mT[5].Fill(emu_MT, weight)
 
         return True

@@ -1,0 +1,13 @@
+
+request_disk          = 1000000
+executable            = jobs_Exorcism_ADD_2016_ADDMonoZ_ZtoLL_MD-1_d-7_TuneCUETP8M1_13TeV-pythia8/script.sh
+arguments             = $(ProcId) $(jobid)
+transfer_input_files  = ../condor_WSProducer.py,../combineHLT_Run2.yaml,../keep_and_drop_WS.txt,../haddnano.py
+output                = $(ClusterId).$(ProcId).out
+error                 = $(ClusterId).$(ProcId).err
+log                   = $(ClusterId).$(ProcId).log
+initialdir            = jobs_Exorcism_ADD_2016_ADDMonoZ_ZtoLL_MD-1_d-7_TuneCUETP8M1_13TeV-pythia8
+transfer_output_files = ""
++JobFlavour           = "testmatch"
+
+queue jobid from jobs_Exorcism_ADD_2016_ADDMonoZ_ZtoLL_MD-1_d-7_TuneCUETP8M1_13TeV-pythia8/inputfiles.dat

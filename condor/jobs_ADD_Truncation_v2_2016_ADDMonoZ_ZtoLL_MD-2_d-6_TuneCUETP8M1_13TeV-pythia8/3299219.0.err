@@ -1,0 +1,21 @@
+Error in <TNetXNGFile::Open>: [ERROR] Server responded with an error: [3011] Unable to open file /eos/cms/store/mc/RunIISummer16NanoAODv5/ADDMonoZ_ZtoLL_MD-2_d-6_TuneCUETP8M1_13TeV-pythia8/NANOAODSIM/PUMoriond17_Nano1June2019_102X_mcRun2_asymptotic_v7-v1/40000/BEDCC723-FC5E-5141-BC14-35A7D19C7849.root; No such file or directory
+
+Error in <TTree::SetBranchStatus>: No branch name is matching wildcard -> HLT_DiEle*
+TTree::SetBranchStatus:0: RuntimeWarning: No branch name is matching wildcard -> LHEPart*
+Error in <TTree::SetBranchStatus>: No branch name is matching wildcard -> HLT_DiEle*
+TTree::SetBranchStatus:0: RuntimeWarning: No branch name is matching wildcard -> LHEPart*
+Traceback (most recent call last):
+  File "condor_Run2_proc.py", line 247, in <module>
+    p.run()
+  File "/afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/python/PhysicsTools/NanoAODTools/postprocessing/framework/postprocessor.py", line 187, in run
+    (nall, npass, timeLoop) = eventLoop(self.modules, inFile, outFile, inTree, outTree, eventRange=eventRange, maxEvents=self.maxEntries)
+  File "/afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/python/PhysicsTools/NanoAODTools/postprocessing/framework/eventloop.py", line 62, in eventLoop
+    ret = m.analyze(e) 
+  File "/afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/python/PhysicsTools/MonoZ/MonoZWSProducer.py", line 205, in analyze
+    weight *= event.ADDWeight #for ADD samples only (EFT weights)
+  File "/afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/python/PhysicsTools/NanoAODTools/postprocessing/framework/datamodel.py", line 13, in __getattr__
+    return self._tree.readBranch(name)
+  File "/afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/python/PhysicsTools/NanoAODTools/postprocessing/framework/treeReaderArrayTools.py", line 63, in readBranch
+    if not branch: raise RuntimeError, "Unknown branch %s" % branchName
+RuntimeError: Unknown branch ADDWeight
+xrdcp: No such file or directory processing tree_0.root

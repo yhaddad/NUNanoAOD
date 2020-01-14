@@ -95,7 +95,7 @@ pre_selection  = ""
 
 if float(options.nevt) > 0:
    print " passing this cut and : ", options.nevt
-   pre_selection += ' && (Entry$ < {})'.format(options.nevt)
+   pre_selection = '(Entry$ < {})'.format(options.nevt)
 
 pro_syst = [ "ElectronEn", "MuonEn", "jesTotal", "jer"]
 ext_syst = [ "puWeight", "PDF", "MuonSF", "ElecronSF", "EWK", "nvtxWeight","TriggerSFWeight","btagEventWeight", "QCDScale0w", "QCDScale1w", "QCDScale2w"]

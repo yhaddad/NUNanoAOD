@@ -1,0 +1,13 @@
+
+request_disk          = 1000000
+executable            = jobs_Exorcism2016_DarkMatter_MonoZToLL_NLO_Scalar_Mx-1_Mv-300_gDM1_gQ1_TuneCUETP8M1_13TeV-madgraph/script.sh
+arguments             = $(ProcId) $(jobid)
+transfer_input_files  = ../condor_WSProducer.py,../combineHLT_Run2.yaml,../keep_and_drop_WS.txt,../haddnano.py
+output                = $(ClusterId).$(ProcId).out
+error                 = $(ClusterId).$(ProcId).err
+log                   = $(ClusterId).$(ProcId).log
+initialdir            = jobs_Exorcism2016_DarkMatter_MonoZToLL_NLO_Scalar_Mx-1_Mv-300_gDM1_gQ1_TuneCUETP8M1_13TeV-madgraph
+transfer_output_files = ""
++JobFlavour           = "testmatch"
+
+queue jobid from jobs_Exorcism2016_DarkMatter_MonoZToLL_NLO_Scalar_Mx-1_Mv-300_gDM1_gQ1_TuneCUETP8M1_13TeV-madgraph/inputfiles.dat

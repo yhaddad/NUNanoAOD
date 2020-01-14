@@ -1,0 +1,13 @@
+
+request_disk          = 1000000
+executable            = jobs_Exorcism2018_DMSimp_MonoZLL_Pseudo_TuneCP5_GQ1p0_GDM1p0_MY0-400_mxd-1/script.sh
+arguments             = $(ProcId) $(jobid)
+transfer_input_files  = ../condor_WSProducer.py,../combineHLT_Run2.yaml,../keep_and_drop_WS.txt,../haddnano.py
+output                = $(ClusterId).$(ProcId).out
+error                 = $(ClusterId).$(ProcId).err
+log                   = $(ClusterId).$(ProcId).log
+initialdir            = jobs_Exorcism2018_DMSimp_MonoZLL_Pseudo_TuneCP5_GQ1p0_GDM1p0_MY0-400_mxd-1
+transfer_output_files = ""
++JobFlavour           = "testmatch"
+
+queue jobid from jobs_Exorcism2018_DMSimp_MonoZLL_Pseudo_TuneCP5_GQ1p0_GDM1p0_MY0-400_mxd-1/inputfiles.dat

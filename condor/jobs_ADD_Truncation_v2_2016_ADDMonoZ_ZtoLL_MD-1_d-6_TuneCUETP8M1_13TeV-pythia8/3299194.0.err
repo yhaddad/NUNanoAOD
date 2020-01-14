@@ -1,0 +1,15 @@
+Error in <TNetXNGFile::Open>: [ERROR] Server responded with an error: [3011] Unable to open file /eos/cms/store/mc/RunIISummer16NanoAODv5/ADDMonoZ_ZtoLL_MD-1_d-6_TuneCUETP8M1_13TeV-pythia8/NANOAODSIM/PUMoriond17_Nano1June2019_102X_mcRun2_asymptotic_v7-v1/30000/7A0EE13A-A724-F045-8F8C-B7E992B96750.root; No such file or directory
+
+Info in <TUnixSystem::ACLiC>: creating shared library /afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/src/PhysicsTools/NanoAODTools/python/postprocessing/helpers/LeptonEfficiencyCorrector_cc.so
+Error in <ACLiC>: Dictionary generation failed!
+Traceback (most recent call last):
+  File "condor_Run2_proc.py", line 247, in <module>
+    p.run()
+  File "/afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/python/PhysicsTools/NanoAODTools/postprocessing/framework/postprocessor.py", line 107, in run
+    m.beginJob()
+  File "/afs/cern.ch/work/c/cfreer/MonoZ_2019/MT_plots/CMSSW_10_6_4/python/PhysicsTools/NanoAODTools/postprocessing/modules/common/lepSFProducer.py", line 62, in beginJob
+    self._worker_mu = ROOT.LeptonEfficiencyCorrector(self.mu_f,self.mu_h)
+  File "/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.14.09-pafccj/lib/ROOT.py", line 613, in __getattr2
+    raise AttributeError( name )
+AttributeError: LeptonEfficiencyCorrector
+xrdcp: No such file or directory processing tree_0.root
