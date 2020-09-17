@@ -29,7 +29,7 @@ echo "+ PYTHON_PATH = $PYTHON_PATH"
 echo "+ PWD         = $PWD"
 python condor_WSProducer.py --jobNum=$1 --isMC={ismc} --era={era} --infile=$2
 echo "----- transfer output to eos :"
-xrdcp -s -f tree_$1.root {eosdir}
+cp -f WS_tree_$1.root {eosdir}
 echo "----- directory after running :"
 ls -lR .
 echo " ------ THE END (everyone dies !) ----- "
@@ -66,9 +66,14 @@ def main():
 
     # Making sure that the proxy is good
     cmssw_base = os.environ['CMSSW_BASE']
-    eosbase = "/eos/cms/store/group/phys_exotica/monoZ/{tag}/{sample}/"
-    group_base = "group/phys_exotica"
+    #eosbase = "/eos/cms/store/group/phys_exotica/monoZ/{tag}/{sample}/"
+    #group_base = "group/phys_exotica"
+    #my_base = "user/cfreer"
+
+    eosbase = "/eos/user/c/cmsdas/long-exercises/MonoZ/{tag}/{sample}/"
+    group_base = "long-exercises/MonoZ"
     my_base = "user/cfreer"
+
 
     with open(options.input, 'r') as stream:
         for sample in stream.read().split('\n'):
@@ -77,7 +82,7 @@ def main():
             sample_name = sample.split("/")[1] if options.isMC else '_'.join(sample.split("/")[1:3])
             jobs_dir = '_'.join(['jobs', options.tag, sample_name])
             logging.info("-- sample_name : " + sample)
-
+            print(sample_name)
             if os.path.isdir(jobs_dir):
                 if not options.force:
                     logging.error(" " + jobs_dir + " already exist !")
@@ -105,7 +110,9 @@ def main():
                 eosoutdir = eosoutdir.replace('/eos/cms', 'root://eoscms.cern.ch/')
                 os.system("eos mkdir -p {}".format(eosoutdir.replace('root://eoscms.cern.ch/','')))
             else:
-                raise NameError(eosoutdir)
+                #raise NameError(eosoutdir)
+		print(eosoutdir)
+		#os.system("mkdir -p {}".format(eosoutdir))
 
             with open(os.path.join(jobs_dir, "script.sh"), "w") as scriptfile:
                 script = script_TEMPLATE.format(
@@ -147,4 +154,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

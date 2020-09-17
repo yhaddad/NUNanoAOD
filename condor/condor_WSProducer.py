@@ -60,27 +60,40 @@ if options.isMC:
    condtag_ = "NANOAODSIM"
    if options.dataset == "X":
       options.dataset = options.infile
-      options.dataset = options.dataset.split('/store')[1].split("/")
-      condtag_ = options.dataset[5]
-      options.dataset = options.dataset[3]
+      #options.dataset = options.dataset.split('/store')[1].split("/")
+      options.dataset = options.dataset.split('/cmsdas')[1].split("/")
+      condtag_ = options.dataset[3]
+      options.dataset = options.dataset[4]
    print "[check] condtag_ == ", condtag_
    print "[check] dataset  == ", options.dataset
 else:
    if options.dataset == "X":
       options.dataset = options.infile
-      options.dataset = options.dataset.split('/store')[1].split("/")
-      condtag_ = options.dataset[2]
-      options.dataset = options.dataset[3]
+      #options.dataset = options.dataset.split('/store')[1].split("/")
+      options.dataset = options.dataset.split('/cmsdas')[1].split("/")
+      condtag_ = options.dataset[3]
+      options.dataset = options.dataset[4]
    else:
       options.dataset = options.dataset.split("/")
-      condtag_ = options.dataset[2]
-      options.dataset = options.dataset[1]
+      condtag_ = options.dataset[3]
+      options.dataset = options.dataset[4]
+
+print "---------------------------"
+print " -- condtag      = ", condtag_
+print " -- dataset  = ", options.dataset
+print "---------------------------"
 
 
 pro_syst = [ "ElectronEn", "MuonEn", "jesTotal", "jer"]
 ext_syst = [ "puWeight", "PDF", "MuonSF", "ElecronSF", "EWK", "nvtxWeight","TriggerSFWeight","btagEventWeight", "QCDScale0w", "QCDScale1w", "QCDScale2w"]
 
 modules_era   = []
+
+if options.isMC:
+   if options.era=="2016":
+      ext_syst.append("PrefireWeight")
+   if options.era=="2017":
+      ext_syst.append("PrefireWeight")
 
 #Do the nom and the data
 modules_era.append(MonoZWSProducer(
