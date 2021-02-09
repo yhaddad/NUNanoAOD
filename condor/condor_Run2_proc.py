@@ -16,6 +16,7 @@ from PhysicsTools.NanoAODTools.postprocessing.modules.common.lepSFProducer impor
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.PrefireCorr import *
 #Import the MonoZ analysis tools
 from PhysicsTools.MonoZ.MonoZProducer import *
+from PhysicsTools.MonoZ.HHProducer import *
 from PhysicsTools.MonoZ.GenWeightProducer import *
 from PhysicsTools.MonoZ.EWProducer import *
 from PhysicsTools.MonoZ.ADDProducer import *
@@ -143,7 +144,7 @@ if options.isMC:
       modules_era.append(nvtxWeight_2018())
 
    modules_era.append(PhiXYCorrection(era=options.era,isMC=options.isMC,sys=''))
-   modules_era.append(MonoZProducer(isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
+   modules_era.append(HHProducer(isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
 
    if options.era=="2016":
       modules_era.append(TriggerSF_2016())
@@ -184,7 +185,7 @@ if options.isMC:
       for var in ["Up", "Down"]:
 	 if "jesTotal" in sys and options.doSyst==1: modules_era.append(PhiXYCorrection(era=options.era,isMC=options.isMC,sys=sys+var))
 	 if "jer" in sys and options.doSyst==1: modules_era.append(PhiXYCorrection(era=options.era,isMC=options.isMC,sys=sys+var))
-         modules_era.append(MonoZProducer(options.isMC, str(options.era), do_syst=1, syst_var=sys+var))
+         modules_era.append(HHProducer(options.isMC, str(options.era), do_syst=1, syst_var=sys+var))
 
 else:
    print "sample : ", options.dataset, " candtag : ", condtag_
@@ -219,7 +220,7 @@ else:
       modules_era.append(getattr(jetRecalib, 'jetRecalib2018%s' % condtag_.split(options.era)[1][:1])() )
 
    modules_era.append(PhiXYCorrection(era=options.era,isMC=options.isMC,sys=''))
-   modules_era.append(MonoZProducer  (isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
+   modules_era.append(HHProducer  (isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
 
    if options.era=="2016":
        options.json = "Cert_271036-284044_13TeV_ReReco_07Aug2017_Collisions16_JSON.txt"
