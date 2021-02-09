@@ -452,41 +452,6 @@ class HHProducer(Module):
             self.out.fillBranch("w_electron_SFUp"  , w_electron_SFUp  )
             self.out.fillBranch("w_electron_SFDown", w_electron_SFDown)
 
-
-        # filling MonoZ type of variables
-        #_delta_zphi = tk.deltaPhi(z_candidate[0].phi, z_candidate[1].phi) if lep_category > 0 else -99
-        #_delta_zdR  = tk.deltaR(z_candidate[0].eta, z_candidate[0].phi,
-        #                        z_candidate[1].eta, z_candidate[1].phi,) if lep_category > 0 else -99
-        #_delta_zeta     = abs(z_candidate[0].eta - z_candidate[1].eta) if lep_category > 0 else -99
-        #_delta_phi_zmet = tk.deltaPhi(zcand_p4.Phi(), met.phi)
-        #_vec_delta_balance  = (met_p4 - zcand_p4).Pt()/zcand_p4.Pt() if zcand_p4.Pt() != 0 else -1
-        #_sca_delta_balance  = met.pt/zcand_p4.Pt() if zcand_p4.Pt() != 0 else -1
-
-
-        #self.out.fillBranch("delta_phi_ll{}".format(self.syst_suffix), _delta_zphi)
-        #self.out.fillBranch("delta_eta_ll{}".format(self.syst_suffix), _delta_zeta)
-        #self.out.fillBranch("delta_R_ll{}".format(self.syst_suffix), _delta_zdR)
-        #self.out.fillBranch("delta_phi_ZMet{}".format(self.syst_suffix), _delta_phi_zmet)
-        #self.out.fillBranch("vec_balance{}".format(self.syst_suffix), _vec_delta_balance)
-        #self.out.fillBranch("sca_balance{}".format(self.syst_suffix), _sca_delta_balance)
-        #self.out.fillBranch("delta_met_rec{}".format(self.syst_suffix), _delta_met_rec)
-        #self.out.fillBranch("emulatedMET{}".format(self.syst_suffix), emulated_met.Pt())
-        #self.out.fillBranch("emulatedMET_phi{}".format(self.syst_suffix), emulated_met.Phi())
-        #self.out.fillBranch("mass_alllep{}".format(self.syst_suffix), all_lepton_p4.M())
-        #self.out.fillBranch("remll_mass{}".format(self.syst_suffix), rem_lepton_p4.M())
-        
-        #self.out.fillBranch("MT{}".format(self.syst_suffix), 
-	#		    np.sqrt(2*zcand_p4.Pt()*var_met_pt*(1 - np.cos(_delta_phi_zmet))))
-	# defined as from https://arxiv.org/pdf/1808.09054.pdf
-	#Ell = np.sqrt(zcand_p4.Mag2() + zcand_p4.M2())
-	#self.out.fillBranch("altMT{}".format(self.syst_suffix),
-	#		    np.sqrt(np.power(Ell + met_p4.Pt(),2) + (met_p4 + zcand_p4).Mag2()) 
-	#		    )
-        # checking the transverse mass
-        #_rem_p4 = ROOT.TLorentzVector()
-        #_rem_p4.SetPtEtaPhiM(rem_lepton_p4.Pt(), 0, rem_lepton_p4.Phi(), 0)
-        #self.out.fillBranch("trans_mass{}".format(self.syst_suffix), (_rem_p4 + met_p4).M())
-
         # process jet
         good_jets  = []
         good_bjets = []
