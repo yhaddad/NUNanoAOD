@@ -15,7 +15,7 @@ from PhysicsTools.NanoAODTools.postprocessing.modules.common.muonScaleResProduce
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.lepSFProducer import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.PrefireCorr import *
 #Import the MonoZ analysis tools
-from PhysicsTools.MonoZ.MonoZProducer import *
+from PhysicsTools.MonoZ.ZZProducer import *
 from PhysicsTools.MonoZ.VBSProducer import *
 from PhysicsTools.MonoZ.GenWeightProducer import *
 from PhysicsTools.MonoZ.EWProducer import *
@@ -143,7 +143,7 @@ if options.isMC:
       modules_era.append(nvtxWeight_2018())
 
    modules_era.append(PhiXYCorrection(era=options.era,isMC=options.isMC,sys=''))
-   modules_era.append(MonoZProducer(isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
+   modules_era.append(ZZProducer(isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
    modules_era.append(VBSProducer(isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
 
    if options.era=="2016":
@@ -168,7 +168,7 @@ if options.isMC:
       for var in ["Up", "Down"]:
          if "jesTotal" in sys and options.doSyst==1: modules_era.append(PhiXYCorrection(era=options.era,isMC=options.isMC,sys=sys+var))
          if "jer" in sys and options.doSyst==1: modules_era.append(PhiXYCorrection(era=options.era,isMC=options.isMC,sys=sys+var))
-         modules_era.append(MonoZProducer(options.isMC, str(options.era), do_syst=1, syst_var=sys+var))
+         modules_era.append(ZZProducer(options.isMC, str(options.era), do_syst=1, syst_var=sys+var))
          modules_era.append(VBSProducer(isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=sys+var))
 
 else:
@@ -204,7 +204,7 @@ else:
       modules_era.append(getattr(jetRecalib, 'jetRecalib2018%s' % condtag_.split(options.era)[1][:1])() )
 
    modules_era.append(PhiXYCorrection(era=options.era,isMC=options.isMC,sys=''))
-   modules_era.append(MonoZProducer  (isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
+   modules_era.append(ZZProducer  (isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
    modules_era.append(VBSProducer(isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
 
    if options.era=="2016": 
