@@ -391,15 +391,15 @@ class MonoZProducer(Module):
         _lead_lep_eta = good_leptons[0].eta if len(good_leptons) else 0.0
         _trail_lep_pt = good_leptons[1].pt if len(good_leptons) >= 2 else 0.0
         _trail_lep_eta = good_leptons[1].eta if len(good_leptons) >= 2 else 0.0
-	_lead_lep_flavor = 0
+	_leading_lep_flavor = 0
 	if len(good_muons) and len(good_electrons):
-		if good_muons[0].pt > good_electrons[0].pt: _lead_lep_flavor = 1
+		if good_muons[0].pt > good_electrons[0].pt: _leading_lep_flavor = 1
 
         self.out.fillBranch("leading_lep_pt{}".format(self.syst_suffix), _lead_lep_pt)
         self.out.fillBranch("leading_lep_eta{}".format(self.syst_suffix), _lead_lep_eta)
         self.out.fillBranch("trailing_lep_pt{}".format(self.syst_suffix), _trail_lep_pt)
         self.out.fillBranch("trailing_lep_eta{}".format(self.syst_suffix), _trail_lep_eta)
-        self.out.fillBranch("leading_lep_flavor{}".format(self.syst_suffix), _lead_lep_flavor)
+        self.out.fillBranch("leading_lep_flavor{}".format(self.syst_suffix), _leading_lep_flavor)
 
         ngood_leptons = len(good_leptons)
         nextra_leptons = len(extra_leptons)
