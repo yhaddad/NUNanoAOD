@@ -65,8 +65,8 @@ class VBSProducer(Module):
         met_p4 = ROOT.TLorentzVector()
         met_p4.SetPtEtaPhiM(met_pt, 0., met_phi, 0.)
 
-        lead_lep_pt = getattr(event, "lead_lep_pt{}".format(self.syst_suffix))
-        trail_lep_pt = getattr(event, "trail_lep_pt{}".format(self.syst_suffix))
+        leading_lep_pt = getattr(event, "leading_lep_pt{}".format(self.syst_suffix))
+        trailing_lep_pt = getattr(event, "trailing_lep_pt{}".format(self.syst_suffix))
 
         Z_pt = getattr(event, "Z_pt{}".format(self.syst_suffix))
         Z_eta = getattr(event, "Z_eta{}".format(self.syst_suffix))
@@ -107,7 +107,7 @@ class VBSProducer(Module):
             S_T_hard = (lead_jet_p4+trail_jet_p4+Z_p4).Pt() / (lead_jet_pt+trail_jet_pt+Z_pt)
             S_T_all = (lead_jet_p4+trail_jet_p4+Z_p4+met_p4).Pt() / (lead_jet_pt+trail_jet_pt+Z_pt+met_pt)
             Jet_pt_Ratio = trail_jet_pt / lead_jet_pt
-            R_pt = lead_lep_pt * trail_lep_pt / (lead_jet_pt * trail_jet_pt)
+            R_pt = leading_lep_pt * trailing_lep_pt / (lead_jet_pt * trail_jet_pt)
             dijet_abs_dEta = abs(lead_jet_eta-trail_jet_eta)
             dijet_Mjj = (lead_jet_p4 + trail_jet_p4).M()
             dijet_Zep = Z_eta - 0.5 * (lead_jet_eta + trail_jet_eta)

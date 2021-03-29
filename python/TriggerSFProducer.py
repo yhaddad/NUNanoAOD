@@ -45,11 +45,11 @@ class TriggerSFProducer(Module):
             l2_eta = 0
             l1_flavor = 0
         else:
-            l1_pt = float(getattr(event,"lead_lep_pt"))
-            l1_eta = abs(float(getattr(event,"lead_lep_eta")))
-            l2_pt = float(getattr(event,"trail_lep_pt"))
-            l2_eta = abs(float(getattr(event,"trail_lep_eta")))
-            l1_flavor = int(getattr(event,"lead_lep_flavor"))
+            l1_pt = float(getattr(event,"leading_lep_pt"))
+            l1_eta = abs(float(getattr(event,"leading_lep_eta")))
+            l2_pt = float(getattr(event,"trailing_lep_pt"))
+            l2_eta = abs(float(getattr(event,"trailing_lep_eta")))
+            l1_flavor = int(getattr(event,"leading_lep_flavor"))
         weight = 1
         weightError = 0
         if lep_cat==3 or lep_cat==5 or lep_cat==7 : #these are MM. MML and MMLL lepton categories
