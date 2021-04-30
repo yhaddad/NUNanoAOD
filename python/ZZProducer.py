@@ -55,12 +55,15 @@ class ZZProducer(Module):
         self.out.branch("lead_jet_pt{}".format(self.syst_suffix), "F")
         self.out.branch("lead_jet_eta{}".format(self.syst_suffix), "F")
         self.out.branch("lead_jet_phi{}".format(self.syst_suffix), "F")
+        self.out.branch("lead_jet_mass{}".format(self.syst_suffix), "F")        
         self.out.branch("trail_jet_pt{}".format(self.syst_suffix), "F")
         self.out.branch("trail_jet_eta{}".format(self.syst_suffix), "F")
         self.out.branch("trail_jet_phi{}".format(self.syst_suffix), "F")
+        self.out.branch("trail_jet_mass{}".format(self.syst_suffix), "F")        
         self.out.branch("third_jet_pt{}".format(self.syst_suffix), "F")
         self.out.branch("third_jet_eta{}".format(self.syst_suffix), "F")
         self.out.branch("third_jet_phi{}".format(self.syst_suffix), "F")
+        self.out.branch("third_jet_mass{}".format(self.syst_suffix), "F")        
 
         self.out.branch("ngood_bjets{}".format(self.syst_suffix), "I")
         self.out.branch("lead_bjet_pt{}".format(self.syst_suffix), "F")
@@ -186,45 +189,27 @@ class ZZProducer(Module):
                         print "[error] not mvaFall18 electron id found ... "
 
             return pass_id
-        #elif (self.era == "2018" and wp == "80"):
-        #    return electron.mvaFall17V1Iso_WP80
-        #elif (self.era == "2018" and wp == "90"):
-        #    return electron.mvaFall17V1Iso_WP90
-        #elif (self.era == "2018" and wp == "WPL"):
-        #    return electron.mvaFall17V1Iso_WPL
 
 
     def btag_id(self, wp):
-        # ref : https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
-        if (self.era == "2016" and wp == "loose"):
-            return 0.2219
-        elif (self.era == "2016" and wp == "medium"):
-            return 0.6324
-        elif (self.era == "2016" and wp == "tight"):
-            return 0.8958
-        elif (self.era == "2017" and wp == "loose"):
-            return 0.1522
-        elif (self.era == "2017" and wp == "medium"):
-            return 0.4941
-        elif (self.era == "2017" and wp == "tight"):
-            return 0.8001
-        elif (self.era == "2018" and wp == "loose"):
-            return 0.1241
-        elif (self.era == "2018" and wp == "medium"):
-            return 0.4184
-        elif (self.era == "2018" and wp == "tight"):
-            return 0.7527
+        # using deepjet
+        # ref : https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation
+        dict_wp = {"2016": {"loose": 0.0614, "medium": 0.3093, "tight": 0.7221},
+                   "2017": {"loose": 0.0521, "medium": 0.3033, "tight": 0.7489},
+                   "2018": {"loose": 0.0494, "medium": 0.2770, "tight": 0.7264}}
+        return dict_wp[self.era][wp]
+
 
     def met_filter(self, flag, filter_mask=True):
         return filter_mask and (
-              (flag.HBHENoiseFilter)
-           and (flag.HBHENoiseIsoFilter)
-           and (flag.EcalDeadCellTriggerPrimitiveFilter)
-           and (flag.goodVertices)
-           and (flag.eeBadScFilter)
-           and (flag.globalTightHalo2016Filter)
-           and (flag.BadChargedCandidateFilter)
-           and (flag.BadPFMuonFilter)
+              (flag.HBHENoiseFilter) 
+              and (flag.HBHENoiseIsoFilter) 
+              and (flag.EcalDeadCellTriggerPrimitiveFilter) 
+              and (flag.goodVertices) 
+              and (flag.eeBadScFilter) 
+              and (flag.globalTightHalo2016Filter) 
+              and (flag.BadChargedCandidateFilter) 
+              and (flag.BadPFMuonFilter)
         )
 
     def duplicate_removal(self):
@@ -491,9 +476,9 @@ class ZZProducer(Module):
             if tk.closest(jet, good_leptons)[1] < 0.4:
                 continue
             good_jets.append(jet)
-            # Count b-tag with medium WP DeepCSV
-            # ref : https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
-            if abs(jet.eta) <= 2.4 and jet.btagDeepB > self.btag_id("loose"):
+            # Count b-tag with medium WP DeepJet
+            # ref : https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation
+            if abs(jet.eta) <= 2.4 and jet.btagDeepFlavB > self.btag_id("loose"):
                 good_bjets.append(jet)
 
         _ngood_jets = len(good_jets)
@@ -504,12 +489,15 @@ class ZZProducer(Module):
         _lead_jet_pt = good_jets[0].pt if _ngood_jets >= 1 else 0.
         _lead_jet_eta = good_jets[0].eta if _ngood_jets >= 1 else -99.
         _lead_jet_phi = good_jets[0].phi if _ngood_jets >= 1 else -99.
+        _lead_jet_mass = good_jets[0].mass if _ngood_jets >= 1 else -99.
         _trail_jet_pt = good_jets[1].pt if _ngood_jets >= 2 else 0.
         _trail_jet_eta = good_jets[1].eta if _ngood_jets >= 2 else -99.
         _trail_jet_phi = good_jets[1].phi if _ngood_jets >= 2 else -99.
+        _trail_jet_mass = good_jets[1].mass if _ngood_jets >= 2 else -99.
         _third_jet_pt = good_jets[2].pt if _ngood_jets >= 3 else 0.
         _third_jet_eta = good_jets[2].eta if _ngood_jets >= 3 else -99.
         _third_jet_phi = good_jets[2].phi if _ngood_jets >= 3 else -99.
+        _third_jet_mass = good_jets[2].mass if _ngood_jets >= 3 else -99.
         _H_T = sum([jet.pt for jet in good_jets])
         _dphi_j_met = tk.deltaPhi(good_jets[0], met.phi) if _ngood_jets >= 1 else -99.
         _lead_bjet_pt = good_bjets[0].pt if _ngood_bjets else 0.
@@ -519,12 +507,15 @@ class ZZProducer(Module):
         self.out.fillBranch("lead_jet_pt{}".format(self.syst_suffix), _lead_jet_pt)
         self.out.fillBranch("lead_jet_eta{}".format(self.syst_suffix), _lead_jet_eta)
         self.out.fillBranch("lead_jet_phi{}".format(self.syst_suffix), _lead_jet_phi)
+        self.out.fillBranch("lead_jet_mass{}".format(self.syst_suffix), _lead_jet_mass)
         self.out.fillBranch("trail_jet_pt{}".format(self.syst_suffix), _trail_jet_pt)
         self.out.fillBranch("trail_jet_eta{}".format(self.syst_suffix), _trail_jet_eta)
         self.out.fillBranch("trail_jet_phi{}".format(self.syst_suffix), _trail_jet_phi)
+        self.out.fillBranch("trail_jet_mass{}".format(self.syst_suffix), _trail_jet_mass)
         self.out.fillBranch("third_jet_pt{}".format(self.syst_suffix), _third_jet_pt)
         self.out.fillBranch("third_jet_eta{}".format(self.syst_suffix), _third_jet_eta)
         self.out.fillBranch("third_jet_phi{}".format(self.syst_suffix), _third_jet_phi)
+        self.out.fillBranch("third_jet_mass{}".format(self.syst_suffix), _third_jet_mass)
         self.out.fillBranch("H_T{}".format(self.syst_suffix), _H_T)
         self.out.fillBranch("delta_phi_j_met{}".format(self.syst_suffix), _dphi_j_met)
         self.out.fillBranch("lead_bjet_pt{}".format(self.syst_suffix), _lead_bjet_pt)
