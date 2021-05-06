@@ -1,5 +1,5 @@
-# MonoZNanoAOD
-MonoZ analysis using NanoAOD
+# NUNanoAOD
+MonoZ, ZZ(2l2nu), and VBS ZZ(2l2nu) analyses using NanoAOD based on NanoAOD-tools
 
 
 ## Quick start
@@ -116,4 +116,7 @@ combineTool.py -M Impacts -d combined_DMY2000Xd1.dat.root -m 125 --o impacts.jso
 plotImpacts.py -i impacts.json -o impacts
 ```
 
-
+# Authors
+Yacine haddad (Northeastern)
+Chad Freer (MIT)   
+Bingran Wang (Northeastern)
