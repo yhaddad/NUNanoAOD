@@ -117,6 +117,6 @@ plotImpacts.py -i impacts.json -o impacts
 ```
 
 # Authors
-Yacine haddad (Northeastern)
-Chad Freer (MIT)   
-Bingran Wang (Northeastern)
+- Yacine haddad (Northeastern)
+- Chad Freer (MIT)   
+- Bingran Wang (Northeastern)
