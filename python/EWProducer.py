@@ -100,50 +100,59 @@ class EWProducer(Module):
     def analyze(self, event):
         # EW correction
         gen_part = Collection(event, "GenPart")
+        # id of incoming and outgoing particles
+        id_q1 = abs(gen_part[0].pdgId)
+        id_q2 = abs(gen_part[1].pdgId)
 
-        fq1 = abs(gen_part[0].pdgId)
-        fq2 = abs(gen_part[1].pdgId)
-
-        if ( (fq1>=1 and fq1<=6) or fq1==21 ):
+        # quark 1
+        if ( (id_q1>=1 and id_q1<=6) or id_q1==21 ):
             q1 = ROOT.TLorentzVector( 0, 0, 100., 100. )
         else:
-            print "[WARNING] MonoZ/EWKcorrection, GenParticle element 0 is neither a quark nor a gluon. weight set to 1"
+            print "[WARNING] EWKcorrection, GenParticle element 0 is neither a quark nor a gluon. weight set to 1"
             self.out.fillBranch("kEW"    , 1)
             self.out.fillBranch("kEWUp"  , 1)
             self.out.fillBranch("kEWDown", 1)
             self.out.fillBranch("kNNLO"  , 1)
             return True
-
-
-        if ( (fq2>=1 and fq2<=6) or fq2==21 ):
+        # quark 2
+        if ( (id_q2>=1 and id_q2<=6) or id_q2==21 ):
             q2 = ROOT.TLorentzVector( 0, 0, -100., 100. )
         else:
-            print "[WARNING] MonoZ/EWKcorrection, GenParticle element 1 is neither a quark nor a gluon. weight set to 1"
+            print "[WARNING] EWKcorrection, GenParticle element 1 is neither a quark nor a gluon. weight set to 1"
             self.out.fillBranch("kEW"    , 1)
             self.out.fillBranch("kEWUp"  , 1)
             self.out.fillBranch("kEWDown", 1)
             self.out.fillBranch("kNNLO"  , 1)
             return True
+        # boson 1
         if ( gen_part[2].pdgId==23 or abs(gen_part[2].pdgId)==24 ):
             v1 = gen_part[2].p4()
         else:
-            print "[WARNING] MonoZ/EWKcorrection, GenParticle element 2 is neither Z quark nor W gluon. weight set to 1"
+            print "[WARNING] EWKcorrection, GenParticle element 2 is neither Z nor W. weight set to 1"
             self.out.fillBranch("kEW"    , 1)
             self.out.fillBranch("kEWUp"  , 1)
             self.out.fillBranch("kEWDown", 1)
             self.out.fillBranch("kNNLO"  , 1)
             return True
-
+        # boson 2
         if ( gen_part[3].pdgId==23 or abs(gen_part[3].pdgId)==24 ):
             v2 = gen_part[3].p4()
         else:
-            print "[WARNING] MonoZ/EWKcorrection, GenParticle element 3 is neither Z quark nor W gluon. weight set to 1"
+            print "[WARNING] EWKcorrection, GenParticle element 3 is neither Z nor W. weight set to 1"
             self.out.fillBranch("kEW"    , 1)
             self.out.fillBranch("kEWUp"  , 1)
             self.out.fillBranch("kEWDown", 1)
             self.out.fillBranch("kNNLO"  , 1)
             return True
 
+        # not sure why, but sometimes there're NaN values
+        if np.isnan(v1.Mag()) or np.isnan(v2.Mag()):
+            print "[WARNING] EWKcorrection, v1 or v2 is NaN. weight set to 1"
+            self.out.fillBranch("kEW"    , 1)
+            self.out.fillBranch("kEWUp"  , 1)
+            self.out.fillBranch("kEWDown", 1)
+            self.out.fillBranch("kNNLO"  , 1)
+            return True
 
         # NNLO
         kNNLO = 1.
@@ -193,24 +202,37 @@ class EWProducer(Module):
         itab = 40000
         # highest value of sqrt(s_hat) in the table
         sqrshatmax = 0.8E+04
-        if sqrshat>sqrshatmax:
+        if sqrshat > sqrshatmax:
             itab = 39800
         else:
             for itmp in range(0, 40000, 200):
-                if abs(sqrshat - self.table[itmp][0])<sqrshatmax:
+                if sqrshatmax > abs(sqrshat - self.table[itmp][0]):
                     sqrshatmax = abs(sqrshat - self.table[itmp][0])
                     itab = itmp
                 else:
                     break
+
         sqrshatmax = self.table[itab+199][1]
+        # try:
+        #     sqrshatmax = self.table[itab+199][1]
+        # except:
+        #     print "sqrshat =", sqrshat
+        #     print "sqrshatmax =", sqrshatmax
+        #     print "itmp =", itmp
+        #     print "itab =", itab
+        #     print "gen_part[0].p4()", gen_part[0].p4().X(), gen_part[0].p4().Y(), gen_part[0].p4().Z(), gen_part[0].p4().T(), gen_part[0].p4().Mag()
+        #     print "gen_part[1].p4()", gen_part[1].p4().X(), gen_part[1].p4().Y(), gen_part[1].p4().Z(), gen_part[1].p4().T(), gen_part[1].p4().Mag()
+        #     print "gen_part[2].p4()", gen_part[2].p4().X(), gen_part[2].p4().Y(), gen_part[2].p4().Z(), gen_part[2].p4().T(), gen_part[2].p4().Mag()
+        #     print "gen_part[3].p4()", gen_part[3].p4().X(), gen_part[3].p4().Y(), gen_part[3].p4().Z(), gen_part[3].p4().T(), gen_part[3].p4().Mag()
+        
         # In case sqrshat exceeds sqrshatmax
         # (the table is for 8 TeV, we run at 13 TeV)
-        if that>sqrshatmax:
+        if that > sqrshatmax:
             itab += 199
         else:
             sqrshatmax = 0.1E+09
             for itmp in range(itab, itab+200):
-                if abs(that - self.table[itmp][1])<sqrshatmax:
+                if sqrshatmax > abs(that - self.table[itmp][1]):
                     sqrshatmax = abs(that - self.table[itmp][1])
                     itab = itmp
                 else:
@@ -221,7 +243,7 @@ class EWProducer(Module):
         # ZZ
         if self.process==1:
             # Flavor of incident quark (std::min in case one is a gluon)
-            qtype = min(fq1, fq2)
+            qtype = min(id_q1, id_q2)
             # d, s
             if (qtype==1 or qtype==3):
                 jtab = 3
@@ -233,7 +255,6 @@ class EWProducer(Module):
                 jtab = 4
             else:
                 jtab = -1
-                #raise Exception("monoZ/EWKcorrection, Unknown quark type.")
 
         if jtab == -1:
             self.out.fillBranch("kEW"    , 1.0)

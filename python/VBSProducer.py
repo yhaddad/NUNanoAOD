@@ -81,18 +81,21 @@ class VBSProducer(Module):
         lead_jet_pt = getattr(event, "lead_jet_pt{}".format(self.syst_suffix))
         lead_jet_eta = getattr(event, "lead_jet_eta{}".format(self.syst_suffix))
         lead_jet_phi = getattr(event, "lead_jet_phi{}".format(self.syst_suffix))
+        lead_jet_mass = getattr(event, "lead_jet_mass{}".format(self.syst_suffix))
         lead_jet_p4 = ROOT.TLorentzVector()
         lead_jet_p4.SetPtEtaPhiM(lead_jet_pt, lead_jet_eta, lead_jet_phi, lead_jet_mass)
 
         trail_jet_pt = getattr(event, "trail_jet_pt{}".format(self.syst_suffix))
         trail_jet_eta = getattr(event, "trail_jet_eta{}".format(self.syst_suffix))
         trail_jet_phi = getattr(event, "trail_jet_phi{}".format(self.syst_suffix))
+        trail_jet_mass = getattr(event, "trail_jet_mass{}".format(self.syst_suffix))
         trail_jet_p4 = ROOT.TLorentzVector()
         trail_jet_p4.SetPtEtaPhiM(trail_jet_pt, trail_jet_eta, trail_jet_phi, trail_jet_mass)
 
         third_jet_pt = getattr(event, "third_jet_pt{}".format(self.syst_suffix))
         third_jet_eta = getattr(event, "third_jet_eta{}".format(self.syst_suffix))
         third_jet_phi = getattr(event, "third_jet_phi{}".format(self.syst_suffix))
+        third_jet_mass = getattr(event, "third_jet_mass{}".format(self.syst_suffix))
         third_jet_p4 = ROOT.TLorentzVector()
         third_jet_p4.SetPtEtaPhiM(third_jet_pt, third_jet_eta, third_jet_phi, third_jet_mass)
 
