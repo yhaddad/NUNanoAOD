@@ -56,6 +56,7 @@ def inputfile(nanofile):
 
 parser = argparse.ArgumentParser("")
 parser.add_argument('-isMC'   , '--isMC'   , type=int, default=1     , help="")
+parser.add_argument('-isUL'   , '--isUL'   , type=int, default=1     , help="")
 parser.add_argument('-jobNum' , '--jobNum' , type=int, default=1     , help="")
 parser.add_argument('-era'    , '--era'    , type=str, default="2018", help="")
 parser.add_argument('-doSyst' , '--doSyst' , type=int, default=1     , help="")
@@ -141,7 +142,7 @@ if options.isMC:
       modules_era.append(EWProducer(2, False))
 
    modules_era.append(jmeCorrections())
-   modules_era.append(PhiXYCorrection(era=options.era, isMC=options.isMC,sys='', metBranchName=metBranchName))
+   modules_era.append(PhiXYCorrection(era=options.era, isMC=options.isMC, isUL=options.isUL, sys='', metBranchName=metBranchName))
    modules_era.append(GenMonoZProducer())
    modules_era.append(ZZProducer(isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
    modules_era.append(VBSProducer(isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
@@ -153,7 +154,7 @@ if options.isMC:
          continue
       for var in ["Up", "Down"]:
          if "jesTotal" in sys or "jer" in sys: 
-            modules_era.append(PhiXYCorrection(era=options.era, isMC=options.isMC, sys=sys+var, metBranchName=metBranchName))
+            modules_era.append(PhiXYCorrection(era=options.era, isMC=options.isMC, isUL=options.isUL, sys=sys+var, metBranchName=metBranchName))
          modules_era.append(ZZProducer(options.isMC, str(options.era), do_syst=1, syst_var=sys+var))
          modules_era.append(VBSProducer(isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=sys+var))
 
@@ -192,7 +193,7 @@ else: # Data
                                        jesUncert="Total", 
                                        metBranchName=metBranchName)
    modules_era.append(jmeCorrections())
-   modules_era.append(PhiXYCorrection(era=options.era, isMC=options.isMC, sys='', metBranchName=metBranchName))
+   modules_era.append(PhiXYCorrection(era=options.era, isMC=options.isMC, isUL=options.isUL, sys='', metBranchName=metBranchName))
    modules_era.append(ZZProducer  (isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
    modules_era.append(VBSProducer(isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=''))
 
