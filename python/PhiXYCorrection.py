@@ -120,11 +120,17 @@ class PhiXYCorrection(Module):
         usemetv2 = False
         #Determine the era for MC samples
         if isMC:
-            if(year == '2016'): runera = 'y2016MC'
-            elif(year == '2017'): runera = 'y2017MC'; usemetv2 = True
-            elif(year == '2018'): runera = 'y2018MC'
-            #Couldn't find data/MC era => no correction applied
-            else: return
+            if not self.isUL:
+                if(year == '2016'): runera = 'y2016MC'
+                elif(year == '2017'): runera = 'y2017MC'; usemetv2 = True
+                elif(year == '2018'): runera = 'y2018MC'
+                else: return
+            else:
+                if(year == '2016APV'): runera = 'yUL2016MCAPV'
+                elif(year == '2016nonAPV'): runera = 'yUL2016MCnonAPV'
+                elif(year == '2017'): runera = 'yUL2017MC'
+                elif(year == '2018'): runera = 'yUL2018MC'
+                else: return
         else:
             #Find the data era via run number
             if not self.isUL:
@@ -147,7 +153,6 @@ class PhiXYCorrection(Module):
                 elif(316998 <= runnb <= 319312): runera = 'y2018B'
                 elif(319313 <= runnb <= 320393): runera = 'y2018C'
                 elif(320394 <= runnb <= 325273): runera = 'y2018D'
-                #Couldn't find data/MC era => no correction applied
                 else: return 
             else:
                 # UL 2016
@@ -170,7 +175,6 @@ class PhiXYCorrection(Module):
                 elif(316998 <= runnb <= 319312) : runera = 'yUL2018B';
                 elif(319313 <= runnb <= 320393) : runera = 'yUL2018C';
                 elif(320394 <= runnb <= 325273) : runera = 'yUL2018D';
-                #Couldn't find data/MC era => no correction applied
                 else: return 
 
         METxcorr = 0.
