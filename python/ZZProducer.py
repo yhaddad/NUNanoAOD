@@ -55,15 +55,18 @@ class ZZProducer(Module):
         self.out.branch("lead_jet_pt{}".format(self.syst_suffix), "F")
         self.out.branch("lead_jet_eta{}".format(self.syst_suffix), "F")
         self.out.branch("lead_jet_phi{}".format(self.syst_suffix), "F")
-        self.out.branch("lead_jet_mass{}".format(self.syst_suffix), "F")        
+        self.out.branch("lead_jet_mass{}".format(self.syst_suffix), "F")
+        self.out.branch("lead_jet_qgl{}".format(self.syst_suffix), "F")
         self.out.branch("trail_jet_pt{}".format(self.syst_suffix), "F")
         self.out.branch("trail_jet_eta{}".format(self.syst_suffix), "F")
         self.out.branch("trail_jet_phi{}".format(self.syst_suffix), "F")
-        self.out.branch("trail_jet_mass{}".format(self.syst_suffix), "F")        
+        self.out.branch("trail_jet_mass{}".format(self.syst_suffix), "F")
+        self.out.branch("trail_jet_qgl{}".format(self.syst_suffix), "F")
         self.out.branch("third_jet_pt{}".format(self.syst_suffix), "F")
         self.out.branch("third_jet_eta{}".format(self.syst_suffix), "F")
         self.out.branch("third_jet_phi{}".format(self.syst_suffix), "F")
-        self.out.branch("third_jet_mass{}".format(self.syst_suffix), "F")        
+        self.out.branch("third_jet_mass{}".format(self.syst_suffix), "F")
+        self.out.branch("third_jet_qgl{}".format(self.syst_suffix), "F")
 
         self.out.branch("ngood_bjets{}".format(self.syst_suffix), "I")
         self.out.branch("lead_bjet_pt{}".format(self.syst_suffix), "F")
@@ -490,14 +493,17 @@ class ZZProducer(Module):
         _lead_jet_eta = good_jets[0].eta if _ngood_jets >= 1 else -99.
         _lead_jet_phi = good_jets[0].phi if _ngood_jets >= 1 else -99.
         _lead_jet_mass = good_jets[0].mass if _ngood_jets >= 1 else -99.
+        _lead_jet_qgl = good_jets[0].qgl if _ngood_jets >= 1 else -99.
         _trail_jet_pt = good_jets[1].pt if _ngood_jets >= 2 else 0.
         _trail_jet_eta = good_jets[1].eta if _ngood_jets >= 2 else -99.
         _trail_jet_phi = good_jets[1].phi if _ngood_jets >= 2 else -99.
         _trail_jet_mass = good_jets[1].mass if _ngood_jets >= 2 else -99.
+        _trail_jet_qgl = good_jets[1].qgl if _ngood_jets >= 2 else -99.
         _third_jet_pt = good_jets[2].pt if _ngood_jets >= 3 else 0.
         _third_jet_eta = good_jets[2].eta if _ngood_jets >= 3 else -99.
         _third_jet_phi = good_jets[2].phi if _ngood_jets >= 3 else -99.
         _third_jet_mass = good_jets[2].mass if _ngood_jets >= 3 else -99.
+        _third_jet_qgl = good_jets[2].qgl if _ngood_jets >= 3 else -99.
         _H_T = sum([jet.pt for jet in good_jets])
         _dphi_j_met = tk.deltaPhi(good_jets[0], met.phi) if _ngood_jets >= 1 else -99.
         _lead_bjet_pt = good_bjets[0].pt if _ngood_bjets else 0.
@@ -508,14 +514,17 @@ class ZZProducer(Module):
         self.out.fillBranch("lead_jet_eta{}".format(self.syst_suffix), _lead_jet_eta)
         self.out.fillBranch("lead_jet_phi{}".format(self.syst_suffix), _lead_jet_phi)
         self.out.fillBranch("lead_jet_mass{}".format(self.syst_suffix), _lead_jet_mass)
+        self.out.fillBranch("lead_jet_qgl{}".format(self.syst_suffix), _lead_jet_qgl)
         self.out.fillBranch("trail_jet_pt{}".format(self.syst_suffix), _trail_jet_pt)
         self.out.fillBranch("trail_jet_eta{}".format(self.syst_suffix), _trail_jet_eta)
         self.out.fillBranch("trail_jet_phi{}".format(self.syst_suffix), _trail_jet_phi)
         self.out.fillBranch("trail_jet_mass{}".format(self.syst_suffix), _trail_jet_mass)
+        self.out.fillBranch("trail_jet_qgl{}".format(self.syst_suffix), _trail_jet_qgl)
         self.out.fillBranch("third_jet_pt{}".format(self.syst_suffix), _third_jet_pt)
         self.out.fillBranch("third_jet_eta{}".format(self.syst_suffix), _third_jet_eta)
         self.out.fillBranch("third_jet_phi{}".format(self.syst_suffix), _third_jet_phi)
         self.out.fillBranch("third_jet_mass{}".format(self.syst_suffix), _third_jet_mass)
+        self.out.fillBranch("third_jet_qgl{}".format(self.syst_suffix), _third_jet_qgl)
         self.out.fillBranch("H_T{}".format(self.syst_suffix), _H_T)
         self.out.fillBranch("delta_phi_j_met{}".format(self.syst_suffix), _dphi_j_met)
         self.out.fillBranch("lead_bjet_pt{}".format(self.syst_suffix), _lead_bjet_pt)
