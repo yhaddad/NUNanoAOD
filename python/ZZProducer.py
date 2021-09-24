@@ -350,9 +350,10 @@ class ZZProducer(Module):
                 
         good_electrons = []
         for idy,el in enumerate(electrons):
-            id_CB = el.cutBased
             # changing to MVA based ID :
-            if el.pt >= (25 if idy==0 else 20) and abs(el.eta) <= 2.5 and self.electron_id(el, "90"):
+            pass_fid = abs(el.eta) <= 2.5 and el.pt >= (25 if idy==0 else 20)
+            pass_ids = self.electron_id(el, "90")
+            if pass_fid and pass_ids:
                 good_electrons.append(el)
 
         # let sort the muons in pt
@@ -362,19 +363,20 @@ class ZZProducer(Module):
         # Find any remaining e/mu that pass looser selection
         extra_leptons = []
         for mu in muons:
-            isoLep   = mu.pfRelIso04_all
-            pass_ids = mu.softId and isoLep <= 0.25
-            pass_fid = abs(mu.eta) < 2.4 and mu.pt >= 7
             if tk.closest(mu, good_muons)[1] < 0.01:
                 continue
+            isoLep   = mu.pfRelIso04_all
+            pass_ids = mu.looseId and isoLep <= 0.25
+            pass_fid = abs(mu.eta) < 2.4 and mu.pt >= 7
             if pass_fid and pass_ids:
                 extra_leptons.append(mu)
 
         for el in electrons:
-            pass_fid = abs(el.eta) < 2.5 and el.pt >= 7
             if tk.closest(el, good_electrons)[1] < 0.01:
                 continue
-            if pass_fid and self.electron_id(el, "WPL"):
+            pass_fid = abs(el.eta) < 2.5 and el.pt >= 7
+            pass_ids = self.electron_id(el, "WPL")
+            if pass_fid and pass_ids:
                 extra_leptons.append(el)
 
         good_leptons = good_electrons + good_muons
