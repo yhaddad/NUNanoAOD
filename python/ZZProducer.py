@@ -55,15 +55,18 @@ class ZZProducer(Module):
         self.out.branch("lead_jet_pt{}".format(self.syst_suffix), "F")
         self.out.branch("lead_jet_eta{}".format(self.syst_suffix), "F")
         self.out.branch("lead_jet_phi{}".format(self.syst_suffix), "F")
-        self.out.branch("lead_jet_mass{}".format(self.syst_suffix), "F")        
+        self.out.branch("lead_jet_mass{}".format(self.syst_suffix), "F")
+        self.out.branch("lead_jet_qgl{}".format(self.syst_suffix), "F")
         self.out.branch("trail_jet_pt{}".format(self.syst_suffix), "F")
         self.out.branch("trail_jet_eta{}".format(self.syst_suffix), "F")
         self.out.branch("trail_jet_phi{}".format(self.syst_suffix), "F")
-        self.out.branch("trail_jet_mass{}".format(self.syst_suffix), "F")        
+        self.out.branch("trail_jet_mass{}".format(self.syst_suffix), "F")
+        self.out.branch("trail_jet_qgl{}".format(self.syst_suffix), "F")
         self.out.branch("third_jet_pt{}".format(self.syst_suffix), "F")
         self.out.branch("third_jet_eta{}".format(self.syst_suffix), "F")
         self.out.branch("third_jet_phi{}".format(self.syst_suffix), "F")
-        self.out.branch("third_jet_mass{}".format(self.syst_suffix), "F")        
+        self.out.branch("third_jet_mass{}".format(self.syst_suffix), "F")
+        self.out.branch("third_jet_qgl{}".format(self.syst_suffix), "F")
 
         self.out.branch("ngood_bjets{}".format(self.syst_suffix), "I")
         self.out.branch("lead_bjet_pt{}".format(self.syst_suffix), "F")
@@ -347,9 +350,10 @@ class ZZProducer(Module):
                 
         good_electrons = []
         for idy,el in enumerate(electrons):
-            id_CB = el.cutBased
             # changing to MVA based ID :
-            if el.pt >= (25 if idy==0 else 20) and abs(el.eta) <= 2.5 and self.electron_id(el, "90"):
+            pass_fid = abs(el.eta) <= 2.5 and el.pt >= (25 if idy==0 else 20)
+            pass_ids = self.electron_id(el, "90")
+            if pass_fid and pass_ids:
                 good_electrons.append(el)
 
         # let sort the muons in pt
@@ -359,19 +363,20 @@ class ZZProducer(Module):
         # Find any remaining e/mu that pass looser selection
         extra_leptons = []
         for mu in muons:
-            isoLep   = mu.pfRelIso04_all
-            pass_ids = mu.softId and isoLep <= 0.25
-            pass_fid = abs(mu.eta) < 2.4 and mu.pt >= 7
             if tk.closest(mu, good_muons)[1] < 0.01:
                 continue
+            isoLep   = mu.pfRelIso04_all
+            pass_ids = mu.looseId and isoLep <= 0.25
+            pass_fid = abs(mu.eta) < 2.4 and mu.pt >= 7
             if pass_fid and pass_ids:
                 extra_leptons.append(mu)
 
         for el in electrons:
-            pass_fid = abs(el.eta) < 2.5 and el.pt >= 7
             if tk.closest(el, good_electrons)[1] < 0.01:
                 continue
-            if pass_fid and self.electron_id(el, "WPL"):
+            pass_fid = abs(el.eta) < 2.5 and el.pt >= 7
+            pass_ids = self.electron_id(el, "WPL")
+            if pass_fid and pass_ids:
                 extra_leptons.append(el)
 
         good_leptons = good_electrons + good_muons
@@ -490,14 +495,17 @@ class ZZProducer(Module):
         _lead_jet_eta = good_jets[0].eta if _ngood_jets >= 1 else -99.
         _lead_jet_phi = good_jets[0].phi if _ngood_jets >= 1 else -99.
         _lead_jet_mass = good_jets[0].mass if _ngood_jets >= 1 else -99.
+        _lead_jet_qgl = good_jets[0].qgl if _ngood_jets >= 1 else -99.
         _trail_jet_pt = good_jets[1].pt if _ngood_jets >= 2 else 0.
         _trail_jet_eta = good_jets[1].eta if _ngood_jets >= 2 else -99.
         _trail_jet_phi = good_jets[1].phi if _ngood_jets >= 2 else -99.
         _trail_jet_mass = good_jets[1].mass if _ngood_jets >= 2 else -99.
+        _trail_jet_qgl = good_jets[1].qgl if _ngood_jets >= 2 else -99.
         _third_jet_pt = good_jets[2].pt if _ngood_jets >= 3 else 0.
         _third_jet_eta = good_jets[2].eta if _ngood_jets >= 3 else -99.
         _third_jet_phi = good_jets[2].phi if _ngood_jets >= 3 else -99.
         _third_jet_mass = good_jets[2].mass if _ngood_jets >= 3 else -99.
+        _third_jet_qgl = good_jets[2].qgl if _ngood_jets >= 3 else -99.
         _H_T = sum([jet.pt for jet in good_jets])
         _dphi_j_met = tk.deltaPhi(good_jets[0], met.phi) if _ngood_jets >= 1 else -99.
         _lead_bjet_pt = good_bjets[0].pt if _ngood_bjets else 0.
@@ -508,14 +516,17 @@ class ZZProducer(Module):
         self.out.fillBranch("lead_jet_eta{}".format(self.syst_suffix), _lead_jet_eta)
         self.out.fillBranch("lead_jet_phi{}".format(self.syst_suffix), _lead_jet_phi)
         self.out.fillBranch("lead_jet_mass{}".format(self.syst_suffix), _lead_jet_mass)
+        self.out.fillBranch("lead_jet_qgl{}".format(self.syst_suffix), _lead_jet_qgl)
         self.out.fillBranch("trail_jet_pt{}".format(self.syst_suffix), _trail_jet_pt)
         self.out.fillBranch("trail_jet_eta{}".format(self.syst_suffix), _trail_jet_eta)
         self.out.fillBranch("trail_jet_phi{}".format(self.syst_suffix), _trail_jet_phi)
         self.out.fillBranch("trail_jet_mass{}".format(self.syst_suffix), _trail_jet_mass)
+        self.out.fillBranch("trail_jet_qgl{}".format(self.syst_suffix), _trail_jet_qgl)
         self.out.fillBranch("third_jet_pt{}".format(self.syst_suffix), _third_jet_pt)
         self.out.fillBranch("third_jet_eta{}".format(self.syst_suffix), _third_jet_eta)
         self.out.fillBranch("third_jet_phi{}".format(self.syst_suffix), _third_jet_phi)
         self.out.fillBranch("third_jet_mass{}".format(self.syst_suffix), _third_jet_mass)
+        self.out.fillBranch("third_jet_qgl{}".format(self.syst_suffix), _third_jet_qgl)
         self.out.fillBranch("H_T{}".format(self.syst_suffix), _H_T)
         self.out.fillBranch("delta_phi_j_met{}".format(self.syst_suffix), _dphi_j_met)
         self.out.fillBranch("lead_bjet_pt{}".format(self.syst_suffix), _lead_bjet_pt)
