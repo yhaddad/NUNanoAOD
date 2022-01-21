@@ -451,10 +451,10 @@ class ZZProducer(Module):
         for tau in taus:
             if tk.closest(tau, good_leptons)[1] < 0.4:
                 continue
-            # only hadronic tau decay
-            if tau.decayMode != 5:
+            # only hadronic tau decay. decay modes 5, 6 not safe yet
+            if tau.decayMode in [5, 6]:
                 continue
-            if tau.pt > 18 and abs(tau.eta) <= 2.3:
+            if tau.pt > 20 and abs(tau.eta) <= 2.3:
                 had_taus.append(tau)
         _nhad_taus = len(had_taus)
 
@@ -476,7 +476,7 @@ class ZZProducer(Module):
         for jet in jets:
             if jet.pt < 30.0 or abs(jet.eta) > 4.7:
                 continue
-            if not jet.jetId:
+            if jet.jetId != 6:
                 continue
             if tk.closest(jet, good_leptons)[1] < 0.4:
                 continue

@@ -1,3 +1,71 @@
+#For 2016 running
+'2016':
+  MuonEG:
+    - HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL
+    - HLT_Mu8_TrkIsoVVL_Ele17_CaloIdL_TrackIdL_IsoVL
+    - HLT_Mu17_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL
+    - HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL
+  DoubleEG:
+    - HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ
+  DoubleMuon:
+    - HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL
+    - HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ
+    - HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL
+    - HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ
+  SingleElectron:
+    - HLT_Ele35_WPLoose_Gsf
+    - HLT_Ele25_eta2p1_WPTight_Gsf
+    - HLT_Ele27_WPTight_Gsf
+    - HLT_Ele27_eta2p1_WPLoose_Gsf
+  SingleMuon:
+    - HLT_IsoMu20
+    - HLT_IsoMu22
+    - HLT_IsoMu24
+    - HLT_IsoTkMu20
+    - HLT_IsoTkMu22
+    - HLT_IsoTkMu24
+
+
+#For 2017 running
+'2017':
+  MuonEG:
+    - HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL
+    - HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ
+    - HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL
+    - HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ
+    - HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL
+    - HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ
+  DoubleEG:
+    - HLT_DoubleEle25_CaloIdL_MW
+    - HLT_DoubleEle33_CaloIdL_MW
+    - HLT_DiEle27_WPTightCaloOnly_L1DoubleEG
+    - HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL
+    - HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ
+    - HLT_DoublePhoton70
+  DoubleMuon:
+    - HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8
+    - HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8
+    - HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass8
+    - HLT_Mu19_TrkIsoVVL_Mu9_TrkIsoVVL_DZ_Mass3p8
+  SingleElectron:
+    - HLT_Ele27_WPTight_Gsf
+    - HLT_Ele32_WPTight_Gsf
+    - HLT_Ele32_WPTight_Gsf_L1DoubleEG
+    - HLT_Ele35_WPTight_Gsf
+    - HLT_Ele38_WPTight_Gsf
+    - HLT_Ele40_WPTight_Gsf
+    - HLT_Ele115_CaloIdVT_GsfTrkIdT
+    - HLT_Photon200
+  SingleMuon:
+    - HLT_Mu50
+    - HLT_IsoMu20
+    - HLT_IsoMu24
+    - HLT_IsoMu27
+    - HLT_IsoMu30
+    - HLT_Mu8_TrkIsoVVL
+    - HLT_Mu17_TrkIsoVVL
+
+
 #For 2018 running
 '2018':
   SingleMuon:
