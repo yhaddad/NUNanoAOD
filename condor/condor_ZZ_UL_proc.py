@@ -162,8 +162,9 @@ if options.isMC:
          modules_era.append(ZZProducer(options.isMC, str(options.era), do_syst=1, syst_var=sys+var))
          modules_era.append(VBSProducer(isMC=options.isMC, era=str(options.era), do_syst=1, syst_var=sys+var))
 
-   hlt_ls = [_hlt for _hlt_ls in dict_HLT[options.era].values() for _hlt in _hlt_ls]
-   pre_selection = pre_selection + " && (" + ' || '.join(hlt_ls) + ")"
+   # not applying HLT to MC
+   # hlt_ls = [_hlt for _hlt_ls in dict_HLT[options.era].values() for _hlt in _hlt_ls]
+   # pre_selection = pre_selection + " && (" + ' || '.join(hlt_ls) + ")"
 
 else: 
    # Data
@@ -171,18 +172,26 @@ else:
                '2017' : ['MuonEG', 'DoubleEG', 'DoubleMuon', 'SingleElectron', 'SingleMuon'], 
                '2018' : ['MuonEG', 'DoubleMuon', 'SingleMuon', 'EGamma']}
 
+   # use HLT to remove duplicated events
    dict_combHLT = {}
+   hlt_passed_list = []
    for _ds in ds_names[options.era]:
       # combined HLT for a single dataset
-      hlt_ds = '(' + ' || '.join(dict_HLT[options.era][_ds]) + ')'
+      hlt_this_list = dict_HLT[options.era][_ds]
+      hlt_this_str = '(' + ' || '.join(hlt_this_list) + ')'
+
       if dict_combHLT:
          # remove events from previous datasets
-         str_combHLT = '(' + hlt_ds + ' && !' + str_combHLT + ')'
+         hlt_passed_str = '(' + ' || '.join(hlt_passed_list) + ')'
+         str_combHLT = ' && !'.join([hlt_this_str, hlt_passed_str])
          dict_combHLT[_ds] = str_combHLT
       else:
          # 1st dataset
-         str_combHLT = hlt_ds
+         str_combHLT = hlt_this_str
          dict_combHLT[_ds] = str_combHLT
+
+      # list of HLTs of previous datasets
+      hlt_passed_list.extend(hlt_this_list)
 
    pre_selection = pre_selection + " && (" + dict_combHLT[options.dataset] + ")"
 
