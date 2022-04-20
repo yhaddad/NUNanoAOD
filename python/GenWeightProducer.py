@@ -120,13 +120,17 @@ class GenWeightProducer(Module):
         # QCD scale uncertainties
         # -----------------------
         try:
+            # (ren_sc, fac_sc) = {0: (0.5, 0.5), 1: (0.5, 1.0), 2: (0.5, 2.0), 3: (1.0, 0.5), 4: (1.0, 1.0), 5: (1.0, 2.0), 6: (2.0, 0.5), 7: (2.0, 1.0), 8: (2.0, 2.0)} 
             qcd_scale = self.getobject(event, "LHEScaleWeight")
-            self.out.fillBranch("QCDScale0wUp"  ,   qcd_scale[1]/qcd_scale[0])
-            self.out.fillBranch("QCDScale0wDown",   qcd_scale[2]/qcd_scale[0])
-            self.out.fillBranch("QCDScale1wUp"  ,   qcd_scale[3]/qcd_scale[0])
-            self.out.fillBranch("QCDScale1wDown",   qcd_scale[6]/qcd_scale[0])
-            self.out.fillBranch("QCDScale2wUp"  ,   qcd_scale[4]/qcd_scale[0])
-            self.out.fillBranch("QCDScale2wDown",   qcd_scale[8]/qcd_scale[0])
+            # Scale0: ren_sc in [0.5, 2.0] and fac_sc = 1.0
+            self.out.fillBranch("QCDScale0wUp"  ,   qcd_scale[1])
+            self.out.fillBranch("QCDScale0wDown",   qcd_scale[7])
+            # Scale1: ren_sc = 1.0 and fac_sc in [0.5, 2.0]
+            self.out.fillBranch("QCDScale1wUp"  ,   qcd_scale[3])
+            self.out.fillBranch("QCDScale1wDown",   qcd_scale[5])
+            # Scale2: (ren_sc, fac_sc) in [(0.5, 0.5), (2.0, 2.0)]
+            self.out.fillBranch("QCDScale2wUp"  ,   qcd_scale[0])
+            self.out.fillBranch("QCDScale2wDown",   qcd_scale[8])
         except:
             self.out.fillBranch("QCDScale0wUp"  ,   1.0)
             self.out.fillBranch("QCDScale0wDown",   1.0)
