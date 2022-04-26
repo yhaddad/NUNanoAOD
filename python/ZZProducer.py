@@ -197,9 +197,10 @@ class ZZProducer(Module):
     def btag_id(self, wp):
         # using deepjet
         # ref : https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation
-        dict_wp = {"2016": {"loose": 0.0614, "medium": 0.3093, "tight": 0.7221},
-                   "2017": {"loose": 0.0521, "medium": 0.3033, "tight": 0.7489},
-                   "2018": {"loose": 0.0494, "medium": 0.2770, "tight": 0.7264}}
+        dict_wp = {"2016preVFP": {"loose": 0.0508, "medium": 0.2598, "tight": 0.6502},
+                   "2016postVFP": {"loose": 0.0480, "medium": 0.2489, "tight": 0.6377},
+                   "2017": {"loose": 0.0532, "medium": 0.3040, "tight": 0.7476},
+                   "2018": {"loose": 0.0490, "medium": 0.2783, "tight": 0.7100},}
         return dict_wp[self.era][wp]
 
 
