@@ -20,7 +20,7 @@ from PhysicsTools.MonoZ.VBSProducer import *
 from PhysicsTools.MonoZ.GenWeightProducer import *
 from PhysicsTools.MonoZ.EWProducer import *
 from PhysicsTools.MonoZ.PhiXYCorrection import *
-# from PhysicsTools.MonoZ.BtagEventWeightProducer import *
+from PhysicsTools.MonoZ.BtagEventWeightProducer import *
 from PhysicsTools.MonoZ.TriggerSFProducer import *
 from PhysicsTools.MonoZ.GenMonoZProducer import *
 import argparse
@@ -56,7 +56,7 @@ def inputfile(nanofile):
 
 parser = argparse.ArgumentParser("")
 parser.add_argument('-isMC'   , '--isMC'   , type=int, default=1     , help="")
-parser.add_argument('-isUL'   , '--isUL'   , type=int, default=0     , help="")
+parser.add_argument('-isUL'   , '--isUL'   , type=int, default=1     , help="")
 parser.add_argument('-jobNum' , '--jobNum' , type=int, default=1     , help="")
 parser.add_argument('-era'    , '--era'    , type=str, default="2018", help="")
 parser.add_argument('-doSyst' , '--doSyst' , type=int, default=1     , help="")
@@ -124,20 +124,23 @@ if options.isMC:
    if options.era=="2016":
       modules_era.append(puAutoWeight_2016())
       modules_era.append(PrefCorr())
-      # modules_era.append(btagSFProducer("Legacy2016", "deepcsv"))
       modules_era.append(muonScaleRes2016())
       modules_era.append(lepSF_2016())
+      modules_era.append(btagSFProducer("UL2016", algo="deepjet", selectedWPs=['L']))
+      modules_era.append(BtagEventWeight_2016())
    elif options.era=="2017":
       modules_era.append(puAutoWeight_2017())
       modules_era.append(PrefCorr())
-      # modules_era.append(btagSFProducer("Legacy2017", "deepcsv"))
       modules_era.append(muonScaleRes2017())
       modules_era.append(lepSF_2017())
+      modules_era.append(btagSFProducer("UL2017", algo="deepjet", selectedWPs=['L']))
+      modules_era.append(BtagEventWeight_2017())
    elif options.era=="2018":
       modules_era.append(puAutoWeight_2018())
-      # modules_era.append(btagSFProducer("Legacy2018", "deepcsv"))
       modules_era.append(muonScaleRes2018())
       modules_era.append(lepSF_2018())
+      modules_era.append(btagSFProducer("UL2018", algo="deepjet", selectedWPs=['L']))
+      modules_era.append(BtagEventWeight_2018())
 
    # WZ or ZZ sample for ewk corrections and ADD for EFT weights
    if "ZZTo" in options.dataset and "GluGluToContin" not in options.dataset and "ZZJJ" not in options.dataset:
