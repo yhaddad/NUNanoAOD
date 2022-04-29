@@ -96,13 +96,14 @@ class BtagEventWeightProducer(Module):
             idx_biny = min(idx_biny, y_ax.GetNbins())
 
             # get jet efficiency with variations from 2D histograms
-            eff = hist_eff.GetBinContent(idx_binx, idx_biny)                
-            # eff_err = hist_eff.GetBinError(idx_binx, idx_biny)
-            eff_err = np.sqrt(eff * (1.0 - eff) / 5000.)
+            eff = hist_eff.GetBinContent(idx_binx, idx_biny)   
+            # systematics of efficiency
+            eff_err = hist_eff.GetBinError(idx_binx, idx_biny)
             eff_up = eff + eff_err
             eff_down = eff - eff_err
 
             # scale factors provided by NanoAOD-tools
+            # https://gitlab.cern.ch/cms-nanoAOD/jsonpog-integration/-/tree/master/POG/BTV
             SF = j.btagSF_deepjet_L
             SF_up = j.btagSF_deepjet_L_up
             SF_down = j.btagSF_deepjet_L_down 
